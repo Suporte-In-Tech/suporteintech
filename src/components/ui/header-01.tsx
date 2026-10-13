@@ -33,6 +33,7 @@ function WhatsAppIcon({ className = "size-4" }: { className?: string }) {
 
 const menuItems = [
   { name: "Home", href: "#" },
+  { name: "Quem Somos", href: "#sobre" },
   { name: "Serviços", href: "#servicos" },
   { name: "Como Trabalhamos", href: "#como-trabalhamos" },
   { name: "Portfólio", href: "#portfolio" },
@@ -225,6 +226,17 @@ export function Menus() {
             )}
           >
             <a href="#">Home</a>
+          </NavigationMenuLink>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuLink
+            asChild
+            className={cn(
+              navigationMenuTriggerStyle(),
+              "bg-transparent text-xs",
+            )}
+          >
+            <a href="#sobre">Quem Somos</a>
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
