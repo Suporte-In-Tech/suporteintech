@@ -12,8 +12,8 @@ export default function Home() {
       <Header />
       <main className="w-full flex-1 flex flex-col">
         <HeroSection />
-        <AppleCardCarousel />
         <AboutSection />
+        <AppleCardCarousel />
         <MethodologySection />
         <ProjectsSection />
       </main>
