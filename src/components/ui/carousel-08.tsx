@@ -1,7 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { ArrowUpRight, ArrowLeft, ArrowRight, ChevronRight } from "lucide-react";
+import Image from "next/image";
+import { ArrowUpRight, ArrowLeft, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Carousel,
@@ -42,7 +43,7 @@ const cards: CardItem[] = [
       "Redes corporativas de alta densidade",
       "Logística de peças e suporte contínuo",
     ],
-    src: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=1000&q=80",
+    src: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=75",
     alt: "Conectividade e Cabos de Rede",
   },
   {
@@ -63,7 +64,7 @@ const cards: CardItem[] = [
       "Integrações de APIs e bancos de dados",
       "Otimização de SEO técnico e performance",
     ],
-    src: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1000&q=80",
+    src: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=75",
     alt: "Computador com código e desenvolvimento",
   },
   {
@@ -83,7 +84,7 @@ const cards: CardItem[] = [
       "Design systems e diretrizes de marca",
       "Redesign moderno de plataformas legadas",
     ],
-    src: "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=1000&q=80",
+    src: "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=800&q=75",
     alt: "Processo criativo de design",
   },
   {
@@ -103,7 +104,7 @@ const cards: CardItem[] = [
       "Funis de atração e conversão de leads",
       "Análise de métricas e relatórios de ROI",
     ],
-    src: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1000&q=80",
+    src: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=75",
     alt: "Marketing Digital e Gestão de Performance",
   },
 ];
@@ -195,147 +196,150 @@ export function AppleCardCarousel() {
             className="w-full"
           >
             <CarouselContent className="-ml-6 px-6 sm:px-8 lg:px-12 py-4">
-                  {cards.map((card) => {
-                    const isFlipped = !!flippedCards[card.id];
+              {cards.map((card) => {
+                const isFlipped = !!flippedCards[card.id];
 
-                    return (
-                      <CarouselItem key={card.id} className="pl-6 basis-auto">
-                        <div
-                          onPointerDown={handlePointerDown}
-                          onClick={(e) => handleCardClick(card.id, e)}
-                          className="group relative w-[280px] h-[460px] sm:w-[320px] sm:h-[500px] lg:w-[360px] lg:h-[540px] border border-border/60 overflow-hidden rounded-3xl cursor-pointer shadow-lg hover:shadow-2xl bg-neutral-950 select-none transition-all duration-300"
-                        >
-                          {/* FACE 1: FOTO E VISÃO PRINCIPAL */}
-                          <div
-                            className={cn(
-                              "absolute inset-0 flex flex-col justify-between p-6 sm:p-8 transition-all duration-500 ease-in-out",
-                              isFlipped
-                                ? "opacity-0 scale-95 pointer-events-none -translate-y-3"
-                                : "opacity-100 scale-100 pointer-events-auto translate-y-0"
-                            )}
-                          >
-                            {/* Imagem de Fundo com transição suave */}
-                            <img
-                              src={card.src}
-                              alt={card.alt || (typeof card.title === "string" ? card.title : card.category)}
-                              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                            />
+                return (
+                  <CarouselItem key={card.id} className="pl-6 basis-auto">
+                    <div
+                      onPointerDown={handlePointerDown}
+                      onClick={(e) => handleCardClick(card.id, e)}
+                      className="group relative w-[280px] h-[460px] sm:w-[320px] sm:h-[500px] lg:w-[360px] lg:h-[540px] border border-border/60 overflow-hidden rounded-3xl cursor-pointer shadow-lg hover:shadow-2xl bg-neutral-950 select-none transition-all duration-300"
+                    >
+                      {/* FACE 1: FOTO E VISÃO PRINCIPAL */}
+                      <div
+                        className={cn(
+                          "absolute inset-0 flex flex-col justify-between p-6 sm:p-8 transition-all duration-500 ease-in-out",
+                          isFlipped
+                            ? "opacity-0 scale-95 pointer-events-none -translate-y-3"
+                            : "opacity-100 scale-100 pointer-events-auto translate-y-0"
+                        )}
+                      >
+                        {/* Imagem de Fundo otimizada via next/image */}
+                        <Image
+                          src={card.src}
+                          alt={card.alt || (typeof card.title === "string" ? card.title : card.category)}
+                          fill
+                          loading="lazy"
+                          sizes="(max-width: 640px) 280px, (max-width: 1024px) 320px, 360px"
+                          className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
 
-                            {/* Gradiente de contraste */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/25 pointer-events-none" />
+                        {/* Gradiente de contraste */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/25 pointer-events-none" />
 
-                            {/* Título e Breve Descrição */}
-                            <div className="relative z-10 flex flex-col gap-2.5 sm:gap-3 text-white">
-                              <h3 className="text-2xl sm:text-3xl font-bold tracking-tight leading-tight drop-shadow-sm">
-                                {card.title}
-                              </h3>
-                              {card.description && (
-                                <p className="text-xs sm:text-sm text-neutral-300 font-normal leading-relaxed line-clamp-3 mt-1">
-                                  {card.description}
-                                </p>
-                              )}
-                            </div>
-
-                            {/* Botão Inferior com indicação de clique */}
-                            <div className="relative z-10 flex items-center justify-between pt-4">
-                              <span className="text-xs text-white/80 font-medium tracking-wide">
-                                Toque para saber mais
-                              </span>
-                              <Button
-                                size="icon"
-                                type="button"
-                                className="h-11 w-11 rounded-full shadow-md bg-white hover:bg-neutral-100 cursor-pointer flex items-center justify-center transition-transform group-hover:scale-105"
-                                aria-label="Ver explicação do serviço"
-                              >
-                                <ArrowUpRight className="h-5 w-5 text-neutral-900 transition-transform duration-300 group-hover:rotate-45 will-change-transform" />
-                              </Button>
-                            </div>
-                          </div>
-
-                          {/* FACE 2: EXPLICAÇÃO DETALHADA */}
-                          <div
-                            className={cn(
-                              "absolute inset-0 flex flex-col justify-between p-6 sm:p-8 bg-[#121212] text-white transition-all duration-500 ease-in-out border border-white/10 rounded-3xl",
-                              isFlipped
-                                ? "opacity-100 scale-100 pointer-events-auto translate-y-0"
-                                : "opacity-0 scale-105 pointer-events-none translate-y-3"
-                            )}
-                          >
-                            {/* Gradiente radial sutil de acabamento */}
-                            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white/5 via-transparent to-transparent pointer-events-none" />
-
-                            {/* Área Superior de Conteúdo */}
-                            <div className="relative z-10 flex flex-col gap-3.5 sm:gap-4">
-                              {/* Categoria / Tag Superior */}
-                              <span className="text-xs font-semibold uppercase tracking-wider text-neutral-400">
-                                {card.category}
-                              </span>
-
-                              {/* Título Principal */}
-                              <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight leading-snug">
-                                {card.title}
-                              </h3>
-
-                              {/* Explicação breve do serviço */}
-                              <p className="text-sm sm:text-base text-neutral-300 leading-relaxed font-normal">
-                                {card.explanation}
-                              </p>
-
-                              {/* Lista de Recursos / Escopo do Serviço */}
-                              {card.features && card.features.length > 0 && (
-                                <ul className="flex flex-col gap-2 mt-2 pt-3 border-t border-white/10">
-                                  {card.features.map((feature, idx) => (
-                                    <li key={idx} className="flex items-center gap-2 text-xs sm:text-sm text-neutral-300">
-                                      <span className="size-1.5 rounded-full bg-white shrink-0 shadow-xs" />
-                                      <span>{feature}</span>
-                                    </li>
-                                  ))}
-                                </ul>
-                              )}
-                            </div>
-
-                            {/* Rodapé / Barra de Ação (Com "Voltar") */}
-                            <div className="relative z-10 flex items-center justify-start pt-4 border-t border-white/10 mt-auto">
-                              <button
-                                type="button"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  setFlippedCards((prev) => ({ ...prev, [card.id]: false }));
-                                }}
-                                className="inline-flex items-center gap-1.5 text-xs sm:text-sm text-neutral-400 hover:text-white transition-colors cursor-pointer"
-                              >
-                                <ArrowLeft className="size-3.5" />
-                                <span>Voltar</span>
-                              </button>
-                            </div>
-                          </div>
+                        {/* Título e Breve Descrição */}
+                        <div className="relative z-10 flex flex-col gap-2.5 sm:gap-3 text-white">
+                          <h3 className="text-2xl sm:text-3xl font-bold tracking-tight leading-tight drop-shadow-sm">
+                            {card.title}
+                          </h3>
+                          {card.description && (
+                            <p className="text-xs sm:text-sm text-neutral-300 font-normal leading-relaxed line-clamp-3 mt-1">
+                              {card.description}
+                            </p>
+                          )}
                         </div>
-                      </CarouselItem>
-                    );
-                  })}
-                                  {/* Espaçador final proporcional para igualar as margens esquerda e direita no fim do carrossel */}
-                  <div
-                    className="shrink-0 basis-6 sm:basis-8 lg:basis-12 pointer-events-none"
-                    aria-hidden="true"
-                  />
-                </CarouselContent>
-              </Carousel>
 
-              {/* Seta Flutuante Direita */}
-              <button
-                id="services-carousel-next"
-                type="button"
-                onClick={() => api?.scrollNext()}
-                disabled={!canScrollNext}
-                aria-label="Próximo serviço"
-                className={cn(
-                  arrowClass,
-                  "absolute right-2 sm:right-4 lg:right-6 top-1/2 -translate-y-1/2 z-30"
-                )}
-              >
-                <ArrowRight className="size-4 sm:size-5" />
-              </button>
-            </div>
+                        {/* Botão Inferior com indicação de clique */}
+                        <div className="relative z-10 flex items-center justify-between pt-4">
+                          <span className="text-xs text-white/80 font-medium tracking-wide">
+                            Toque para saber mais
+                          </span>
+                          <Button
+                            size="icon"
+                            type="button"
+                            className="h-11 w-11 rounded-full shadow-md bg-white hover:bg-neutral-100 cursor-pointer flex items-center justify-center transition-transform group-hover:scale-105"
+                            aria-label="Ver explicação do serviço"
+                          >
+                            <ArrowUpRight className="h-5 w-5 text-neutral-900 transition-transform duration-300 group-hover:rotate-45 will-change-transform" />
+                          </Button>
+                        </div>
+                      </div>
+
+                      {/* FACE 2: EXPLICAÇÃO DETALHADA */}
+                      <div
+                        className={cn(
+                          "absolute inset-0 flex flex-col justify-between p-6 sm:p-8 bg-[#121212] text-white transition-all duration-500 ease-in-out border border-white/10 rounded-3xl",
+                          isFlipped
+                            ? "opacity-100 scale-100 pointer-events-auto translate-y-0"
+                            : "opacity-0 scale-105 pointer-events-none translate-y-3"
+                        )}
+                      >
+                        {/* Gradiente radial sutil de acabamento */}
+                        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white/5 via-transparent to-transparent pointer-events-none" />
+
+                        {/* Área Superior de Conteúdo */}
+                        <div className="relative z-10 flex flex-col gap-3.5 sm:gap-4">
+                          {/* Categoria / Tag Superior */}
+                          <span className="text-xs font-semibold uppercase tracking-wider text-neutral-400">
+                            {card.category}
+                          </span>
+
+                          {/* Título Principal */}
+                          <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight leading-snug">
+                            {card.title}
+                          </h3>
+
+                          {/* Explicação breve do serviço */}
+                          <p className="text-sm sm:text-base text-neutral-300 leading-relaxed font-normal">
+                            {card.explanation}
+                          </p>
+
+                          {/* Lista de Recursos / Escopo do Serviço */}
+                          {card.features && card.features.length > 0 && (
+                            <ul className="flex flex-col gap-2 mt-2 pt-3 border-t border-white/10">
+                              {card.features.map((feature, idx) => (
+                                <li key={idx} className="flex items-center gap-2 text-xs sm:text-sm text-neutral-300">
+                                  <span className="size-1.5 rounded-full bg-white shrink-0 shadow-xs" />
+                                  <span>{feature}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
+
+                        {/* Rodapé / Barra de Ação (Com "Voltar") */}
+                        <div className="relative z-10 flex items-center justify-start pt-4 border-t border-white/10 mt-auto">
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setFlippedCards((prev) => ({ ...prev, [card.id]: false }));
+                            }}
+                            className="inline-flex items-center gap-1.5 text-xs sm:text-sm text-neutral-400 hover:text-white transition-colors cursor-pointer"
+                          >
+                            <ArrowLeft className="size-3.5" />
+                            <span>Voltar</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </CarouselItem>
+                );
+              })}
+              {/* Espaçador final proporcional para igualar as margens esquerda e direita no fim do carrossel */}
+              <div
+                className="shrink-0 basis-6 sm:basis-8 lg:basis-12 pointer-events-none"
+                aria-hidden="true"
+              />
+            </CarouselContent>
+          </Carousel>
+
+          {/* Seta Flutuante Direita */}
+          <button
+            id="services-carousel-next"
+            type="button"
+            onClick={() => api?.scrollNext()}
+            disabled={!canScrollNext}
+            aria-label="Próximo serviço"
+            className={cn(
+              arrowClass,
+              "absolute right-2 sm:right-4 lg:right-6 top-1/2 -translate-y-1/2 z-30"
+            )}
+          >
+            <ArrowRight className="size-4 sm:size-5" />
+          </button>
+        </div>
       </div>
     </section>
   );

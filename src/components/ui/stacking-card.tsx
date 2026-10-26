@@ -103,8 +103,8 @@ export const Card = ({ project, position, total, onDragNext, onDragPrev }: CardP
           src={project.link}
           alt={project.title}
           fill
-          priority={isActive}
-          sizes="(max-width: 1200px) 100vw, 1200px"
+          loading="lazy"
+          sizes="(max-width: 768px) 95vw, (max-width: 1200px) 85vw, 1152px"
           className="object-cover transition-transform duration-500 group-hover:scale-[1.015]"
           draggable={false}
         />

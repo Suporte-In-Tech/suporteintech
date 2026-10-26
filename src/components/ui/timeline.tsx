@@ -172,14 +172,10 @@ const defaultBottomJourneyData: JourneyItem[] = [
 ];
 
 export default function Timeline({
-  title = "Como Trabalhamos",
-  periodLabel = "Metodologia Ágil e Estruturada",
   textColor = "var(--color-foreground, currentColor)",
   mutedTextColor = "var(--color-muted-foreground, #71717a)",
   activeColor = "var(--color-primary, currentColor)",
   backgroundColor = "var(--color-background, transparent)",
-  imageUrl = "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80",
-  imageAlt = "Equipe SuporteInTech em operação técnica",
   duration,
   scrollDuration = 1.2,
   topData = defaultTopJourneyData,
@@ -295,14 +291,15 @@ export default function Timeline({
     const titleSplits: Partial<Record<string, SplitTextInstance>> = {};
     const descriptionSplits: Partial<Record<string, SplitTextInstance>> = {};
 
+    // Split only by lines (not chars/words) since only line masks are animated
     items.forEach((item) => {
       titleSplits[item.id] = new SplitText(`.title-${item.id}`, {
-        type: "chars, words, lines",
+        type: "lines",
         mask: "lines",
       });
 
       descriptionSplits[item.id] = new SplitText(`.description-${item.id}`, {
-        type: "chars, words, lines",
+        type: "lines",
         mask: "lines",
       });
     });
@@ -401,7 +398,7 @@ export default function Timeline({
       ScrollTrigger.refresh();
     };
 
-    window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", handleResize, { passive: true });
 
     return () => {
       Object.values(titleSplits).forEach((split) => split?.revert?.());

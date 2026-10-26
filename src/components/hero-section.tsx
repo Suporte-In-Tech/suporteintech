@@ -1,5 +1,3 @@
-"use client";
-
 import * as React from "react";
 import Demo from "@/components/ui/demo";
 import { ChevronRight } from "lucide-react";

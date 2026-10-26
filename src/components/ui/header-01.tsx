@@ -160,7 +160,6 @@ const Header = () => {
                   <Image
                     src={logoCompletaLight}
                     alt="SuporteInTech"
-                    priority
                     className={cn(
                       "absolute left-0 top-1/2 -translate-y-1/2 h-7 sm:h-8 w-auto max-w-none transition-all duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)] origin-left dark:hidden",
                       isCollapsed
@@ -173,7 +172,6 @@ const Header = () => {
                   <Image
                     src={logoSimplificadaDark}
                     alt="SIT"
-                    priority
                     className={cn(
                       "absolute left-0 top-1/2 -translate-y-1/2 h-7 sm:h-8 w-auto max-w-none transition-all duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)] origin-left hidden dark:block",
                       isCollapsed
@@ -185,7 +183,6 @@ const Header = () => {
                   <Image
                     src={logoSimplificadaLight}
                     alt="SIT"
-                    priority
                     className={cn(
                       "absolute left-0 top-1/2 -translate-y-1/2 h-7 sm:h-8 w-auto max-w-none transition-all duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)] origin-left dark:hidden",
                       isCollapsed
@@ -293,7 +290,9 @@ export function ModeToggle() {
   useEffect(() => {
     setMounted(true);
   }, []);
-  if (!mounted) return null;
+  if (!mounted) {
+    return <div className="size-9" aria-hidden="true" />;
+  }
   return (
     <div className="flex flex-col justify-center">
       <div>

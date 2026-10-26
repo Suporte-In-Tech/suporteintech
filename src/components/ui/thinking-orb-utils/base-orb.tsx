@@ -134,20 +134,28 @@ export const BaseThinkingOrb = React.forwardRef<
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    const isMobile =
+      typeof window !== "undefined" && window.innerWidth < 640;
+    const renderSize = isMobile
+      ? Math.min(size, Math.max(280, window.innerWidth - 32))
+      : size;
+
     const dpr = Math.min(
-      2,
+      isMobile ? 1.25 : 1.5,
       typeof window !== "undefined" && window.devicePixelRatio
         ? window.devicePixelRatio
         : 1,
     );
 
-    canvas.width = Math.round(size * dpr);
-    canvas.height = Math.round(size * dpr);
+    canvas.width = Math.round(renderSize * dpr);
+    canvas.height = Math.round(renderSize * dpr);
 
     const preset = resolvePreset(state, 64);
     let opts = preset.opts;
     if (dots !== undefined && dots !== 1) {
       opts = scaleCounts(opts, Math.max(0.1, dots));
+    } else if (isMobile) {
+      opts = scaleCounts(opts, 0.75);
     }
     if (dotSize !== undefined && dotSize !== 1) {
       opts = scaleRadii(opts, Math.max(0.1, dotSize));
@@ -159,29 +167,38 @@ export const BaseThinkingOrb = React.forwardRef<
 
     const render = (tSec: number) => {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      ctx.clearRect(0, 0, size, size);
+      ctx.clearRect(0, 0, renderSize, renderSize);
 
       if (scale && scale !== 1) {
         ctx.save();
-        ctx.translate(size / 2, size / 2);
+        ctx.translate(renderSize / 2, renderSize / 2);
         ctx.scale(scale, scale);
-        ctx.translate(-size / 2, -size / 2);
+        ctx.translate(-renderSize / 2, -renderSize / 2);
       }
 
-      drawFn(ctx, size, tSec, isDark, opts);
+      drawFn(ctx, renderSize, tSec, isDark, opts);
 
       if (scale && scale !== 1) {
         ctx.restore();
       }
     };
 
-    if (playback === "pause") {
-      render(0.8);
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+
+    // Render initial static frame immediately for instant visual paint without blocking TBT
+    render(0.8);
+
+    if (playback === "pause" || prefersReducedMotion) {
       return;
     }
 
     let rafId = 0;
-    let isRunning = true;
+    let isRunning = false;
+    let isInView = true;
+    let isPageVisible =
+      typeof document === "undefined" ? true : !document.hidden;
 
     const loop = () => {
       if (!isRunning) return;
@@ -190,11 +207,51 @@ export const BaseThinkingOrb = React.forwardRef<
       rafId = requestAnimationFrame(loop);
     };
 
-    rafId = requestAnimationFrame(loop);
+    const updatePlaybackState = () => {
+      const shouldRun = isInView && isPageVisible;
+      if (shouldRun && !isRunning) {
+        isRunning = true;
+        rafId = requestAnimationFrame(loop);
+      } else if (!shouldRun && isRunning) {
+        isRunning = false;
+        cancelAnimationFrame(rafId);
+      }
+    };
+
+    // Defer continuous 60fps loop slightly so hydration and initial main-thread work complete cleanly
+    const startTimer = window.setTimeout(() => {
+      updatePlaybackState();
+    }, 150);
+
+    const io =
+      typeof IntersectionObserver !== "undefined"
+        ? new IntersectionObserver(
+            (entries) => {
+              const entry = entries[0];
+              if (entry) {
+                isInView = entry.isIntersecting;
+                updatePlaybackState();
+              }
+            },
+            { threshold: 0.05 },
+          )
+        : null;
+
+    io?.observe(canvas);
+
+    const handleVisibilityChange = () => {
+      isPageVisible = !document.hidden;
+      updatePlaybackState();
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
+      window.clearTimeout(startTimer);
       isRunning = false;
       cancelAnimationFrame(rafId);
+      io?.disconnect();
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, [
     effectiveMode,

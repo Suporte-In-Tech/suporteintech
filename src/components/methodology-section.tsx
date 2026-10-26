@@ -1,7 +1,18 @@
 "use client";
 
 import * as React from "react";
-import Timeline from "@/components/ui/timeline";
+import dynamic from "next/dynamic";
+
+const Timeline = dynamic(() => import("@/components/ui/timeline"), {
+  ssr: false,
+  loading: () => (
+    <div
+      id="como-trabalhamos"
+      className="h-[150vw] max-[600px]:h-[300vh] w-full bg-background"
+      aria-hidden="true"
+    />
+  ),
+});
 
 export function MethodologySection() {
   return (
@@ -29,8 +40,6 @@ export function MethodologySection() {
       <Timeline
         title="Metodologia & Processos"
         periodLabel="Metodologia & Processo — SuporteInTech"
-        imageUrl="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80"
-        imageAlt="Equipe técnica SuporteInTech em operação"
       />
     </div>
   );

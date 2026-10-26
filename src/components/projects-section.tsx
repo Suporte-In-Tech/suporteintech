@@ -1,5 +1,3 @@
-"use client";
-
 import * as React from "react";
 import StackingCards, { type ProjectData } from "@/components/ui/stacking-card";
 
