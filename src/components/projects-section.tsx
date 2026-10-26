@@ -5,50 +5,28 @@ import StackingCards, { type ProjectData } from "@/components/ui/stacking-card";
 
 const projects: ProjectData[] = [
   {
-    category: "Infraestrutura & Redes",
-    title: "Modernização de Data Center",
+    category: "Engenharia de Software • Case de Sucesso",
+    title: "Construção de Plataformas Web — SOBEI",
     description:
-      "Reestruturação completa do ambiente de servidores de uma rede de clínicas: novo cabeamento estruturado, virtualização e redundância de energia, com migração realizada sem nenhuma interrupção do atendimento.",
-    link: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80",
-    color: "#2f4fd8",
+      "Desenvolvimento completo do ecossistema de software da instituição: API central em Spring Boot, 4 portais web em Next.js (Institucional, Canal de Ética, Congresso e Backoffice) e Design System autoral.",
+    link: "/projetos/sobei-cover.webp",
+    color: "#0A193F",
+    href: "/projetos/sobei",
   },
   {
-    category: "Engenharia de Software",
-    title: "Plataforma E-commerce B2B",
+    category: "Infraestrutura & Redes • Case de Sucesso",
+    title: "Reestruturação Logística de Redes — SOBEI",
     description:
-      "Portal de vendas sob medida integrado ao ERP do cliente, com catálogo dinâmico, tabelas de preço por região e checkout otimizado — resultando em pedidos online 3x mais rápidos.",
-    link: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80",
-    color: "#5b3fd9",
-  },
-  {
-    category: "UI/UX & Produto",
-    title: "App de Gestão Logística",
-    description:
-      "Redesign da experiência de um aplicativo de rastreamento de entregas. Novo design system, fluxos simplificados e interface acessível para motoristas e operadores em campo.",
-    link: "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=1200&q=80",
-    color: "#0f6e66",
-  },
-  {
-    category: "Segurança da Informação",
-    title: "Blindagem de Rede Corporativa",
-    description:
-      "Implantação de firewalls de nova geração, VPN segmentada e monitoramento contínuo de ameaças para um escritório de advocacia, garantindo conformidade com a LGPD.",
-    link: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=80",
-    color: "#b3245f",
-  },
-  {
-    category: "Marketing & Performance",
-    title: "Dashboard de Performance",
-    description:
-      "Central de métricas unificando tráfego pago, orgânico e CRM em tempo real, permitindo decisões orientadas a dados e redução de 40% no custo por lead.",
-    link: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80",
-    color: "#c2410c",
+      "Projeto concebido para mapear e documentar a infraestrutura existente nas dependências da SOBEI, identificando gargalos e oportunidades de melhoria para facilitar manutenções futuras através de um mapa lógico e interativo da rede.",
+    link: "/projetos/sobei-redes-cover.webp",
+    color: "#364562",
+    href: "/projetos/redes-sobei",
   },
 ];
 
 export function ProjectsSection() {
   return (
-    <section id="portfolio" className="w-full py-16 sm:py-24 bg-background">
+    <section id="portfolio" className="w-full max-w-full py-16 sm:py-24 bg-background overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div className="px-6 sm:px-8 lg:px-12 mb-4 sm:mb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
@@ -60,7 +38,7 @@ export function ProjectsSection() {
             </h2>
           </div>
           <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed max-w-md">
-            Alguns dos desafios que transformamos em resultados. Use as setas para navegar entre os cases.
+            Alguns dos desafios que transformamos em resultados. Use as setas para navegar entre os projetos.
           </p>
         </div>
 

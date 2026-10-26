@@ -1,9 +1,11 @@
-"use client";
+'use client';
 import * as React from "react";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Menu, X, Moon, Sun } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { CONTACT_INFO } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
 import { Toggle } from "@/components/ui/toggle";
 import { useTheme } from "next-themes";
@@ -31,13 +33,32 @@ function WhatsAppIcon({ className = "size-4" }: { className?: string }) {
   );
 }
 
-const menuItems = [
-  { name: "Home", href: "#" },
-  { name: "Quem Somos", href: "#sobre" },
-  { name: "Serviços", href: "#servicos" },
-  { name: "Como Trabalhamos", href: "#como-trabalhamos" },
-  { name: "Portfólio", href: "#portfolio" },
+export const menuItems = [
+  { name: "Home", href: "/" },
+  { name: "Quem Somos", href: "/#sobre" },
+  { name: "Serviços", href: "/#servicos" },
+  { name: "Portfólio", href: "/#portfolio" },
 ];
+
+export function handleNavClick(href: string, e: React.MouseEvent<HTMLAnchorElement>) {
+  if (typeof window === "undefined") return;
+
+  if (href === "/") {
+    if (window.location.pathname === "/") {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  } else if (href.startsWith("/#")) {
+    const targetId = href.replace("/#", "");
+    if (window.location.pathname === "/") {
+      e.preventDefault();
+      const el = document.getElementById(targetId);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }
+}
 
 const Header = () => {
   const [menuState, setMenuState] = React.useState(false);
@@ -55,13 +76,30 @@ const Header = () => {
   }, []);
 
   React.useEffect(() => {
+    // Tratamento de rolagem suave para âncora ao carregar ou mudar de rota para a home
+    const handleHashScroll = () => {
+      if (typeof window !== "undefined" && window.location.pathname === "/" && window.location.hash) {
+        const id = window.location.hash.replace("#", "");
+        setTimeout(() => {
+          const el = document.getElementById(id);
+          if (el) {
+            el.scrollIntoView({ behavior: "smooth" });
+          }
+        }, 150);
+      }
+    };
+
+    handleHashScroll();
+    window.addEventListener("hashchange", handleHashScroll);
+    return () => window.removeEventListener("hashchange", handleHashScroll);
+  }, []);
+
+  React.useEffect(() => {
     if (isScrolled) {
-      // Quando o header fica flutuante, aguarda 0,25s e inicia a transição de encolhimento
       timerRef.current = setTimeout(() => {
         setIsCollapsed(true);
       }, 250);
     } else {
-      // Quando volta ao topo (não flutuante), cancela timer e restaura logo completo
       if (timerRef.current) {
         clearTimeout(timerRef.current);
       }
@@ -94,9 +132,10 @@ const Header = () => {
         >
           <div className="relative flex flex-wrap items-center justify-between gap-3">
             <div className="flex w-full justify-between lg:w-auto">
-              <a
-                href="#"
+              <Link
+                href="/"
                 aria-label="SuporteInTech Home"
+                onClick={(e) => handleNavClick("/", e)}
                 className="relative flex items-center h-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-lg select-none"
               >
                 <div
@@ -155,7 +194,7 @@ const Header = () => {
                     )}
                   />
                 </div>
-              </a>
+              </Link>
               <div className="flex gap-2">
                 <button
                   onClick={() => setMenuState(!menuState)}
@@ -180,13 +219,16 @@ const Header = () => {
                 <ul className="space-y-4 text-base">
                   {menuItems.map((item, index) => (
                     <li key={index}>
-                      <a
+                      <Link
                         href={item.href}
-                        onClick={() => setMenuState(false)}
+                        onClick={(e) => {
+                          handleNavClick(item.href, e);
+                          setMenuState(false);
+                        }}
                         className="text-muted-foreground hover:text-primary text-sm block transition-colors duration-200"
                       >
                         <span>{item.name}</span>
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -199,7 +241,12 @@ const Header = () => {
                   asChild
                   className="transition-all duration-300"
                 >
-                  <a href="#contato" className="flex items-center gap-2">
+                  <a
+                    href={CONTACT_INFO.whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2"
+                  >
                     <WhatsAppIcon className="size-4 shrink-0 text-[#25D366]" />
                     <span>Fale Conosco</span>
                   </a>
@@ -217,50 +264,24 @@ export function Menus() {
   return (
     <NavigationMenu viewport={true}>
       <NavigationMenuList className="gap-1">
-        <NavigationMenuItem>
-          <NavigationMenuLink
-            asChild
-            className={cn(
-              navigationMenuTriggerStyle(),
-              "bg-transparent text-xs",
-            )}
-          >
-            <a href="#">Home</a>
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink
-            asChild
-            className={cn(
-              navigationMenuTriggerStyle(),
-              "bg-transparent text-xs",
-            )}
-          >
-            <a href="#sobre">Quem Somos</a>
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink
-            asChild
-            className={cn(
-              navigationMenuTriggerStyle(),
-              "bg-transparent text-xs",
-            )}
-          >
-            <a href="#servicos">Serviços</a>
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink
-            asChild
-            className={cn(
-              navigationMenuTriggerStyle(),
-              "bg-transparent text-xs",
-            )}
-          >
-            <a href="#portfolio">Portfólio</a>
-          </NavigationMenuLink>
-        </NavigationMenuItem>
+        {menuItems.map((item, idx) => (
+          <NavigationMenuItem key={idx}>
+            <NavigationMenuLink
+              asChild
+              className={cn(
+                navigationMenuTriggerStyle(),
+                "bg-transparent text-xs",
+              )}
+            >
+              <Link
+                href={item.href}
+                onClick={(e) => handleNavClick(item.href, e)}
+              >
+                {item.name}
+              </Link>
+            </NavigationMenuLink>
+          </NavigationMenuItem>
+        ))}
       </NavigationMenuList>
     </NavigationMenu>
   );

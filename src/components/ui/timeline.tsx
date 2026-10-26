@@ -414,7 +414,7 @@ export default function Timeline({
     <section
       ref={sectionRef}
       id="como-trabalhamos"
-      className="h-[150vw] max-[600px]:h-[300vh] w-full relative overflow-clip"
+      className="h-[150vw] max-[600px]:h-[300vh] w-full relative overflow-clip select-none"
       style={sectionStyle}
     >
       <div className="h-screen w-full sticky top-0 pt-[8%] sm:pt-[10%] overflow-hidden max-[600px]:top-[5%]">

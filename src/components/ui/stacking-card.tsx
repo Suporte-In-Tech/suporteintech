@@ -1,6 +1,8 @@
 'use client';
 
 import * as React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
 import { motion, AnimatePresence, type PanInfo } from 'motion/react';
 import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -20,8 +22,8 @@ export interface ProjectData {
 
 /** Quantos cards anteriores ficam visíveis empilhados atrás do card ativo */
 const VISIBLE_DEPTH = 3;
-const SCALE_STEP = 0.05;
-const OFFSET_STEP = 22; // px
+const SCALE_STEP = 0.04;
+const OFFSET_STEP = 20; // px
 
 interface CardProps {
   project: ProjectData;
@@ -35,12 +37,13 @@ interface CardProps {
 export const Card = ({ project, position, total, onDragNext, onDragPrev }: CardProps) => {
   const isActive = position === 0;
   const depth = Math.min(-position, VISIBLE_DEPTH);
+  const isDraggingRef = React.useRef(false);
 
   // Estados de animação: replicam o efeito do modelo por rolagem
   // (cards anteriores encolhem e sobem; o próximo entra por cima da pilha)
   const animate =
     position > 0
-      ? { x: '115%', y: 0, scale: 1, opacity: 0, rotate: 6 }
+      ? { x: '115%', y: 0, scale: 1, opacity: 0, rotate: 4 }
       : {
           x: 0,
           y: -depth * OFFSET_STEP,
@@ -49,9 +52,22 @@ export const Card = ({ project, position, total, onDragNext, onDragPrev }: CardP
           rotate: 0,
         };
 
+  const handleDragStart = () => {
+    isDraggingRef.current = true;
+  };
+
   const handleDragEnd = (_: unknown, info: PanInfo) => {
+    setTimeout(() => {
+      isDraggingRef.current = false;
+    }, 100);
     if (info.offset.x < -80 || info.velocity.x < -500) onDragNext();
     else if (info.offset.x > 80 || info.velocity.x > 500) onDragPrev();
+  };
+
+  const handleClick = (e: React.MouseEvent) => {
+    if (isDraggingRef.current) {
+      e.preventDefault();
+    }
   };
 
   return (
@@ -62,6 +78,7 @@ export const Card = ({ project, position, total, onDragNext, onDragPrev }: CardP
       drag={isActive ? 'x' : false}
       dragConstraints={{ left: 0, right: 0 }}
       dragElastic={0.25}
+      onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
       style={{
         backgroundColor: project.color,
@@ -69,57 +86,37 @@ export const Card = ({ project, position, total, onDragNext, onDragPrev }: CardP
       }}
       aria-hidden={!isActive}
       className={cn(
-        'absolute inset-0 origin-top rounded-3xl p-6 sm:p-8 lg:p-10 text-white shadow-2xl',
-        'flex flex-col border border-white/10 overflow-hidden',
+        'absolute inset-0 origin-top rounded-2xl sm:rounded-3xl overflow-hidden border border-border/80 shadow-xl select-none',
         isActive ? 'cursor-grab active:cursor-grabbing' : 'pointer-events-none'
       )}
     >
-      {/* Brilho sutil */}
-      <div className='pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(255,255,255,0.18),transparent_60%)]' />
-
-      <div className='relative flex flex-col items-center text-center'>
-        {project.category && (
-          <span className='mb-2 text-[10px] sm:text-xs font-semibold uppercase tracking-[0.2em] text-white/70'>
-            {project.category}
-          </span>
+      <Link
+        href={project.href ?? '#'}
+        tabIndex={isActive ? 0 : -1}
+        onClick={handleClick}
+        className={cn(
+          'group relative block w-full h-full overflow-hidden',
+          !isActive && 'pointer-events-none'
         )}
-        <h3 className='text-xl sm:text-2xl lg:text-3xl font-semibold tracking-tight'>
-          {project.title}
-        </h3>
-      </div>
+      >
+        <Image
+          src={project.link}
+          alt={project.title}
+          fill
+          priority={isActive}
+          sizes="(max-width: 1200px) 100vw, 1200px"
+          className="object-cover transition-transform duration-500 group-hover:scale-[1.015]"
+          draggable={false}
+        />
 
-      <div className='relative mt-5 flex h-full min-h-0 flex-col-reverse gap-5 md:flex-row md:gap-10'>
-        <div className='md:w-[40%] md:pt-[6%] flex flex-col'>
-          <p className='text-sm sm:text-[15px] leading-relaxed text-white/85'>
-            {project.description}
-          </p>
-          <a
-            href={project.href ?? '#contato'}
-            tabIndex={isActive ? 0 : -1}
-            onPointerDown={(e) => e.stopPropagation()}
-            className='group/link mt-4 inline-flex w-fit items-center gap-2 text-sm font-medium underline underline-offset-4 decoration-white/40 hover:decoration-white transition-colors'
-          >
-            Ver projeto
-            <ArrowUpRight className='size-4 transition-transform duration-300 group-hover/link:rotate-45' />
-          </a>
+        {/* Badge de ação rápida no hover (sem escurecer o card) */}
+        <div className="pointer-events-none absolute inset-0 flex items-end justify-end p-4 sm:p-6 lg:p-8">
+          <div className="inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-black/80 backdrop-blur-md border border-white/20 text-white text-xs sm:text-sm font-medium shadow-xl opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:scale-105">
+            <span>Acessar Case Completo</span>
+            <ArrowUpRight className="size-3.5 sm:size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </div>
         </div>
-
-        <div className='relative min-h-[160px] flex-1 md:w-[60%] md:h-full overflow-hidden rounded-2xl'>
-          <motion.div
-            className='h-full w-full'
-            initial={false}
-            animate={{ scale: isActive ? 1 : 1.35 }}
-            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <img
-              src={project.link}
-              alt={project.title}
-              draggable={false}
-              className='absolute inset-0 h-full w-full object-cover select-none'
-            />
-          </motion.div>
-        </div>
-      </div>
+      </Link>
     </motion.article>
   );
 };
@@ -163,7 +160,7 @@ const Component = React.forwardRef<HTMLDivElement, ComponentRootProps>(
         onKeyDown={handleKeyDown}
         className={cn('w-full outline-none', className)}
       >
-        <div className='flex items-center gap-2 sm:gap-4 lg:gap-8'>
+        <div className='flex items-center gap-2 sm:gap-4 lg:gap-6'>
           <button
             id='stacking-card-prev'
             type='button'
@@ -176,8 +173,8 @@ const Component = React.forwardRef<HTMLDivElement, ComponentRootProps>(
           </button>
 
           {/* Palco dos cards (espaço superior reservado para a pilha) */}
-          <div className='relative flex-1 pt-16'>
-            <div className='relative h-[540px] sm:h-[500px] md:h-[440px] lg:h-[460px]'>
+          <div className='relative flex-1 pt-8 sm:pt-10'>
+            <div className='relative w-full aspect-[16/9]'>
               {projects.map((project, i) => (
                 <Card
                   key={`p_${i}`}
@@ -204,7 +201,7 @@ const Component = React.forwardRef<HTMLDivElement, ComponentRootProps>(
         </div>
 
         {/* Indicadores */}
-        <div className='mt-8 flex items-center justify-center gap-4'>
+        <div className='mt-6 sm:mt-8 flex items-center justify-center gap-4'>
           <span className='font-mono text-xs tabular-nums text-muted-foreground'>
             <AnimatePresence mode='popLayout' initial={false}>
               <motion.span
