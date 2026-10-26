@@ -21,6 +21,10 @@ node_modules/
 credentials.json
 *.pem
 
+# Commercial Proposals & Internal Scripts
+orcamentos/
+scripts/
+
 # Next.js & Build Output
 .next/
 out/

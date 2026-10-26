@@ -15,6 +15,8 @@ AGENTS.md
 scratch/
 knip-report.txt
 *.tmp
+orcamentos/
+scripts/
 
 # Docker
 Dockerfile

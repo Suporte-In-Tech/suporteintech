@@ -39,7 +39,7 @@ const cards: CardItem[] = [
     features: [
       "Cabeamento estruturado & fibra óptica",
       "Roteadores, switches e firewalls",
-      "Wi-Fi corporativo de alta densidade",
+      "Redes corporativas de alta densidade",
       "Logística de peças e suporte contínuo",
     ],
     src: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=1000&q=80",
@@ -154,7 +154,7 @@ export function AppleCardCarousel() {
   };
 
   return (
-    <section id="servicos" className="w-full py-16 sm:py-24 bg-background">
+    <section id="servicos" className="w-full max-w-full py-16 sm:py-24 bg-background overflow-hidden">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="px-6 sm:px-8 lg:px-12 mb-8 sm:mb-12 flex flex-col md:flex-row md:items-end justify-between gap-4">
@@ -286,7 +286,7 @@ export function AppleCardCarousel() {
                                 <ul className="flex flex-col gap-2 mt-2 pt-3 border-t border-white/10">
                                   {card.features.map((feature, idx) => (
                                     <li key={idx} className="flex items-center gap-2 text-xs sm:text-sm text-neutral-300">
-                                      <span className="size-1.5 rounded-full bg-primary shrink-0" />
+                                      <span className="size-1.5 rounded-full bg-white shrink-0 shadow-xs" />
                                       <span>{feature}</span>
                                     </li>
                                   ))}
@@ -294,30 +294,30 @@ export function AppleCardCarousel() {
                               )}
                             </div>
 
-                            {/* Rodapé / Barra de Ação (Com "Expandir >" e "Voltar") */}
-                            <div className="relative z-10 flex items-center justify-between pt-4 border-t border-white/10 mt-auto">
+                            {/* Rodapé / Barra de Ação (Com "Voltar") */}
+                            <div className="relative z-10 flex items-center justify-start pt-4 border-t border-white/10 mt-auto">
                               <button
                                 type="button"
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   setFlippedCards((prev) => ({ ...prev, [card.id]: false }));
                                 }}
-                                className="inline-flex items-center gap-1.5 text-xs sm:text-sm text-neutral-400 hover:text-white transition-colors"
+                                className="inline-flex items-center gap-1.5 text-xs sm:text-sm text-neutral-400 hover:text-white transition-colors cursor-pointer"
                               >
                                 <ArrowLeft className="size-3.5" />
                                 <span>Voltar</span>
                               </button>
-
-                              <div className="inline-flex items-center gap-1 text-sm font-semibold text-white group-hover:text-primary transition-colors">
-                                <span>Expandir</span>
-                                <ChevronRight className="size-4" />
-                              </div>
                             </div>
                           </div>
                         </div>
                       </CarouselItem>
                     );
                   })}
+                                  {/* Espaçador final proporcional para igualar as margens esquerda e direita no fim do carrossel */}
+                  <div
+                    className="shrink-0 basis-6 sm:basis-8 lg:basis-12 pointer-events-none"
+                    aria-hidden="true"
+                  />
                 </CarouselContent>
               </Carousel>
 

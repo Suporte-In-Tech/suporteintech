@@ -1,5 +1,7 @@
+import { CONTACT_INFO } from "@/lib/constants";
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import logoSimplificadaDark from "../../../public/logo-simplificada-dark.png";
 
 // Self-contained SVG icons for social networks
@@ -36,20 +38,20 @@ export function MinimalFooter() {
   const year = new Date().getFullYear();
 
   const company = [
-    { title: "Sobre Nós", href: "#sobre" },
-    { title: "Política de Privacidade", href: "#" },
-    { title: "Termos de Serviço", href: "#" },
+    { title: "Sobre Nós", href: "/#sobre" },
+    { title: "Política de Privacidade", href: "/#sobre" },
+    { title: "Termos de Serviço", href: "/#sobre" },
   ];
 
   const support = [
-    { title: "Contato com Suporte", href: "#contato" },
+    { title: "Contato via WhatsApp", href: CONTACT_INFO.whatsappUrl, external: true },
+    { title: "Solicitar Orçamento", href: CONTACT_INFO.whatsappUrl, external: true },
   ];
 
   const navigation = [
-    { title: "Home", href: "#" },
-    { title: "Serviços", href: "#servicos" },
-    { title: "Como Trabalhamos", href: "#como-trabalhamos" },
-    { title: "Portfólio", href: "#portfolio" },
+    { title: "Home", href: "/" },
+    { title: "Serviços", href: "/#servicos" },
+    { title: "Portfólio", href: "/#portfolio" },
   ];
 
   const socialLinks = [
@@ -66,13 +68,13 @@ export function MinimalFooter() {
         </div>
         <div className="flex flex-col md:flex-row justify-between gap-10 md:gap-16 px-6 md:px-10 py-8 md:py-10">
           <div className="flex flex-col gap-5 max-w-sm">
-            <a href="#" aria-label="SuporteInTech Home" className="w-max opacity-90 hover:opacity-100 transition-opacity">
+            <Link href="/" aria-label="SuporteInTech Home" className="w-max opacity-90 hover:opacity-100 transition-opacity">
               <Image
                 src={logoSimplificadaDark}
                 alt="SuporteInTech"
                 className="h-14 sm:h-16 md:h-20 w-auto object-contain"
               />
-            </a>
+            </Link>
             <p className="text-neutral-300 font-mono text-sm text-balance leading-relaxed">
               SuporteInTech — Suporte técnico especializado, infraestrutura de TI e computação em nuvem.
             </p>
@@ -99,11 +101,13 @@ export function MinimalFooter() {
                   Suporte
                 </span>
                 <div className="flex flex-col gap-1.5">
-                  {support.map(({ href, title }, i) => (
+                  {support.map(({ href, title, external }, i) => (
                     <a
                       key={i}
                       className="w-max py-1 text-sm text-neutral-300 hover:text-white duration-200 hover:underline"
                       href={href}
+                      target={external ? "_blank" : undefined}
+                      rel={external ? "noopener noreferrer" : undefined}
                     >
                       {title}
                     </a>
@@ -117,13 +121,13 @@ export function MinimalFooter() {
                 </span>
                 <div className="flex flex-col gap-1.5">
                   {navigation.map(({ href, title }, i) => (
-                    <a
+                    <Link
                       key={i}
                       className="w-max py-1 text-sm text-neutral-300 hover:text-white duration-200 hover:underline"
                       href={href}
                     >
                       {title}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </div>
@@ -135,13 +139,13 @@ export function MinimalFooter() {
               </span>
               <div className="flex flex-col gap-1.5">
                 {company.map(({ href, title }, i) => (
-                  <a
+                  <Link
                     key={i}
                     className="w-max py-1 text-sm text-neutral-300 hover:text-white duration-200 hover:underline"
                     href={href}
                   >
                     {title}
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>
