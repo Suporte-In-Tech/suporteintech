@@ -1,8 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { OrbConnecting } from "@/components/ui/thinking-orb-utils/orb-connecting";
-import type { ThinkingOrbSurface } from "@/components/ui/thinking-orb-utils/types";
+import { OrbConnecting } from "@/components/ui/thinking-orb";
+import type { ThinkingOrbSurface } from "@/components/ui/thinking-orb";
 
 export interface DemoProps {
   surface?: ThinkingOrbSurface;
