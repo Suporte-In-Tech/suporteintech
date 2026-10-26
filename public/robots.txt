@@ -1,0 +1,41 @@
+# robots.txt — SuporteInTech
+# Documentação estruturada para LLMs e Agentes de IA disponível em /llm.txt e /llms.txt
+
+User-agent: *
+Allow: /
+Allow: /llm.txt
+Allow: /llms.txt
+Allow: /projetos/sobei
+Allow: /projetos/redes-sobei
+Disallow: /api/
+
+# Permissões explícitas para Crawlers de Busca e Indexadores de IA (GEO / AEO)
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
