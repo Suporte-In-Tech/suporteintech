@@ -287,7 +287,7 @@ export default function SobeiCasePage() {
                   </p>
                 </div>
 
-                <div className="relative w-full rounded-2xl sm:rounded-3xl overflow-hidden border border-border/80 bg-neutral-950 shadow-2xl aspect-[16/10] sm:aspect-[16/9]">
+                <div className="relative w-full rounded-2xl sm:rounded-3xl overflow-hidden border border-border/80 bg-neutral-950 shadow-2xl aspect-[16/9]">
                   <Image
                     src="/projetos/sobei-responsive-showcase.webp"
                     alt="sobei.org.br — Portal institucional oficial em versões desktop e mobile"
