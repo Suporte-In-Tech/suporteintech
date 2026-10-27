@@ -44,7 +44,7 @@ const cards: CardItem[] = [
       "Logística de peças e suporte contínuo",
     ],
     src: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=75",
-    alt: "Conectividade e Cabos de Rede",
+    alt: "Infraestrutura de TI, Cabeamento Estruturado e Arquitetura de Redes Corporativas — Suporte In Tech",
   },
   {
     id: "2",
@@ -56,16 +56,16 @@ const cards: CardItem[] = [
         Web & Aplicações
       </>
     ),
-    description: "Plataformas modernas, interfaces fluidas e sistemas escaláveis sob medida para seu negócio.",
-    explanation: "Construção de aplicações digitais com tecnologia de ponta, velocidade extrema, código limpo e arquitetura escalável para potencializar suas operações online.",
+    description: "Criação de sites profissionais, plataformas modernas, interfaces fluidas e sistemas sob medida para seu negócio.",
+    explanation: "Criação de sites institucionais, landing pages e desenvolvimento de software sob medida com tecnologia de ponta, velocidade extrema, código limpo e arquitetura escalável.",
     features: [
-      "Portais web e landing pages de conversão",
-      "Sistemas e plataformas sob medida",
-      "Integrações de APIs e bancos de dados",
-      "Otimização de SEO técnico e performance",
+      "Criação de sites, portais web e landing pages",
+      "Desenvolvimento de software e sistemas sob medida",
+      "Integrações de APIs REST e bancos de dados",
+      "Otimização de SEO técnico e alta performance",
     ],
     src: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=75",
-    alt: "Computador com código e desenvolvimento",
+    alt: "Criação de Sites Profissionais, Desenvolvimento de Software Sob Medida e Sistemas Web — Suporte In Tech",
   },
   {
     id: "3",
@@ -82,10 +82,10 @@ const cards: CardItem[] = [
       "Design de interfaces web e mobile (UI/UX)",
       "Prototipagem interativa e fluxos de usuário",
       "Design systems e diretrizes de marca",
-      "Redesign moderno de plataformas legadas",
+      "Redesign moderno de sites e plataformas legadas",
     ],
     src: "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=800&q=75",
-    alt: "Processo criativo de design",
+    alt: "Design de Interfaces UI/UX, Prototipagem e Design Systems — Suporte In Tech",
   },
   {
     id: "4",
@@ -96,16 +96,16 @@ const cards: CardItem[] = [
         <br />& Performance
       </>
     ),
-    description: "Estratégias orientadas a conversão, branding digital e presença com autoridade online.",
-    explanation: "Estratégias orientadas a dados para posicionar sua empresa nos canais certos, atraindo clientes qualificados e maximizando o retorno sobre investimento.",
+    description: "Estratégias orientadas a conversão, SEO, branding digital e presença com autoridade online.",
+    explanation: "Estratégias orientadas a dados para posicionar sua empresa no topo das buscas, atraindo clientes qualificados e maximizando o retorno sobre investimento.",
     features: [
-      "Gestão de tráfego pago (Google e Meta)",
-      "Posicionamento orgânico e conteúdo",
+      "Gestão de tráfego pago (Google Ads e Meta Ads)",
+      "Posicionamento orgânico (SEO) e conteúdo",
       "Funis de atração e conversão de leads",
       "Análise de métricas e relatórios de ROI",
     ],
     src: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=75",
-    alt: "Marketing Digital e Gestão de Performance",
+    alt: "Marketing Digital, SEO Técnico, Tráfego Pago e Gestão de Performance — Suporte In Tech",
   },
 ];
 

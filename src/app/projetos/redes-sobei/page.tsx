@@ -4,16 +4,56 @@ import Link from "next/link";
 import Image from "next/image";
 import { Header } from "@/components/ui/header-01";
 import { MinimalFooter } from "@/components/ui/minimal-footer";
+import { CaseStudyJsonLd } from "@/components/seo/json-ld";
 import {
   ArrowLeft,
   ArrowUpRight,
   Network,
 } from "lucide-react";
 
+const pageTitle =
+  "Case de Sucesso: Infraestrutura de TI, Logística & Mapeamento de Redes SOBEI";
+const pageDescription =
+  "Projeto completo de engenharia de infraestrutura de TI e redes corporativas na SOBEI: auditoria física e lógica em mais de 13 unidades, cabeamento estruturado, segmentação VLANs 802.1Q e documentação interativa no Cisco Packet Tracer.";
+
 export const metadata: Metadata = {
-  title: "Case de Sucesso: Reestruturação Logística & Mapeamento de Redes SOBEI | Suporte In Tech",
-  description:
-    "Projeto completo de engenharia de infraestrutura na SOBEI: mapeamento físico e lógico de mais de 13 unidades, identificação de gargalos operacionais e documentação viva no Cisco Packet Tracer.",
+  title: pageTitle,
+  description: pageDescription,
+  keywords: [
+    "infraestrutura de TI",
+    "arquitetura de redes",
+    "cabeamento estruturado",
+    "mapeamento de rede",
+    "Cisco Packet Tracer",
+    "segmentação VLAN",
+    "auditoria de rede corporativa",
+    "suporte de TI",
+    "SOBEI",
+    "Suporte In Tech",
+  ],
+  alternates: {
+    canonical: "/projetos/redes-sobei",
+  },
+  openGraph: {
+    title: `${pageTitle} | Suporte In Tech`,
+    description: pageDescription,
+    url: "/projetos/redes-sobei",
+    type: "article",
+    images: [
+      {
+        url: "/projetos/sobei-redes-cover.webp",
+        width: 2880,
+        height: 1620,
+        alt: "Capa Oficial SOBEI — Estruturação da Topologia de Redes e Infraestrutura de TI (Suporte In Tech)",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${pageTitle} | Suporte In Tech`,
+    description: pageDescription,
+    images: ["/projetos/sobei-redes-cover.webp"],
+  },
 };
 
 const metaItems = [
@@ -45,6 +85,22 @@ const networkResults = [
 export default function RedesSobeiCasePage() {
   return (
     <div className="min-h-screen flex flex-col w-full max-w-full overflow-x-hidden bg-background text-foreground antialiased selection:bg-foreground selection:text-background font-sans">
+      <CaseStudyJsonLd
+        title={pageTitle}
+        description={pageDescription}
+        slug="/projetos/redes-sobei"
+        image="/projetos/sobei-redes-cover.webp"
+        serviceType="Infraestrutura de TI, Arquitetura de Redes Corporativas e Cabeamento Estruturado"
+        keywords={[
+          "infraestrutura de TI",
+          "redes corporativas",
+          "cabeamento estruturado",
+          "Cisco Packet Tracer",
+          "VLAN",
+          "SOBEI",
+          "Suporte In Tech",
+        ]}
+      />
       <Header />
 
       <main className="w-full max-w-full overflow-x-hidden flex-1 pt-24 sm:pt-32 pb-20 sm:pb-28">
@@ -232,8 +288,6 @@ export default function RedesSobeiCasePage() {
             </section>
 
           </div>
-
-          
 
           {/* Section: Results & Impact (4 Cards Padronizados) */}
           <section className="mb-14 sm:mb-20">

@@ -27,6 +27,9 @@ export function HeroSection() {
               Da infraestrutura à tela,
               <br />
               <span className="text-foreground/90">nós construímos o futuro.</span>
+              <span className="sr-only">
+                {" "}— Criação de Sites Profissionais, Desenvolvimento de Software Sob Medida, Sistemas Web e Infraestrutura de TI
+              </span>
             </h1>
           </div>
 
