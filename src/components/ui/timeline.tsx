@@ -264,7 +264,7 @@ export default function Timeline({
 
     // DESKTOP (> 600px): finaliza com o Item 07 perfeitamente visível à direita, eliminando o espaçamento vazio que não é necessário no desktop
     mm.add("(min-width: 601px)", () => {
-      const slidePercent = -38;
+      const slidePercent = -41.5;
       const lineWidth = "100%";
       const lineStart = "top 20%";
       const slideEnd = "90% bottom";
