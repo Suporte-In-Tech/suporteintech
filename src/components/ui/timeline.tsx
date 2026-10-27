@@ -212,49 +212,101 @@ export default function Timeline({
 
   useGSAP(() => {
     const section = sectionRef.current;
+    const slider = wholeSliderRef.current;
 
-    if (!section) return;
+    if (!section || !slider) return;
 
-    const isMobile = window.innerWidth < 600;
-    const slidePercent = isMobile ? -76.8 : -40;
-    const lineWidth = isMobile ? "98%" : "100%";
-    const lineStart = isMobile ? "top 30%" : "top 20%";
-    const slideEnd = isMobile ? "88% 50%" : "90% bottom";
-    const lineEnd = isMobile ? "86% 50%" : "88% bottom";
+    const mm = gsap.matchMedia();
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: section,
-        start: "top top",
-        end: slideEnd,
-        scrub: true,
-      },
-      defaults: {
-        ease: "none",
-      },
+    // MOBILE (<= 600px): mantém o espaçamento e curso expandido necessários para o Item 07 ser navegável no mobile
+    mm.add("(max-width: 600px)", () => {
+      const slidePercent = -76.8;
+      const lineWidth = "98%";
+      const lineStart = "top 30%";
+      const slideEnd = "88% 50%";
+      const lineEnd = "86% 50%";
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: slideEnd,
+          scrub: true,
+          invalidateOnRefresh: true,
+        },
+        defaults: {
+          ease: "none",
+        },
+      });
+
+      tl.fromTo(
+        slider,
+        { xPercent: 0 },
+        { xPercent: slidePercent },
+      );
+
+      if (reducedMotion) {
+        gsap.set(".journey-line", { width: lineWidth });
+      } else {
+        gsap.to(".journey-line", {
+          width: lineWidth,
+          ease: "none",
+          scrollTrigger: {
+            trigger: section,
+            start: lineStart,
+            end: lineEnd,
+            scrub: true,
+            invalidateOnRefresh: true,
+          },
+        });
+      }
     });
 
-    tl.fromTo(
-      wholeSliderRef.current,
-      { xPercent: 0 },
-      { xPercent: slidePercent },
-    );
+    // DESKTOP (> 600px): finaliza com o Item 07 perfeitamente visível à direita, eliminando o espaçamento vazio que não é necessário no desktop
+    mm.add("(min-width: 601px)", () => {
+      const slidePercent = -38;
+      const lineWidth = "100%";
+      const lineStart = "top 20%";
+      const slideEnd = "90% bottom";
+      const lineEnd = "88% bottom";
 
-    if (reducedMotion) {
-      gsap.set(".journey-line", { width: lineWidth });
-      return;
-    }
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: slideEnd,
+          scrub: true,
+          invalidateOnRefresh: true,
+        },
+        defaults: {
+          ease: "none",
+        },
+      });
 
-    gsap.to(".journey-line", {
-      width: lineWidth,
-      ease: "none",
-      scrollTrigger: {
-        trigger: section,
-        start: lineStart,
-        end: lineEnd,
-        scrub: true,
-      },
+      tl.fromTo(
+        slider,
+        { xPercent: 0 },
+        { xPercent: slidePercent },
+      );
+
+      if (reducedMotion) {
+        gsap.set(".journey-line", { width: lineWidth });
+      } else {
+        gsap.to(".journey-line", {
+          width: lineWidth,
+          ease: "none",
+          scrollTrigger: {
+            trigger: section,
+            start: lineStart,
+            end: lineEnd,
+            scrub: true,
+            invalidateOnRefresh: true,
+          },
+        });
+      }
     });
+
+    return () => mm.revert();
   }, { dependencies: [reducedMotion], scope: sectionRef });
 
   useGSAP(() => {
@@ -368,42 +420,44 @@ export default function Timeline({
       return timeline;
     };
 
-    const positions: ReadonlyArray<readonly [number, number]> =
-      window.innerWidth < 600
-        ? [
-            [2, 12],
-            [14, 24],
-            [26, 36],
-            [38, 48],
-            [51, 61],
-            [64, 74],
-            [77, 87],
-          ]
-        : [
-            [6, 26],
-            [16, 36],
-            [26, 46],
-            [35, 55],
-            [45, 65],
-            [55, 75],
-            [65, 85],
-          ];
+    const mm = gsap.matchMedia();
 
-    items.forEach((item, index) => {
-      const [startPos, endPos] = positions[index] || [index * 10, index * 10 + 20];
-      createItemTimeline(item, startPos, endPos);
+    mm.add("(max-width: 600px)", () => {
+      const mobilePositions: ReadonlyArray<readonly [number, number]> = [
+        [2, 12],
+        [14, 24],
+        [26, 36],
+        [38, 48],
+        [51, 61],
+        [64, 74],
+        [77, 87],
+      ];
+      items.forEach((item, index) => {
+        const [startPos, endPos] = mobilePositions[index] || [index * 10, index * 10 + 20];
+        createItemTimeline(item, startPos, endPos);
+      });
     });
 
-    const handleResize = () => {
-      ScrollTrigger.refresh();
-    };
-
-    window.addEventListener("resize", handleResize, { passive: true });
+    mm.add("(min-width: 601px)", () => {
+      const desktopPositions: ReadonlyArray<readonly [number, number]> = [
+        [6, 26],
+        [16, 36],
+        [26, 46],
+        [35, 55],
+        [45, 65],
+        [55, 75],
+        [65, 85],
+      ];
+      items.forEach((item, index) => {
+        const [startPos, endPos] = desktopPositions[index] || [index * 10, index * 10 + 20];
+        createItemTimeline(item, startPos, endPos);
+      });
+    });
 
     return () => {
+      mm.revert();
       Object.values(titleSplits).forEach((split) => split?.revert?.());
       Object.values(descriptionSplits).forEach((split) => split?.revert?.());
-      window.removeEventListener("resize", handleResize);
     };
   }, { dependencies: [normalizedDuration, reducedMotion], scope: sectionRef });
 
