@@ -39,8 +39,8 @@ export function MinimalFooter() {
 
   const company = [
     { title: "Sobre Nós", href: "/#sobre" },
-    { title: "Política de Privacidade", href: "/#sobre" },
-    { title: "Termos de Serviço", href: "/#sobre" },
+    { title: "Case Software SOBEI", href: "/projetos/sobei" },
+    { title: "Case Redes SOBEI", href: "/projetos/redes-sobei" },
   ];
 
   const support = [
@@ -71,12 +71,12 @@ export function MinimalFooter() {
             <Link href="/" aria-label="SuporteInTech Home" className="w-max opacity-90 hover:opacity-100 transition-opacity">
               <Image
                 src={logoSimplificadaDark}
-                alt="SuporteInTech"
+                alt="SuporteInTech — Criação de Sites, Desenvolvimento de Software e TI"
                 className="h-14 sm:h-16 md:h-20 w-auto object-contain"
               />
             </Link>
             <p className="text-neutral-300 font-mono text-sm text-balance leading-relaxed">
-              SuporteInTech — Suporte técnico especializado, infraestrutura de TI e computação em nuvem.
+              SuporteInTech — Criação de sites profissionais, desenvolvimento de software sob medida, infraestrutura de redes e suporte de TI corporativo.
             </p>
             <div className="flex gap-2">
               {socialLinks.map((item, i) => (
@@ -135,7 +135,7 @@ export function MinimalFooter() {
 
             <div className="min-w-[140px]">
               <span className="text-neutral-400 mb-3 block text-xs font-semibold uppercase tracking-wider">
-                Empresa
+                Empresa & Cases
               </span>
               <div className="flex flex-col gap-1.5">
                 {company.map(({ href, title }, i) => (

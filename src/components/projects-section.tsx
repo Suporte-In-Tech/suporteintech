@@ -1,4 +1,5 @@
 import * as React from "react";
+import Link from "next/link";
 import StackingCards, { type ProjectData } from "@/components/ui/stacking-card";
 
 const projects: ProjectData[] = [
@@ -42,6 +43,22 @@ export function ProjectsSection() {
 
         <div className="px-3 sm:px-8 lg:px-12">
           <StackingCards projects={projects} className="mx-auto max-w-6xl" />
+        </div>
+
+        {/* Sumário semântico SSR para garantir indexação completa de todos os cases e links internos pelos crawlers */}
+        <div className="sr-only">
+          {projects.map((project) => (
+            <article key={project.href}>
+              <span>{project.category}</span>
+              <h3>{project.title}</h3>
+              <p>{project.description}</p>
+              {project.href && (
+                <Link href={project.href}>
+                  Ver case completo: {project.title}
+                </Link>
+              )}
+            </article>
+          ))}
         </div>
       </div>
     </section>

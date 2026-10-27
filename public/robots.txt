@@ -5,6 +5,8 @@ User-agent: *
 Allow: /
 Allow: /llm.txt
 Allow: /llms.txt
+Allow: /sitemap.xml
+Allow: /manifest.webmanifest
 Allow: /projetos/sobei
 Allow: /projetos/redes-sobei
 Disallow: /api/
@@ -39,3 +41,5 @@ Allow: /
 
 User-agent: Applebot-Extended
 Allow: /
+
+Sitemap: https://suporteintech.com.br/sitemap.xml

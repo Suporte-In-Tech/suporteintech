@@ -1,22 +1,22 @@
-# SuporteInTech — Suporte Técnico, Infraestrutura de TI & Engenharia de Software
+# SuporteInTech — Criação de Sites, Desenvolvimento de Software Sob Medida & Infraestrutura de TI
 
-> Da infraestrutura à tela, nós construímos o futuro. A SuporteInTech une infraestrutura de redes corporativas, engenharia de software sob medida, UI/UX design e estratégia digital em uma única equipe técnica — responsável do cabo de rede à experiência final do usuário.
+> Da infraestrutura à tela, nós construímos o futuro. A SuporteInTech (Suporte In Tech) é uma empresa especializada em criação de sites profissionais, desenvolvimento de software sob medida, sistemas web, UI/UX design, arquitetura de redes corporativas e infraestrutura de TI — responsável do cabo de rede à experiência final do usuário.
 
 ---
 
 ## Quem Somos
 
-A **SuporteInTech** nasceu para resolver um problema crítico no mercado corporativo e institucional: empresas que dependem integralmente de tecnologia para operar, mas não têm um parceiro técnico único e confiável quando ela falha ou precisa escalar.
+A **SuporteInTech** nasceu para resolver um problema crítico no mercado corporativo e institucional: empresas que precisam crescer no ambiente digital — seja através da criação de um site de alta conversão, do desenvolvimento de um software sob medida ou da estruturação da sua rede — mas não têm um parceiro técnico único e confiável.
 
-Tecnologia deixou de ser um departamento de apoio: hoje ela é o que mantém vendas, atendimento, governança e logística funcionando. Uma rede instável ou um sistema fora do ar não é apenas um incômodo técnico — é operação paralisada e faturamento perdido.
+Tecnologia deixou de ser um departamento de apoio: hoje ela é o que mantém vendas, atendimento, governança e logística funcionando. Uma rede instável, um site lento ou um sistema fora do ar não é apenas um incômodo técnico — é operação paralisada e faturamento perdido.
 
-Por isso, trabalhamos com uma **visão de engenharia integrada**: quem projeta e certifica a sua rede física e lógica entende profundamente as aplicações que rodam sobre ela; quem desenvolve seu ecossistema de software conhece a infraestrutura que o sustenta. O resultado são decisões arquiteturais coerentes, eliminação de atritos entre múltiplos fornecedores e respostas imediatas quando algo precisa de atenção.
+Por isso, trabalhamos com uma **visão de engenharia integrada**: quem projeta e certifica a sua rede física e lógica entende profundamente as aplicações que rodam sobre ela; quem desenvolve seu site institucional ou ecossistema de software conhece a infraestrutura que o sustenta. O resultado são decisões arquiteturais coerentes, eliminação de atritos entre múltiplos fornecedores e respostas imediatas quando algo precisa de atenção.
 
 ### Nossos Princípios Operacionais
 
 1. **Diagnóstico antes da solução:** Nenhum projeto começa com orçamento pronto. Primeiro auditamos a operação, mapeamos gargalos, riscos e dependências — e só então propomos uma arquitetura técnica. Isso evita retrabalho, compras desnecessárias e soluções incompatíveis.
 2. **Um único responsável técnico:** Rede, servidores, software e presença digital costumam ficar espalhados entre vários fornecedores que não se comunicam. Centralizamos tudo em uma única equipe, com um ponto de contato que domina o seu ambiente de ponta a ponta.
-3. **Documentação como entrega:** Cada intervenção gera registro formal: topologia lógica e física da rede (incluindo simulações no Cisco Packet Tracer), inventário de ativos, credenciais sob custódia segura, diagramas de arquitetura e histórico técnico. O conhecimento sobre a infraestrutura pertence à empresa contratante — eliminando a dependência tácita de terceiros.
+3. **Documentação como entrega:** Cada intervenção gera registro formal: topologia lógica e física da rede (incluindo simulações no Cisco Packet Tracer), inventário de ativos, credenciais sob custódia segura, diagramas de arquitetura de software e histórico técnico. O conhecimento pertence à empresa contratante — eliminando a dependência tácita de terceiros.
 4. **Continuidade acima de tudo (Zero Downtime):** Mudanças são planejadas em janelas de baixo impacto, com plano de contingência e rollback definido antes de qualquer alteração para evoluir a tecnologia sem interromper a operação.
 
 ### Nossos Compromissos
@@ -27,9 +27,27 @@ Por isso, trabalhamos com uma **visão de engenharia integrada**: quem projeta e
 
 ---
 
-## Nossos Serviços
+## Nossos Serviços (Criação de Sites, Software, UI/UX, Marketing & Infraestrutura de TI)
 
-### 1. Infraestrutura & Redes — Arquitetura e Logística de Redes
+### 1. Engenharia de Software — Criação de Sites Profissionais, Desenvolvimento Web & Software Sob Medida
+Construção de sites institucionais rápidos, landing pages de alta conversão, plataformas digitais modernas, APIs corporativas e sistemas escaláveis sob medida para empresas de todos os portes.
+- **Escopo Técnico:**
+  - Criação de sites profissionais, portais institucionais e landing pages otimizadas para conversão e posicionamento no Google (SEO Técnico e Core Web Vitals);
+  - Desenvolvimento Fullstack de software sob medida, sistemas web corporativos, SaaS e painéis administrativos (Backoffice);
+  - Arquitetura de APIs RESTful escaláveis e seguras (Java, Spring Boot, Node.js, TypeScript, Python);
+  - Front-end de última geração com Next.js, React e Tailwind CSS;
+  - Modelagem de bancos de dados relacionais (PostgreSQL), migrações versionadas (Flyway) e armazenamento em nuvem (Cloudflare R2 / AWS);
+  - Autenticação Stateless JWT, RBAC, conformidade estrita com a LGPD (ex.: Canais de Ética e Compliance) e geração automatizada de documentos/relatórios em PDF.
+
+### 2. UI/UX & Produto — Design de Interfaces & Experiência
+Concepção visual sofisticada aliada à engenharia de usabilidade. Desenhamos sites, aplicativos e produtos digitais que reforçam a autoridade da marca e convertem visitantes em clientes.
+- **Escopo Técnico:**
+  - Design de interfaces web e mobile (UI/UX) de alto padrão;
+  - Prototipagem interativa de alta fidelidade e mapeamento de fluxos de usuário;
+  - Criação e documentação de Design Systems escaláveis com tokens semânticos;
+  - Redesign moderno e refatoração visual de sites e plataformas legadas.
+
+### 3. Infraestrutura & Redes — Arquitetura e Logística de Redes Corporativas
 Planejamos, instalamos, auditamos e gerenciamos infraestruturas de conectividade corporativa com foco em alta disponibilidade, segurança perimetral de tráfego e logística ágil para reposição de ativos.
 - **Escopo Técnico:**
   - Cabeamento estruturado (Cat6/Cat6A), certificação de pontos e fibra óptica;
@@ -40,29 +58,11 @@ Planejamos, instalamos, auditamos e gerenciamos infraestruturas de conectividade
   - Organização e saneamento de racks, patch panels e logística preventiva de peças sobressalentes;
   - Sistemas de CFTV IP e videomonitoramento em redes isoladas.
 
-### 2. Engenharia de Software — Desenvolvimento Web & Aplicações Sob Medida
-Construção de plataformas digitais modernas, APIs corporativas de alta performance, interfaces fluidas e sistemas escaláveis sob medida para operações críticas.
+### 4. Marketing & Performance — SEO, Tráfego Pago e Posicionamento Digital
+Estratégias orientadas a dados para posicionar empresas no topo das buscas, atrair clientes qualificados e maximizar o retorno sobre investimento (ROI).
 - **Escopo Técnico:**
-  - Desenvolvimento Fullstack de sistemas web, portais institucionais e painéis administrativos (Backoffice);
-  - Arquitetura de APIs RESTful escaláveis e seguras (Java, Spring Boot, Node.js, TypeScript);
-  - Front-end de última geração com Next.js, React e Tailwind CSS;
-  - Modelagem de bancos de dados relacionais (PostgreSQL), migrações versionadas (Flyway) e armazenamento em nuvem (Cloudflare R2 / AWS);
-  - Autenticação Stateless JWT, RBAC, conformidade estrita com a LGPD (ex.: Canais de Ética e Compliance) e geração automatizada de documentos/relatórios em PDF;
-  - Otimização de SEO técnico, Core Web Vitals e performance extrema.
-
-### 3. UI/UX & Produto — Design de Interfaces & Experiência
-Concepção visual sofisticada aliada à engenharia de usabilidade. Desenhamos produtos digitais que reforçam a autoridade da marca e convertem usuários em cada etapa da jornada.
-- **Escopo Técnico:**
-  - Design de interfaces web e mobile (UI/UX) de alto padrão;
-  - Prototipagem interativa de alta fidelidade e mapeamento de fluxos de usuário;
-  - Criação e documentação de Design Systems escaláveis com tokens semânticos;
-  - Redesign moderno e refatoração visual de plataformas legadas.
-
-### 4. Marketing & Performance — Estratégia e Posicionamento Digital
-Estratégias orientadas a dados para posicionar empresas com autoridade online, atrair clientes qualificados e maximizar o retorno sobre investimento (ROI).
-- **Escopo Técnico:**
+  - Posicionamento orgânico (SEO técnico e on-page), estruturação de landing pages de alta conversão e funis de aquisição;
   - Gestão estratégica de tráfego pago (Google Ads e Meta Ads);
-  - Posicionamento orgânico (SEO), estruturação de landing pages de alta conversão e funis de aquisição;
   - Análise de telemetria, métricas de conversão e relatórios de performance.
 
 ---
@@ -71,7 +71,7 @@ Estratégias orientadas a dados para posicionar empresas com autoridade online, 
 
 1. **01. Diagnóstico & Auditoria:** Mapeamento rigoroso de infraestrutura e processos, análise de tráfego, identificação de gargalos e definição clara de escopo técnico.
 2. **02. Arquitetura & Estratégia:** Desenho da topologia de rede, especificação de switches/firewalls e modelagem da arquitetura de software e banco de dados.
-3. **03. Desenvolvimento & Engenharia:** Montagem de racks, conectorização, desenvolvimento de código sob medida e estruturação de APIs e bancos de dados escaláveis.
+3. **03. Desenvolvimento & Engenharia:** Montagem de racks, conectorização, criação de sites, desenvolvimento de código sob medida e estruturação de APIs e bancos de dados escaláveis.
 4. **04. Design & Experiência:** Prototipagem interativa, aplicação de Design System, testes de usabilidade e construção de interfaces responsivas.
 5. **05. Homologação & Testes QA:** Simulação de estresse, validação de latência, auditoria de segurança perimetral/aplicacional e aprovação junto ao cliente.
 6. **06. Go-Live com Zero Downtime:** Transição suave e virada de chave planejada para não interromper a operação da empresa.
@@ -81,7 +81,7 @@ Estratégias orientadas a dados para posicionar empresas com autoridade online, 
 
 ## Cases de Sucesso em Destaque (Portfólio)
 
-- **Ecossistema Digital & Plataformas Web — SOBEI (`/projetos/sobei`):**
+- **Ecossistema Digital, Criação de Portais Web & Software Sob Medida — SOBEI (`/projetos/sobei`):**
   Desenvolvimento completo da arquitetura de software para a Sociedade Beneficente Equilíbrio de Interlagos (SOBEI), integrando 5 aplicações: API REST Centralizada em Java / Spring Boot + PostgreSQL (`api.sobei.org.br`), Portal Institucional em Next.js (`sobei.org.br`), Canal de Ética & Compliance aderente à LGPD (`denuncias.sobei.org.br`), Plataforma do Congresso SOBEI com credenciamento por QR Code (`congresso.sobei.org.br`), Backoffice Administrativo Unificado (`administracao.sobei.org.br`) e Design System autoral.
 - **Reestruturação Logística & Mapeamento de Redes — SOBEI (`/projetos/redes-sobei`):**
   Auditoria física e lógica em mais de 13 unidades da SOBEI, eliminando loops de comutação, gargalos de banda e dependência tácita por meio de segmentação em 4 VLANs (802.1Q — Administrativo, CFTV, Pedagogia e Visitantes), reorganização de racks, logística de peças sobressalentes e documentação digital interativa completa no Cisco Packet Tracer (`.pkt`), reduzindo o MTTR em mais de 70%.
@@ -91,14 +91,17 @@ Estratégias orientadas a dados para posicionar empresas com autoridade online, 
 ## Estrutura de Páginas do Site
 
 - `/` — Página Inicial (Apresentação, Quem Somos, Nossos Serviços, Metodologia em 7 Etapas e Portfólio)
-- `/projetos/sobei` — Case de Sucesso: Ecossistema Digital & Plataformas Web SOBEI
-- `/projetos/redes-sobei` — Case de Sucesso: Reestruturação Logística & Mapeamento de Redes SOBEI
+- `/projetos/sobei` — Case de Sucesso: Criação de Site, Ecossistema Digital & Plataformas Web SOBEI
+- `/projetos/redes-sobei` — Case de Sucesso: Infraestrutura de TI, Logística & Mapeamento de Redes SOBEI
+- `/sitemap.xml` — Sitemap XML completo com imagens indexáveis
+- `/manifest.webmanifest` — Web App Manifest
 
 ---
 
 ## Contato Oficial
 
 - **Empresa:** SuporteInTech (Suporte In Tech)
+- **Website Oficial:** https://suporteintech.com.br
 - **Telefone / WhatsApp Comercial:** +55 (11) 99252-7640 (`https://wa.me/5511992527640`)
-- **E-mail:** jose.antonio.220507@gmail.com
-- **Localização:** São Paulo, SP — Brasil
+- **E-mail:** joserodriguesfrt@gmail.com
+- **Localização:** São Paulo, SP — Brasil (Atendimento em São Paulo e projetos de software/sites em todo o Brasil)

@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Header } from "@/components/ui/header-01";
 import { MinimalFooter } from "@/components/ui/minimal-footer";
+import { CaseStudyJsonLd } from "@/components/seo/json-ld";
 import {
   ArrowLeft,
   ArrowUpRight,
@@ -11,10 +12,49 @@ import {
   ExternalLink,
 } from "lucide-react";
 
+const pageTitle =
+  "Case de Sucesso: Criação de Site, Ecossistema Digital & Software SOBEI";
+const pageDescription =
+  "Desenvolvimento completo de software sob medida e criação de portais web para a SOBEI: API central em Java Spring Boot, 4 sites/plataformas em Next.js (Institucional, Canal de Ética LGPD, Congresso e Backoffice) e Design System autoral.";
+
 export const metadata: Metadata = {
-  title: "Case de Sucesso: Ecossistema Digital & Plataformas Web SOBEI | Suporte In Tech",
-  description:
-    "Desenvolvimento completo do ecossistema de software da SOBEI: API central em Spring Boot, 4 portais web em Next.js e Design System autoral.",
+  title: pageTitle,
+  description: pageDescription,
+  keywords: [
+    "criação de site institucional",
+    "desenvolvimento de software sob medida",
+    "desenvolvimento de sistemas web",
+    "case de sucesso software",
+    "portal web Next.js",
+    "API Spring Boot",
+    "canal de ética LGPD",
+    "Design System",
+    "SOBEI",
+    "Suporte In Tech",
+  ],
+  alternates: {
+    canonical: "/projetos/sobei",
+  },
+  openGraph: {
+    title: `${pageTitle} | Suporte In Tech`,
+    description: pageDescription,
+    url: "/projetos/sobei",
+    type: "article",
+    images: [
+      {
+        url: "/projetos/sobei-cover.webp",
+        width: 1920,
+        height: 1080,
+        alt: "Capa Oficial SOBEI — Criação de Sites, Plataformas Administrativas e Ecossistema de Software (Suporte In Tech)",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${pageTitle} | Suporte In Tech`,
+    description: pageDescription,
+    images: ["/projetos/sobei-cover.webp"],
+  },
 };
 
 const metaItems = [
@@ -94,6 +134,22 @@ const brandIdentityRows = [
 export default function SobeiCasePage() {
   return (
     <div className="min-h-screen flex flex-col w-full max-w-full overflow-x-hidden bg-background text-foreground antialiased selection:bg-foreground selection:text-background font-sans">
+      <CaseStudyJsonLd
+        title={pageTitle}
+        description={pageDescription}
+        slug="/projetos/sobei"
+        image="/projetos/sobei-cover.webp"
+        serviceType="Desenvolvimento de Software Sob Medida, Criação de Sites e Design System"
+        keywords={[
+          "criação de site",
+          "desenvolvimento de software",
+          "Next.js",
+          "Spring Boot",
+          "Design System",
+          "SOBEI",
+          "Suporte In Tech",
+        ]}
+      />
       <Header />
 
       <main className="w-full max-w-full overflow-x-hidden flex-1 pt-24 sm:pt-32 pb-20 sm:pb-28">
