@@ -185,10 +185,98 @@ export default function Timeline({
 
     if (!section || !slider) return;
 
+    const mm = gsap.matchMedia();
+
+    // MOBILE (<= 600px): mantém o espaçamento e curso expandido necessários para o Item 07 ser navegável no mobile
+    mm.add("(max-width: 600px)", () => {
+      const slidePercent = -76.8;
+      const lineWidth = "98%";
+      const lineStart = "top 30%";
+      const slideEnd = "88% 50%";
+      const lineEnd = "86% 50%";
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: slideEnd,
+          scrub: true,
+          invalidateOnRefresh: true,
+        },
+        defaults: {
+          ease: "none",
+        },
+      });
+
+      tl.fromTo(
+        slider,
+        { xPercent: 0 },
+        { xPercent: slidePercent },
+      );
+
+      gsap.to(".journey-line", {
+        width: lineWidth,
+        ease: "none",
+        scrollTrigger: {
+          trigger: section,
+          start: lineStart,
+          end: lineEnd,
+          scrub: true,
+          invalidateOnRefresh: true,
+        },
+      });
+    });
+
+    // DESKTOP (> 600px): finaliza com o Item 07 perfeitamente visível à direita, eliminando o espaçamento vazio que não é necessário no desktop
+    mm.add("(min-width: 601px)", () => {
+      const slidePercent = -41.5;
+      const lineWidth = "100%";
+      const lineStart = "top 20%";
+      const slideEnd = "90% bottom";
+      const lineEnd = "88% bottom";
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: slideEnd,
+          scrub: true,
+          invalidateOnRefresh: true,
+        },
+        defaults: {
+          ease: "none",
+        },
+      });
+
+      tl.fromTo(
+        slider,
+        { xPercent: 0 },
+        { xPercent: slidePercent },
+      );
+
+      gsap.to(".journey-line", {
+        width: lineWidth,
+        ease: "none",
+        scrollTrigger: {
+          trigger: section,
+          start: lineStart,
+          end: lineEnd,
+          scrub: true,
+          invalidateOnRefresh: true,
+        },
+      });
+    });
+
+    return () => mm.revert();
+  }, { scope: sectionRef });
+
+  useGSAP(() => {
+    const section = sectionRef.current;
+
+    if (!section) return;
+
     const items = allJourneyItems;
 
-    // 1. Inicialização do estado base: linha guia em 0% e hastes em 0
-    gsap.set(".journey-line", { width: "0%" });
     items.forEach((item) => {
       const isTop = topData.some((topItem) => topItem.id === item.id);
       gsap.set(`.jl-${item.id}`, {
@@ -196,61 +284,26 @@ export default function Timeline({
         transformOrigin: isTop ? "bottom bottom" : "top top",
       });
       gsap.set(`.jd-${item.id}`, { scale: 0 });
+      gsap.set(`.title-${item.id}`, { opacity: 1 });
+      gsap.set(`.description-${item.id}`, { opacity: 1 });
     });
 
     const titleSplits: Partial<Record<string, SplitTextInstance>> = {};
     const descriptionSplits: Partial<Record<string, SplitTextInstance>> = {};
 
+    // Split only by lines (not chars/words) since only line masks are animated
     items.forEach((item) => {
-      try {
-        titleSplits[item.id] = new SplitText(`.title-${item.id}`, {
-          type: "lines",
-          mask: "lines",
-        });
-        descriptionSplits[item.id] = new SplitText(`.description-${item.id}`, {
-          type: "lines",
-          mask: "lines",
-        });
-      } catch (err) {
-        console.warn("SplitText fallback:", err);
-      }
+      titleSplits[item.id] = new SplitText(`.title-${item.id}`, {
+        type: "lines",
+        mask: "lines",
+      });
+
+      descriptionSplits[item.id] = new SplitText(`.description-${item.id}`, {
+        type: "lines",
+        mask: "lines",
+      });
     });
 
-    const getTargets = (id: string, type: "title" | "desc") => {
-      const split = type === "title" ? titleSplits[id] : descriptionSplits[id];
-      if (split?.lines && split.lines.length > 0) {
-        return split.lines;
-      }
-      return type === "title" ? `.title-${id}` : `.description-${id}`;
-    };
-
-    // 2. Tópico 01: Animação imediata de entrada assim que a seção surge na tela
-    const item1Tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: section,
-        start: "top 70%",
-        end: "top top",
-        scrub: true,
-      },
-    });
-
-    item1Tl
-      .fromTo(".jl-etapa-1", { scaleY: 0 }, { scaleY: 1, ease: "none" })
-      .fromTo(".jd-etapa-1", { scale: 0 }, { scale: 1, ease: "none" }, "<")
-      .fromTo(
-        getTargets("etapa-1", "title"),
-        { y: 50, opacity: 0 },
-        { y: 0, opacity: 1, ease: "none" },
-        "<0.2"
-      )
-      .fromTo(
-        getTargets("etapa-1", "desc"),
-        { y: 35, opacity: 0 },
-        { y: 0, opacity: 1, ease: "none" },
-        "<0.1"
-      );
-
-    // 3. Função auxiliar para animar individualmente os itens 02 a 07 conforme o scroll avança
     const createItemTimeline = (
       item: JourneyItem,
       startPos: number,
@@ -258,10 +311,11 @@ export default function Timeline({
     ) => {
       const lineSelector = `.jl-${item.id}`;
       const dotSelector = `.jd-${item.id}`;
-      const titleTargets = getTargets(item.id, "title");
-      const descTargets = getTargets(item.id, "desc");
+      const titleLines = titleSplits[item.id]?.lines || [];
+      const descriptionLines = descriptionSplits[item.id]?.lines || [];
 
       const isTop = topData.some((topItem) => topItem.id === item.id);
+
       if (!isTop) {
         gsap.set(lineSelector, { transformOrigin: "top top" });
       }
@@ -289,11 +343,10 @@ export default function Timeline({
           "<",
         )
         .fromTo(
-          titleTargets,
-          { y: 50, opacity: 0 },
+          titleLines,
+          { y: 100 },
           {
             y: 0,
-            opacity: 1,
             delay: -0.8 * normalizedDuration,
             duration: normalizedDuration,
             stagger: 0.02,
@@ -301,11 +354,10 @@ export default function Timeline({
           },
         )
         .fromTo(
-          descTargets,
-          { y: 35, opacity: 0 },
+          descriptionLines,
+          { y: 100 },
           {
             y: 0,
-            opacity: 1,
             duration: normalizedDuration,
             stagger: 0.02,
             ease: "power2.out",
@@ -318,52 +370,7 @@ export default function Timeline({
 
     const mm = gsap.matchMedia();
 
-    // MOBILE (<= 600px)
     mm.add("(max-width: 600px)", () => {
-      const slidePercent = -76.8;
-      const lineWidth = "98%";
-      const lineStart = "top top";
-      const slideEnd = "88% 50%";
-      const lineEnd = "86% 50%";
-
-      // Slider horizontal
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: "top top",
-          end: slideEnd,
-          scrub: true,
-          invalidateOnRefresh: true,
-        },
-        defaults: {
-          ease: "none",
-        },
-      });
-
-      tl.fromTo(
-        slider,
-        { xPercent: 0 },
-        { xPercent: slidePercent },
-      );
-
-      // Linha central guia crescendo acompanhando o scroll
-      gsap.fromTo(
-        ".journey-line",
-        { width: "0%" },
-        {
-          width: lineWidth,
-          ease: "none",
-          scrollTrigger: {
-            trigger: section,
-            start: lineStart,
-            end: lineEnd,
-            scrub: true,
-            invalidateOnRefresh: true,
-          },
-        }
-      );
-
-      // Itens 02 a 07
       const mobilePositions: ReadonlyArray<readonly [number, number]> = [
         [2, 12],
         [14, 24],
@@ -374,58 +381,12 @@ export default function Timeline({
         [77, 87],
       ];
       items.forEach((item, index) => {
-        if (index === 0) return; // Item 01 já animado pelo item1Tl
         const [startPos, endPos] = mobilePositions[index] || [index * 10, index * 10 + 20];
         createItemTimeline(item, startPos, endPos);
       });
     });
 
-    // DESKTOP (> 600px)
     mm.add("(min-width: 601px)", () => {
-      const slidePercent = -41.5;
-      const lineWidth = "100%";
-      const lineStart = "top top";
-      const slideEnd = "90% bottom";
-      const lineEnd = "88% bottom";
-
-      // Slider horizontal
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: "top top",
-          end: slideEnd,
-          scrub: true,
-          invalidateOnRefresh: true,
-        },
-        defaults: {
-          ease: "none",
-        },
-      });
-
-      tl.fromTo(
-        slider,
-        { xPercent: 0 },
-        { xPercent: slidePercent },
-      );
-
-      // Linha central guia crescendo acompanhando o scroll
-      gsap.fromTo(
-        ".journey-line",
-        { width: "0%" },
-        {
-          width: lineWidth,
-          ease: "none",
-          scrollTrigger: {
-            trigger: section,
-            start: lineStart,
-            end: lineEnd,
-            scrub: true,
-            invalidateOnRefresh: true,
-          },
-        }
-      );
-
-      // Itens 02 a 07
       const desktopPositions: ReadonlyArray<readonly [number, number]> = [
         [6, 26],
         [16, 36],
@@ -436,21 +397,17 @@ export default function Timeline({
         [65, 85],
       ];
       items.forEach((item, index) => {
-        if (index === 0) return; // Item 01 já animado pelo item1Tl
         const [startPos, endPos] = desktopPositions[index] || [index * 10, index * 10 + 20];
         createItemTimeline(item, startPos, endPos);
       });
     });
 
-    ScrollTrigger.refresh();
-
     return () => {
       mm.revert();
-      item1Tl.kill();
       Object.values(titleSplits).forEach((split) => split?.revert?.());
       Object.values(descriptionSplits).forEach((split) => split?.revert?.());
     };
-  }, { scope: sectionRef });
+  }, { dependencies: [normalizedDuration], scope: sectionRef });
 
   return (
     <section
@@ -472,7 +429,7 @@ export default function Timeline({
                 style={activeStyle}
               ></div>
               <div
-                className="h-0.5 w-0 rounded-full journey-line opacity-80"
+                className="h-0.5 w-[0%] rounded-full journey-line opacity-80"
                 style={activeStyle}
               ></div>
               <div
