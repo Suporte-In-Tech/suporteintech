@@ -176,16 +176,12 @@ export default function Timeline({
   mutedTextColor = "var(--color-muted-foreground, #71717a)",
   activeColor = "var(--color-primary, currentColor)",
   backgroundColor = "var(--color-background, transparent)",
-  duration,
-  scrollDuration = 1.2,
   topData = defaultTopJourneyData,
   bottomData = defaultBottomJourneyData,
 }: TimelineProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const wholeSliderRef = useRef<HTMLDivElement>(null);
   const reducedMotion = usePrefersReducedMotion();
-  const animationDuration = duration ?? scrollDuration;
-  const normalizedDuration = Math.max(0.2, animationDuration);
 
   const allJourneyItems: JourneyItem[] = [
     ...topData,
@@ -216,106 +212,9 @@ export default function Timeline({
 
     if (!section || !slider) return;
 
-    const mm = gsap.matchMedia();
-
-    // MOBILE (<= 600px): mantém o espaçamento e curso expandido necessários para o Item 07 ser navegável no mobile
-    mm.add("(max-width: 600px)", () => {
-      const slidePercent = -76.8;
-      const lineWidth = "98%";
-      const lineStart = "top 30%";
-      const slideEnd = "88% 50%";
-      const lineEnd = "86% 50%";
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: "top top",
-          end: slideEnd,
-          scrub: true,
-          invalidateOnRefresh: true,
-        },
-        defaults: {
-          ease: "none",
-        },
-      });
-
-      tl.fromTo(
-        slider,
-        { xPercent: 0 },
-        { xPercent: slidePercent },
-      );
-
-      if (reducedMotion) {
-        gsap.set(".journey-line", { width: lineWidth });
-      } else {
-        gsap.to(".journey-line", {
-          width: lineWidth,
-          ease: "none",
-          scrollTrigger: {
-            trigger: section,
-            start: lineStart,
-            end: lineEnd,
-            scrub: true,
-            invalidateOnRefresh: true,
-          },
-        });
-      }
-    });
-
-    // DESKTOP (> 600px): finaliza com o Item 07 perfeitamente visível à direita, eliminando o espaçamento vazio que não é necessário no desktop
-    mm.add("(min-width: 601px)", () => {
-      const slidePercent = -41.5;
-      const lineWidth = "100%";
-      const lineStart = "top 20%";
-      const slideEnd = "90% bottom";
-      const lineEnd = "88% bottom";
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: "top top",
-          end: slideEnd,
-          scrub: true,
-          invalidateOnRefresh: true,
-        },
-        defaults: {
-          ease: "none",
-        },
-      });
-
-      tl.fromTo(
-        slider,
-        { xPercent: 0 },
-        { xPercent: slidePercent },
-      );
-
-      if (reducedMotion) {
-        gsap.set(".journey-line", { width: lineWidth });
-      } else {
-        gsap.to(".journey-line", {
-          width: lineWidth,
-          ease: "none",
-          scrollTrigger: {
-            trigger: section,
-            start: lineStart,
-            end: lineEnd,
-            scrub: true,
-            invalidateOnRefresh: true,
-          },
-        });
-      }
-    });
-
-    return () => mm.revert();
-  }, { dependencies: [reducedMotion], scope: sectionRef });
-
-  useGSAP(() => {
-    const section = sectionRef.current;
-
-    if (!section) return;
-
     const items = allJourneyItems;
 
+    // Se preferir movimento reduzido, exibe tudo sem animações
     if (reducedMotion) {
       items.forEach((item) => {
         gsap.set(`.jl-${item.id}`, { scaleY: 1 });
@@ -326,9 +225,39 @@ export default function Timeline({
           clearProps: "transform",
         });
       });
-      return;
+      gsap.set(".journey-line", { width: "100%" });
+
+      const mm = gsap.matchMedia();
+      mm.add("(max-width: 600px)", () => {
+        gsap.to(slider, {
+          xPercent: -76.8,
+          ease: "none",
+          scrollTrigger: {
+            trigger: section,
+            start: "top top",
+            end: "92% bottom",
+            scrub: true,
+            invalidateOnRefresh: true,
+          },
+        });
+      });
+      mm.add("(min-width: 601px)", () => {
+        gsap.to(slider, {
+          xPercent: -41.5,
+          ease: "none",
+          scrollTrigger: {
+            trigger: section,
+            start: "top top",
+            end: "92% bottom",
+            scrub: true,
+            invalidateOnRefresh: true,
+          },
+        });
+      });
+      return () => mm.revert();
     }
 
+    // Configuração inicial das hastes, pontos e opacidade
     items.forEach((item) => {
       const isTop = topData.some((topItem) => topItem.id === item.id);
       gsap.set(`.jl-${item.id}`, {
@@ -336,142 +265,164 @@ export default function Timeline({
         transformOrigin: isTop ? "bottom bottom" : "top top",
       });
       gsap.set(`.jd-${item.id}`, { scale: 0 });
-      gsap.set(`.title-${item.id}`, { opacity: 1 });
-      gsap.set(`.description-${item.id}`, { opacity: 1 });
     });
 
     const titleSplits: Partial<Record<string, SplitTextInstance>> = {};
     const descriptionSplits: Partial<Record<string, SplitTextInstance>> = {};
 
-    // Split only by lines (not chars/words) since only line masks are animated
     items.forEach((item) => {
-      titleSplits[item.id] = new SplitText(`.title-${item.id}`, {
-        type: "lines",
-        mask: "lines",
-      });
-
-      descriptionSplits[item.id] = new SplitText(`.description-${item.id}`, {
-        type: "lines",
-        mask: "lines",
-      });
+      try {
+        titleSplits[item.id] = new SplitText(`.title-${item.id}`, {
+          type: "lines",
+          mask: "lines",
+        });
+        descriptionSplits[item.id] = new SplitText(`.description-${item.id}`, {
+          type: "lines",
+          mask: "lines",
+        });
+      } catch (err) {
+        console.warn("SplitText fallback:", err);
+      }
     });
 
-    const createItemTimeline = (
-      item: JourneyItem,
-      startPos: number,
-      endPos: number,
-    ) => {
-      const lineSelector = `.jl-${item.id}`;
-      const dotSelector = `.jd-${item.id}`;
-      const titleLines = titleSplits[item.id]?.lines || [];
-      const descriptionLines = descriptionSplits[item.id]?.lines || [];
-
-      const isTop = topData.some((topItem) => topItem.id === item.id);
-
-      if (!isTop) {
-        gsap.set(lineSelector, { transformOrigin: "top top" });
+    const getTargets = (id: string, type: "title" | "desc") => {
+      const split = type === "title" ? titleSplits[id] : descriptionSplits[id];
+      if (split?.lines && split.lines.length > 0) {
+        return split.lines;
       }
-
-      const timeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: `${startPos}% 30%`,
-          end: `${endPos}% 50%`,
-          scrub: true,
-        },
-      });
-
-      timeline
-        .to(lineSelector, {
-          scaleY: 1,
-          duration: normalizedDuration * 0.4,
-        })
-        .to(
-          dotSelector,
-          {
-            scale: 1,
-            duration: normalizedDuration * 0.4,
-          },
-          "<",
-        )
-        .fromTo(
-          titleLines,
-          { y: 100 },
-          {
-            y: 0,
-            delay: -0.8 * normalizedDuration,
-            duration: normalizedDuration,
-            stagger: 0.02,
-            ease: "power2.out",
-          },
-        )
-        .fromTo(
-          descriptionLines,
-          { y: 100 },
-          {
-            y: 0,
-            duration: normalizedDuration,
-            stagger: 0.02,
-            ease: "power2.out",
-          },
-          "<",
-        );
-
-      return timeline;
+      return type === "title" ? `.title-${id}` : `.description-${id}`;
     };
+
+    // Item 01: Animação de entrada imediata assim que a seção surge na tela
+    // Isso garante que ao travar no topo, o Tópico 01 já esteja 100% visível e pronto
+    const item1Tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: "top 75%",
+        end: "top top",
+        scrub: true,
+      },
+    });
+
+    item1Tl
+      .fromTo(".jl-etapa-1", { scaleY: 0 }, { scaleY: 1, ease: "none" })
+      .fromTo(".jd-etapa-1", { scale: 0 }, { scale: 1, ease: "none" }, "<")
+      .fromTo(
+        getTargets("etapa-1", "title"),
+        { y: 50, opacity: 0 },
+        { y: 0, opacity: 1, ease: "none" },
+        "<0.2"
+      )
+      .fromTo(
+        getTargets("etapa-1", "desc"),
+        { y: 35, opacity: 0 },
+        { y: 0, opacity: 1, ease: "none" },
+        "<0.1"
+      );
 
     const mm = gsap.matchMedia();
 
-    mm.add("(max-width: 600px)", () => {
-      const mobilePositions: ReadonlyArray<readonly [number, number]> = [
-        [2, 12],
-        [14, 24],
-        [26, 36],
-        [38, 48],
-        [51, 61],
-        [64, 74],
-        [77, 87],
-      ];
-      items.forEach((item, index) => {
-        const [startPos, endPos] = mobilePositions[index] || [index * 10, index * 10 + 20];
-        createItemTimeline(item, startPos, endPos);
+    const buildTimeline = (slidePercent: number, lineWidth: string) => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: "92% bottom",
+          scrub: 0.5,
+          invalidateOnRefresh: true,
+        },
+        defaults: {
+          ease: "none",
+        },
       });
+
+      // 1. Movimento horizontal do slider do início (Tópico 01) até o fim (Tópico 07)
+      tl.fromTo(
+        slider,
+        { xPercent: 0 },
+        { xPercent: slidePercent, duration: 90, ease: "none" },
+        0
+      );
+
+      // 2. Crescimento contínuo da linha central guia
+      tl.fromTo(
+        ".journey-line",
+        { width: "0%" },
+        { width: lineWidth, duration: 90, ease: "none" },
+        0
+      );
+
+      // 3. Animações sincronizadas das etapas 02 até 07 conforme deslizam para o campo de visão
+      const stepConfig = [
+        { id: "etapa-2", time: 12 },
+        { id: "etapa-3", time: 26 },
+        { id: "etapa-4", time: 40 },
+        { id: "etapa-5", time: 54 },
+        { id: "etapa-6", time: 68 },
+        { id: "etapa-7", time: 80 },
+      ];
+
+      stepConfig.forEach(({ id, time }) => {
+        tl.fromTo(
+          `.jl-${id}`,
+          { scaleY: 0 },
+          { scaleY: 1, duration: 5, ease: "power1.out" },
+          time
+        );
+        tl.fromTo(
+          `.jd-${id}`,
+          { scale: 0 },
+          { scale: 1, duration: 5, ease: "back.out(2)" },
+          time
+        );
+        tl.fromTo(
+          getTargets(id, "title"),
+          { y: 50, opacity: 0 },
+          { y: 0, opacity: 1, duration: 7, ease: "power2.out" },
+          time + 1
+        );
+        tl.fromTo(
+          getTargets(id, "desc"),
+          { y: 35, opacity: 0 },
+          { y: 0, opacity: 1, duration: 7, ease: "power2.out" },
+          time + 2
+        );
+      });
+
+      return tl;
+    };
+
+    // MOBILE (<= 600px): curso amplo até -76.8%
+    mm.add("(max-width: 600px)", () => {
+      buildTimeline(-76.8, "98%");
     });
 
+    // DESKTOP (> 600px): curso calibrado até -41.5%
     mm.add("(min-width: 601px)", () => {
-      const desktopPositions: ReadonlyArray<readonly [number, number]> = [
-        [6, 26],
-        [16, 36],
-        [26, 46],
-        [35, 55],
-        [45, 65],
-        [55, 75],
-        [65, 85],
-      ];
-      items.forEach((item, index) => {
-        const [startPos, endPos] = desktopPositions[index] || [index * 10, index * 10 + 20];
-        createItemTimeline(item, startPos, endPos);
-      });
+      buildTimeline(-41.5, "100%");
     });
+
+    ScrollTrigger.refresh();
 
     return () => {
       mm.revert();
+      item1Tl.kill();
       Object.values(titleSplits).forEach((split) => split?.revert?.());
       Object.values(descriptionSplits).forEach((split) => split?.revert?.());
     };
-  }, { dependencies: [normalizedDuration, reducedMotion], scope: sectionRef });
+  }, { dependencies: [reducedMotion], scope: sectionRef });
 
   return (
     <section
       ref={sectionRef}
       id="como-trabalhamos"
-      className="h-[150vw] max-[600px]:h-[300vh] w-full relative overflow-clip select-none"
+      className="h-[240vh] sm:h-[260vh] w-full relative overflow-clip select-none"
       style={sectionStyle}
     >
-      <div className="h-screen w-full sticky top-0 pt-[8%] sm:pt-[10%] overflow-hidden max-[600px]:top-[5%]">
+      <div className="h-screen w-full sticky top-0 flex flex-col justify-center items-start overflow-hidden pt-20 pb-6 sm:pt-24 sm:pb-8">
         <div
           ref={wholeSliderRef}
-          className="mr-[2vw] flex h-[30vw] w-[165vw] items-center px-[5vw] max-[600px]:h-[80vh] max-[600px]:w-[430vw] max-[600px]:px-[7vw]"
+          className="mr-[2vw] flex h-[30vw] max-h-[64vh] w-[165vw] items-center px-[5vw] max-[600px]:h-[62vh] max-[600px]:w-[430vw] max-[600px]:px-[7vw]"
         >
           <div className="relative h-full w-full">
             {/* Linha Central Guia */}
@@ -490,7 +441,7 @@ export default function Timeline({
               ></div>
             </div>
 
-            {/* Metade Superior: Itens Ímpares */}
+            {/* Metade Superior: Itens Ímpares (01, 03, 05, 07) */}
             <div className="flex h-1/2 w-full items-center justify-start">
               <div className="w-full flex h-full gap-x-[15vw] max-[600px]:gap-x-[40vw] pl-[2vw] max-[600px]:pl-[5vw]">
                 {topData.map((item) => (
@@ -499,9 +450,9 @@ export default function Timeline({
                     className="relative h-full w-[30vw] pl-[2.5vw] pr-[1vw] max-[600px]:w-[70vw] max-[600px]:pl-[5vw] flex flex-col justify-start shrink-0"
                   >
                     {/* Haste Vertical e Ponto Superior conectados à linha base */}
-                    <div className="absolute left-0 top-[1.8vw] max-[600px]:top-[3.5vw] bottom-0 w-8 -translate-x-1/2 flex flex-col items-center pointer-events-none">
+                    <div className="absolute left-0 top-[1.8vw] max-[600px]:top-[2vw] bottom-0 w-8 -translate-x-1/2 flex flex-col items-center pointer-events-none">
                       <div
-                        className={`size-[0.85vw] max-[600px]:size-[2.2vw] rounded-full shrink-0 jd-${item.id} shadow-sm z-10`}
+                        className={`size-[0.85vw] max-[600px]:size-[3.5vw] rounded-full shrink-0 jd-${item.id} shadow-sm z-10`}
                         style={activeStyle}
                       />
                       <div
@@ -510,17 +461,17 @@ export default function Timeline({
                       />
                     </div>
 
-                    <div className="pt-[1vw] space-y-[0.8vw]">
+                    <div className="pt-[1vw] max-[600px]:pt-2 space-y-[0.8vw] max-[600px]:space-y-1.5">
                       <h4
-                        className={`title-${item.id} text-[2.2vw] font-semibold tracking-tight leading-tight max-[600px]:text-[6.2vw]`}
+                        className={`title-${item.id} text-[2.2vw] font-semibold tracking-tight leading-tight max-[600px]:text-[5.5vw]`}
                       >
-                        <span className="opacity-60 font-mono text-[1.8vw] max-[600px]:text-[5vw] mr-2">
+                        <span className="opacity-60 font-mono text-[1.8vw] max-[600px]:text-[4.5vw] mr-2">
                           {item.year}.
                         </span>
                         {item.month}
                       </h4>
                       <p
-                        className={`description-${item.id} w-[90%] text-[1.3vw] leading-[1.25] font-normal max-[600px]:w-[90%] max-[600px]:text-[4.4vw]`}
+                        className={`description-${item.id} w-[90%] text-[1.3vw] leading-[1.3] font-normal max-[600px]:w-[95%] max-[600px]:text-[3.8vw]`}
                         style={mutedTextStyle}
                       >
                         {item.content}
@@ -531,7 +482,7 @@ export default function Timeline({
               </div>
             </div>
 
-            {/* Metade Inferior: Itens Pares */}
+            {/* Metade Inferior: Itens Pares (02, 04, 06) */}
             <div className="h-1/2 flex items-center justify-start w-full">
               <div className="w-full flex h-full gap-x-[15vw] max-[600px]:gap-x-[40vw] pl-[18vw] max-[600px]:pl-[60vw]">
                 {bottomData.map((item) => (
@@ -540,28 +491,28 @@ export default function Timeline({
                     className="relative h-full w-[25vw] pl-[2.5vw] pr-[1vw] max-[600px]:w-[70vw] max-[600px]:pl-[5vw] flex flex-col justify-end shrink-0"
                   >
                     {/* Haste Vertical e Ponto Inferior conectados à linha base */}
-                    <div className="absolute left-0 top-0 bottom-[1.8vw] max-[600px]:bottom-[3.5vw] w-8 -translate-x-1/2 flex flex-col items-center pointer-events-none">
+                    <div className="absolute left-0 top-0 bottom-[1.8vw] max-[600px]:bottom-[2vw] w-8 -translate-x-1/2 flex flex-col items-center pointer-events-none">
                       <div
                         className={`w-0.5 flex-1 origin-top jl-${item.id} opacity-85`}
                         style={activeStyle}
                       />
                       <div
-                        className={`size-[0.85vw] max-[600px]:size-[2.2vw] rounded-full shrink-0 jd-${item.id} shadow-sm z-10`}
+                        className={`size-[0.85vw] max-[600px]:size-[3.5vw] rounded-full shrink-0 jd-${item.id} shadow-sm z-10`}
                         style={activeStyle}
                       />
                     </div>
 
-                    <div className="pb-[1vw] space-y-[0.8vw]">
+                    <div className="pb-[1vw] max-[600px]:pb-2 space-y-[0.8vw] max-[600px]:space-y-1.5">
                       <h4
-                        className={`title-${item.id} text-[2.2vw] font-semibold tracking-tight leading-tight max-[600px]:text-[6.2vw]`}
+                        className={`title-${item.id} text-[2.2vw] font-semibold tracking-tight leading-tight max-[600px]:text-[5.5vw]`}
                       >
-                        <span className="opacity-60 font-mono text-[1.8vw] max-[600px]:text-[5vw] mr-2">
+                        <span className="opacity-60 font-mono text-[1.8vw] max-[600px]:text-[4.5vw] mr-2">
                           {item.year}.
                         </span>
                         {item.month}
                       </h4>
                       <p
-                        className={`description-${item.id} w-[90%] text-[1.3vw] leading-[1.25] font-normal max-[600px]:w-[90%] max-[600px]:text-[4.4vw]`}
+                        className={`description-${item.id} w-[90%] text-[1.3vw] leading-[1.3] font-normal max-[600px]:w-[95%] max-[600px]:text-[3.8vw]`}
                         style={mutedTextStyle}
                       >
                         {item.content}

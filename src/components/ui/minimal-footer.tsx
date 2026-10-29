@@ -39,8 +39,8 @@ export function MinimalFooter() {
 
   const company = [
     { title: "Sobre Nós", href: "/#sobre" },
-    { title: "Case Software SOBEI", href: "/projetos/sobei" },
-    { title: "Case Redes SOBEI", href: "/projetos/redes-sobei" },
+    { title: "Projeto Software SOBEI", href: "/projetos/sobei" },
+    { title: "Projeto Redes SOBEI", href: "/projetos/redes-sobei" },
   ];
 
   const support = [
@@ -61,8 +61,19 @@ export function MinimalFooter() {
   ];
 
   return (
-    <footer className="relative bg-[#2b2b2b] text-white rounded-t-3xl md:rounded-t-[2.5rem] border-t border-white/10 overflow-hidden shadow-2xl">
-      <div className="bg-[radial-gradient(35%_80%_at_30%_0%,rgba(255,255,255,0.06),transparent)] mx-auto max-w-5xl md:border-x md:border-white/10">
+    <footer className="relative min-h-[100dvh] flex flex-col bg-[#2b2b2b] text-white rounded-t-3xl md:rounded-t-[2.5rem] border-t border-white/10 overflow-hidden shadow-2xl">
+      {/* Efeito de leve brilho suave abrangendo o footer */}
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_120%_80%_at_50%_0%,rgba(255,255,255,0.08),rgba(255,255,255,0.02)_45%,transparent_85%)]"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_100%_70%_at_50%_50%,rgba(255,255,255,0.03),transparent_75%)]"
+        aria-hidden="true"
+      />
+
+      {/* Conteúdo posicionado no topo com as linhas estendidas até o fim do footer */}
+      <div className="relative z-10 bg-[radial-gradient(35%_80%_at_30%_0%,rgba(255,255,255,0.06),transparent)] mx-auto w-full max-w-5xl md:border-x md:border-white/10 flex-1 flex flex-col">
         <div className="pt-6 md:pt-8 px-6 md:px-10">
           <div className="bg-white/10 h-px w-full" />
         </div>
@@ -135,7 +146,7 @@ export function MinimalFooter() {
 
             <div className="min-w-[140px]">
               <span className="text-neutral-400 mb-3 block text-xs font-semibold uppercase tracking-wider">
-                Empresa & Cases
+                Empresa & Projetos
               </span>
               <div className="flex flex-col gap-1.5">
                 {company.map(({ href, title }, i) => (
@@ -151,15 +162,19 @@ export function MinimalFooter() {
             </div>
           </div>
         </div>
-        <div className="bg-white/10 h-px w-full" />
-        <div className="flex max-w-5xl flex-col justify-between gap-2 px-6 md:px-10 pt-4 pb-8">
-          <p className="text-neutral-400 text-center font-light text-xs">
-            © {year} SuporteInTech. Todos os direitos reservados.
-          </p>
+        {/* Barra inferior de copyright posicionada na base do footer */}
+        <div className="mt-auto w-full">
+          <div className="bg-white/10 h-px w-full" />
+          <div className="flex max-w-5xl flex-col justify-between gap-2 px-6 md:px-10 pt-4 pb-8">
+            <p className="text-neutral-400 text-center font-light text-xs">
+              © {year} SuporteInTech. Todos os direitos reservados.
+            </p>
+          </div>
         </div>
       </div>
     </footer>
   );
 }
 
+export const DitheredFooter = MinimalFooter;
 export default MinimalFooter;

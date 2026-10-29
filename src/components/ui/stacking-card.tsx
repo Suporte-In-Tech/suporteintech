@@ -112,7 +112,7 @@ export const Card = ({ project, position, total, onDragNext, onDragPrev }: CardP
         {/* Badge de ação rápida no hover (sem escurecer o card) */}
         <div className="pointer-events-none absolute inset-0 flex items-end justify-end p-4 sm:p-6 lg:p-8">
           <div className="inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-black/80 backdrop-blur-md border border-white/20 text-white text-xs sm:text-sm font-medium shadow-xl opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:scale-105">
-            <span>Acessar Case Completo</span>
+            <span>Acessar Projeto Completo</span>
             <ArrowUpRight className="size-3.5 sm:size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </div>
         </div>
@@ -224,11 +224,15 @@ const Component = React.forwardRef<HTMLDivElement, ComponentRootProps>(
                 onClick={() => setIndex(i)}
                 aria-label={`Ir para ${p.title}`}
                 aria-current={i === index}
-                className={cn(
-                  'h-1.5 rounded-full transition-all duration-500 cursor-pointer',
-                  i === index ? 'w-8 bg-foreground' : 'w-1.5 bg-foreground/25 hover:bg-foreground/50'
-                )}
-              />
+                className="p-2 cursor-pointer flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-full"
+              >
+                <span
+                  className={cn(
+                    'h-1.5 rounded-full transition-all duration-500 block',
+                    i === index ? 'w-8 bg-foreground' : 'w-1.5 bg-foreground/25 hover:bg-foreground/50'
+                  )}
+                />
+              </button>
             ))}
           </div>
         </div>

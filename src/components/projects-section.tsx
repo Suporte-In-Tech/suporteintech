@@ -4,7 +4,7 @@ import StackingCards, { type ProjectData } from "@/components/ui/stacking-card";
 
 const projects: ProjectData[] = [
   {
-    category: "Engenharia de Software • Case de Sucesso",
+    category: "Engenharia de Software • Projeto",
     title: "Construção de Plataformas Web — SOBEI",
     description:
       "Desenvolvimento completo do ecossistema de software da instituição: API central em Spring Boot, 4 portais web em Next.js (Institucional, Canal de Ética, Congresso e Backoffice) e Design System autoral.",
@@ -13,7 +13,7 @@ const projects: ProjectData[] = [
     href: "/projetos/sobei",
   },
   {
-    category: "Infraestrutura & Redes • Case de Sucesso",
+    category: "Infraestrutura & Redes • Projeto",
     title: "Reestruturação Logística de Redes — SOBEI",
     description:
       "Projeto concebido para mapear e documentar a infraestrutura existente nas dependências da SOBEI, identificando gargalos e oportunidades de melhoria para facilitar manutenções futuras através de um mapa lógico e interativo da rede.",
@@ -45,7 +45,7 @@ export function ProjectsSection() {
           <StackingCards projects={projects} className="mx-auto max-w-6xl" />
         </div>
 
-        {/* Sumário semântico SSR para garantir indexação completa de todos os cases e links internos pelos crawlers */}
+        {/* Sumário semântico SSR para garantir indexação completa de todos os projetos e links internos pelos crawlers */}
         <div className="sr-only">
           {projects.map((project) => (
             <article key={project.href}>
@@ -54,7 +54,7 @@ export function ProjectsSection() {
               <p>{project.description}</p>
               {project.href && (
                 <Link href={project.href}>
-                  Ver case completo: {project.title}
+                  Ver projeto completo: {project.title}
                 </Link>
               )}
             </article>

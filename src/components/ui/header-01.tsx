@@ -65,14 +65,61 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = React.useState(false);
   const [isCollapsed, setIsCollapsed] = React.useState(false);
   const timerRef = React.useRef<NodeJS.Timeout | null>(null);
+  const [isOverFooter, setIsOverFooter] = React.useState(false);
+  const headerRef = React.useRef<HTMLElement>(null);
+  const headerHeightRef = React.useRef<number>(84);
+  const footerRef = React.useRef<HTMLElement | null>(null);
 
   React.useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+    let ticking = false;
+
+    const measureLayout = () => {
+      if (headerRef.current) {
+        const rect = headerRef.current.getBoundingClientRect();
+        if (rect.height > 0) {
+          headerHeightRef.current = rect.bottom;
+        }
+      }
+      footerRef.current = document.querySelector("footer");
     };
+
+    measureLayout();
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrollY = window.scrollY;
+          const nextScrolled = scrollY > 20;
+          setIsScrolled((prev) => (prev !== nextScrolled ? nextScrolled : prev));
+
+          const footer = footerRef.current || document.querySelector("footer");
+          if (footer) {
+            footerRef.current = footer;
+            const footerRect = footer.getBoundingClientRect();
+            const isReachingHeader = footerRect.top <= headerHeightRef.current + 8;
+            setIsOverFooter((prev) => {
+              if (prev !== isReachingHeader) {
+                if (isReachingHeader) setMenuState(false);
+                return isReachingHeader;
+              }
+              return prev;
+            });
+          }
+
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
     window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", measureLayout, { passive: true });
     handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", measureLayout);
+    };
   }, []);
 
   React.useEffect(() => {
@@ -114,7 +161,13 @@ const Header = () => {
   }, [isScrolled]);
 
   return (
-    <header className="fixed top-0 inset-x-0 z-50 transition-all duration-500 ease-in-out">
+    <header
+      ref={headerRef}
+      className={cn(
+        "fixed top-0 inset-x-0 z-50 transition-all duration-300 ease-in-out",
+        isOverFooter && "-translate-y-full opacity-0 pointer-events-none"
+      )}
+    >
       <nav
         data-state={menuState && "active"}
         className={cn(

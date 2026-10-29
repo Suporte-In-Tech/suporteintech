@@ -1,10 +1,18 @@
+import dynamic from "next/dynamic";
 import { Header } from "@/components/ui/header-01";
 import { MinimalFooter } from "@/components/ui/minimal-footer";
 import { HeroSection } from "@/components/hero-section";
-import { AppleCardCarousel } from "@/components/ui/carousel-08";
-import { MethodologySection } from "@/components/methodology-section";
 import { AboutSection } from "@/components/about-section";
-import { ProjectsSection } from "@/components/projects-section";
+
+const AppleCardCarousel = dynamic(
+  () => import("@/components/ui/carousel-08").then((mod) => mod.AppleCardCarousel)
+);
+const MethodologySection = dynamic(
+  () => import("@/components/methodology-section").then((mod) => mod.MethodologySection)
+);
+const ProjectsSection = dynamic(
+  () => import("@/components/projects-section").then((mod) => mod.ProjectsSection)
+);
 
 export default function Home() {
   return (
