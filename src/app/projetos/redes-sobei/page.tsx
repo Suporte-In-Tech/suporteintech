@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 
 const pageTitle =
-  "Case de Sucesso: Infraestrutura de TI, Logística & Mapeamento de Redes SOBEI";
+  "Projeto: Infraestrutura de TI, Logística & Mapeamento de Redes SOBEI";
 const pageDescription =
   "Projeto completo de engenharia de infraestrutura de TI e redes corporativas na SOBEI: auditoria física e lógica em mais de 13 unidades, cabeamento estruturado, segmentação VLANs 802.1Q e documentação interativa no Cisco Packet Tracer.";
 

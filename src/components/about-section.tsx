@@ -1,15 +1,55 @@
 "use client";
 
 import * as React from "react";
-import { motion } from "motion/react";
 import { ShieldCheck, Handshake, FileText } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-const fadeUp = {
-  initial: { opacity: 0, y: 24 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-80px" },
-  transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const },
-};
+function Reveal({
+  children,
+  className,
+  delay = 0,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  delay?: number;
+}) {
+  const [isVisible, setIsVisible] = React.useState(false);
+  const ref = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "-40px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      style={{
+        transitionDuration: "700ms",
+        transitionDelay: `${delay}ms`,
+        transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
+      }}
+      className={cn(
+        "transition-all",
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6",
+        className
+      )}
+    >
+      {children}
+    </div>
+  );
+}
 
 const principles = [
   {
@@ -53,23 +93,23 @@ export function AboutSection() {
     <section id="sobre" className="w-full py-20 sm:py-28 bg-background border-y border-border/60">
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         {/* Manifesto */}
-        <motion.div {...fadeUp} className="max-w-5xl">
+        <Reveal className="max-w-5xl">
           <span className="text-xs sm:text-sm font-semibold tracking-wider uppercase text-primary mb-6 block">
             Quem Somos
           </span>
           <p className="text-2xl sm:text-3xl lg:text-[2.6rem] font-semibold tracking-tight leading-[1.25] text-foreground">
-            A SuporteInTech nasceu para resolver um problema comum:{" "}
-            <span className="text-muted-foreground">
+            A Suporte In Tech nasceu para resolver um problema comum:{" "}
+            <span className="text-yellow-500 dark:text-yellow-300">
               empresas que dependem de tecnologia, mas não têm com quem contar quando ela falha.
             </span>{" "}
             Unimos infraestrutura, software e estratégia digital em uma só equipe — responsável do cabo de rede à
             experiência do seu cliente.
           </p>
-        </motion.div>
+        </Reveal>
 
         <div className="mt-16 sm:mt-24 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
           {/* Coluna esquerda fixa */}
-          <motion.div {...fadeUp} className="lg:col-span-5">
+          <Reveal className="lg:col-span-5">
             <div className="lg:sticky lg:top-28">
               <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
                 Parceiro técnico,
@@ -91,7 +131,7 @@ export function AboutSection() {
                 </p>
               </div>
             </div>
-          </motion.div>
+          </Reveal>
 
           {/* Princípios */}
           <div className="lg:col-span-7">
@@ -100,20 +140,17 @@ export function AboutSection() {
             </span>
             <ol className="mt-6 divide-y divide-border/70 border-t border-border/70">
               {principles.map((p, i) => (
-                <motion.li
-                  key={p.title}
-                  {...fadeUp}
-                  transition={{ ...fadeUp.transition, delay: i * 0.05 }}
-                  className="group grid grid-cols-[3rem_1fr] sm:grid-cols-[4.5rem_1fr] gap-2 py-8"
-                >
-                  <span className="font-mono text-sm text-muted-foreground/70 pt-1 transition-colors group-hover:text-foreground">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <div>
-                    <h3 className="text-lg sm:text-xl font-semibold tracking-tight text-foreground">{p.title}</h3>
-                    <p className="mt-3 text-sm sm:text-[15px] leading-relaxed text-muted-foreground">{p.text}</p>
-                  </div>
-                </motion.li>
+                <li key={p.title} className="py-8">
+                  <Reveal delay={i * 50} className="group grid grid-cols-[3rem_1fr] sm:grid-cols-[4.5rem_1fr] gap-2">
+                    <span className="font-mono text-sm text-muted-foreground/70 pt-1 transition-colors group-hover:text-foreground">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <div>
+                      <h3 className="text-lg sm:text-xl font-semibold tracking-tight text-foreground">{p.title}</h3>
+                      <p className="mt-3 text-sm sm:text-[15px] leading-relaxed text-muted-foreground">{p.text}</p>
+                    </div>
+                  </Reveal>
+                </li>
               ))}
             </ol>
           </div>
@@ -122,16 +159,15 @@ export function AboutSection() {
         {/* Compromissos */}
         <div className="mt-16 sm:mt-24 grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-0 md:divide-x divide-border/70 border-t border-border/70 pt-12">
           {commitments.map(({ icon: Icon, title, text }, i) => (
-            <motion.div
+            <Reveal
               key={title}
-              {...fadeUp}
-              transition={{ ...fadeUp.transition, delay: i * 0.08 }}
+              delay={i * 80}
               className="md:px-8 first:md:pl-0 last:md:pr-0"
             >
               <Icon className="size-5 text-foreground" strokeWidth={1.75} />
               <h3 className="mt-4 text-base font-semibold text-foreground">{title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{text}</p>
-            </motion.div>
+            </Reveal>
           ))}
         </div>
       </div>

@@ -1,8 +1,18 @@
 "use client";
 
 import * as React from "react";
-import Demo from "@/components/ui/demo";
+import dynamic from "next/dynamic";
 import { ChevronRight } from "lucide-react";
+
+const Demo = dynamic(() => import("@/components/ui/demo"), {
+  ssr: false,
+  loading: () => (
+    <div
+      className="size-[320px] sm:size-[480px] lg:size-[640px] pointer-events-none"
+      aria-hidden="true"
+    />
+  ),
+});
 
 export function HeroSection() {
   return (

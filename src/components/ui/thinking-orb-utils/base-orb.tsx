@@ -134,20 +134,25 @@ export const BaseThinkingOrb = React.forwardRef<
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 640;
+    const effectiveSize = isMobile ? Math.min(size, 380) : size;
     const dpr = Math.min(
-      2,
+      isMobile ? 1.5 : 2,
       typeof window !== "undefined" && window.devicePixelRatio
         ? window.devicePixelRatio
         : 1,
     );
 
-    canvas.width = Math.round(size * dpr);
-    canvas.height = Math.round(size * dpr);
+    canvas.width = Math.round(effectiveSize * dpr);
+    canvas.height = Math.round(effectiveSize * dpr);
 
     const preset = resolvePreset(state, 64);
     let opts = preset.opts;
     if (dots !== undefined && dots !== 1) {
       opts = scaleCounts(opts, Math.max(0.1, dots));
+    } else if (isMobile) {
+      // Reduz a densidade de partículas no mobile para aliviar cálculo trigonométrico
+      opts = scaleCounts(opts, 0.55);
     }
     if (dotSize !== undefined && dotSize !== 1) {
       opts = scaleRadii(opts, Math.max(0.1, dotSize));
@@ -159,42 +164,95 @@ export const BaseThinkingOrb = React.forwardRef<
 
     const render = (tSec: number) => {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      ctx.clearRect(0, 0, size, size);
+      ctx.clearRect(0, 0, effectiveSize, effectiveSize);
 
       if (scale && scale !== 1) {
         ctx.save();
-        ctx.translate(size / 2, size / 2);
+        ctx.translate(effectiveSize / 2, effectiveSize / 2);
         ctx.scale(scale, scale);
-        ctx.translate(-size / 2, -size / 2);
+        ctx.translate(-effectiveSize / 2, -effectiveSize / 2);
       }
 
-      drawFn(ctx, size, tSec, isDark, opts);
+      drawFn(ctx, effectiveSize, tSec, isDark, opts);
 
       if (scale && scale !== 1) {
         ctx.restore();
       }
     };
 
+    // Renderiza o primeiro quadro estático imediatamente para evitar tela vazia ou layout shift
+    render(0.8);
+
     if (playback === "pause") {
-      render(0.8);
       return;
     }
 
     let rafId = 0;
-    let isRunning = true;
+    let isRunning = false;
+    let isVisible = true;
+    let lastFrameTime = 0;
+    const minFrameInterval = isMobile ? 32 : 16; // 30 FPS no mobile para economizar CPU, 60 FPS no desktop
 
-    const loop = () => {
-      if (!isRunning) return;
-      const tSec = (performance.now() / 1000) * effectiveSpeed;
-      render(tSec);
+    const loop = (now: number) => {
+      if (!isRunning || !isVisible) return;
+      if (now - lastFrameTime >= minFrameInterval) {
+        lastFrameTime = now;
+        const tSec = (now / 1000) * effectiveSpeed;
+        render(tSec);
+      }
       rafId = requestAnimationFrame(loop);
     };
 
-    rafId = requestAnimationFrame(loop);
+    // Inicia a animação contínua após a hidratação/ociosidade do thread principal
+    const startAnimation = () => {
+      if (isRunning || !isVisible) return;
+      isRunning = true;
+      lastFrameTime = performance.now();
+      rafId = requestAnimationFrame(loop);
+    };
+
+    const stopAnimation = () => {
+      isRunning = false;
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = 0;
+      }
+    };
+
+    // Pausa a renderização quando o elemento estiver fora do viewport
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+        if (isVisible) {
+          startAnimation();
+        } else {
+          stopAnimation();
+        }
+      },
+      { threshold: 0.05 }
+    );
+
+    observer.observe(canvas);
+
+    // Agenda o início contínuo após o carregamento crítico inicial
+    let idleTimer: ReturnType<typeof setTimeout> | null = null;
+    if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+      (window as unknown as { requestIdleCallback: (cb: () => void, opts?: { timeout: number }) => number }).requestIdleCallback(
+        () => {
+          if (isVisible) startAnimation();
+        },
+        { timeout: 1500 }
+      );
+    } else {
+      idleTimer = setTimeout(() => {
+        if (isVisible) startAnimation();
+      }, 1200);
+    }
 
     return () => {
-      isRunning = false;
-      cancelAnimationFrame(rafId);
+      stopAnimation();
+      observer.disconnect();
+      if (idleTimer) clearTimeout(idleTimer);
     };
   }, [
     effectiveMode,

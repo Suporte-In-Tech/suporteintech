@@ -8,7 +8,7 @@ const Timeline = dynamic(() => import("@/components/ui/timeline"), {
   loading: () => (
     <div
       id="como-trabalhamos"
-      className="h-[150vw] max-[600px]:h-[300vh] w-full bg-background"
+      className="h-[240vh] sm:h-[260vh] w-full bg-background"
       aria-hidden="true"
     />
   ),
@@ -63,7 +63,7 @@ export function MethodologySection() {
   return (
     <div className="w-full">
       {/* Cabeçalho da Metodologia - Mesma estrutura e alinhamento de Nossos Serviços */}
-      <section className="w-full pt-16 sm:pt-24 pb-6 sm:pb-8 bg-background">
+      <section className="w-full pt-16 sm:pt-24 pb-8 sm:pb-12 bg-background">
         <div className="max-w-7xl mx-auto">
           <div className="px-6 sm:px-8 lg:px-12 flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>

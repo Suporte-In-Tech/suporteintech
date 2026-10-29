@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 
 const pageTitle =
-  "Case de Sucesso: Criação de Site, Ecossistema Digital & Software SOBEI";
+  "Projeto: Criação de Site, Ecossistema Digital & Software SOBEI";
 const pageDescription =
   "Desenvolvimento completo de software sob medida e criação de portais web para a SOBEI: API central em Java Spring Boot, 4 sites/plataformas em Next.js (Institucional, Canal de Ética LGPD, Congresso e Backoffice) e Design System autoral.";
 
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     "criação de site institucional",
     "desenvolvimento de software sob medida",
     "desenvolvimento de sistemas web",
-    "case de sucesso software",
+    "projeto software",
     "portal web Next.js",
     "API Spring Boot",
     "canal de ética LGPD",
@@ -169,7 +169,7 @@ export default function SobeiCasePage() {
           {/* Header & Title */}
           <header className="mb-8 sm:mb-10">
             <span className="text-xs font-semibold uppercase tracking-wider text-primary mb-2 block">
-              Case de Sucesso • Engenharia de Software & Web
+              Projeto • Engenharia de Software & Web
             </span>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-foreground leading-tight mb-4">
               SOBEI — Ecossistema Digital & Plataformas Web

@@ -254,7 +254,7 @@ export function CaseStudyJsonLd({
           {
             "@type": "ListItem",
             position: 2,
-            name: "Portfólio & Cases",
+            name: "Portfólio & Projetos",
             item: `${baseUrl}/#portfolio`,
           },
           {

@@ -2,106 +2,34 @@
 
 > Da infraestrutura à tela, nós construímos o futuro. A SuporteInTech (Suporte In Tech) é uma empresa especializada em criação de sites profissionais, desenvolvimento de software sob medida, sistemas web, UI/UX design, arquitetura de redes corporativas e infraestrutura de TI — responsável do cabo de rede à experiência final do usuário.
 
----
+## Seções & Navegação Principal
 
-## Quem Somos
+- [Página Inicial](https://suporteintech.com.br/): Visão geral da empresa, proposta de valor e serviços oferecidos.
+- [Quem Somos & Filosofia](https://suporteintech.com.br/#sobre): Nossos princípios operacionais, metodologia integrada e compromissos corporativos com segurança da informação e LGPD.
+- [Nossos Serviços](https://suporteintech.com.br/#servicos): Detalhamento dos serviços de Engenharia de Software, Infraestrutura & Redes, UI/UX Design e Performance Digital.
+- [Metodologia & Processos](https://suporteintech.com.br/#como-trabalhamos): Esteira técnica em 7 etapas, do diagnóstico inicial ao go-live com zero downtime e suporte contínuo 24/7.
+- [Portfólio de Projetos](https://suporteintech.com.br/#portfolio): Casos de sucesso e projetos em destaque desenvolvidos pela equipe técnica.
 
-A **SuporteInTech** nasceu para resolver um problema crítico no mercado corporativo e institucional: empresas que precisam crescer no ambiente digital — seja através da criação de um site de alta conversão, do desenvolvimento de um software sob medida ou da estruturação da sua rede — mas não têm um parceiro técnico único e confiável.
+## Estudos de Caso & Projetos em Destaque
 
-Tecnologia deixou de ser um departamento de apoio: hoje ela é o que mantém vendas, atendimento, governança e logística funcionando. Uma rede instável, um site lento ou um sistema fora do ar não é apenas um incômodo técnico — é operação paralisada e faturamento perdido.
+- [Construção de Plataformas Web — SOBEI](https://suporteintech.com.br/projetos/sobei): Ecossistema completo composto por 4 portais em Next.js (Institucional, Canal de Ética LGPD, Congresso e Backoffice), API central em Java Spring Boot e Design System autoral.
+- [Reestruturação Logística de Redes — SOBEI](https://suporteintech.com.br/projetos/redes-sobei): Diagnóstico de conectividade, documentação de topologia física e lógica no Cisco Packet Tracer e reorganização de racks e switches para alta disponibilidade.
 
-Por isso, trabalhamos com uma **visão de engenharia integrada**: quem projeta e certifica a sua rede física e lógica entende profundamente as aplicações que rodam sobre ela; quem desenvolve seu site institucional ou ecossistema de software conhece a infraestrutura que o sustenta. O resultado são decisões arquiteturais coerentes, eliminação de atritos entre múltiplos fornecedores e respostas imediatas quando algo precisa de atenção.
+## Nossos Serviços Especializados
 
-### Nossos Princípios Operacionais
-
-1. **Diagnóstico antes da solução:** Nenhum projeto começa com orçamento pronto. Primeiro auditamos a operação, mapeamos gargalos, riscos e dependências — e só então propomos uma arquitetura técnica. Isso evita retrabalho, compras desnecessárias e soluções incompatíveis.
-2. **Um único responsável técnico:** Rede, servidores, software e presença digital costumam ficar espalhados entre vários fornecedores que não se comunicam. Centralizamos tudo em uma única equipe, com um ponto de contato que domina o seu ambiente de ponta a ponta.
-3. **Documentação como entrega:** Cada intervenção gera registro formal: topologia lógica e física da rede (incluindo simulações no Cisco Packet Tracer), inventário de ativos, credenciais sob custódia segura, diagramas de arquitetura de software e histórico técnico. O conhecimento pertence à empresa contratante — eliminando a dependência tácita de terceiros.
-4. **Continuidade acima de tudo (Zero Downtime):** Mudanças são planejadas em janelas de baixo impacto, com plano de contingência e rollback definido antes de qualquer alteração para evoluir a tecnologia sem interromper a operação.
-
-### Nossos Compromissos
-
-- **Segurança da Informação & LGPD:** Boas práticas de proteção de dados aplicadas desde a concepção (*Security by Design*): controle de acesso baseado em papéis (RBAC), criptografia, backups verificados e segmentação lógica de rede (VLANs).
-- **Relação de Longo Prazo:** Atuamos como extensão do time do cliente, acompanhando a expansão da empresa e antecipando demandas de infraestrutura e sistemas.
-- **Transparência Total:** Escopo, prazos, SLAs e custos definidos por escrito, com relatórios claros em linguagem de negócio e de engenharia.
-
----
-
-## Nossos Serviços (Criação de Sites, Software, UI/UX, Marketing & Infraestrutura de TI)
-
-### 1. Engenharia de Software — Criação de Sites Profissionais, Desenvolvimento Web & Software Sob Medida
-Construção de sites institucionais rápidos, landing pages de alta conversão, plataformas digitais modernas, APIs corporativas e sistemas escaláveis sob medida para empresas de todos os portes.
-- **Escopo Técnico:**
-  - Criação de sites profissionais, portais institucionais e landing pages otimizadas para conversão e posicionamento no Google (SEO Técnico e Core Web Vitals);
-  - Desenvolvimento Fullstack de software sob medida, sistemas web corporativos, SaaS e painéis administrativos (Backoffice);
-  - Arquitetura de APIs RESTful escaláveis e seguras (Java, Spring Boot, Node.js, TypeScript, Python);
-  - Front-end de última geração com Next.js, React e Tailwind CSS;
-  - Modelagem de bancos de dados relacionais (PostgreSQL), migrações versionadas (Flyway) e armazenamento em nuvem (Cloudflare R2 / AWS);
-  - Autenticação Stateless JWT, RBAC, conformidade estrita com a LGPD (ex.: Canais de Ética e Compliance) e geração automatizada de documentos/relatórios em PDF.
+### 1. Engenharia de Software — Criação de Sites Profissionais & Sistemas Sob Medida
+Construção de sites institucionais rápidos, landing pages de alta conversão, portais web, APIs corporativas e sistemas escaláveis sob medida para empresas de todos os portes.
+- **Tecnologias:** Java, Spring Boot, Next.js, React, TypeScript, Tailwind CSS, PostgreSQL, Cloudflare R2 / AWS.
 
 ### 2. UI/UX & Produto — Design de Interfaces & Experiência
-Concepção visual sofisticada aliada à engenharia de usabilidade. Desenhamos sites, aplicativos e produtos digitais que reforçam a autoridade da marca e convertem visitantes em clientes.
-- **Escopo Técnico:**
-  - Design de interfaces web e mobile (UI/UX) de alto padrão;
-  - Prototipagem interativa de alta fidelidade e mapeamento de fluxos de usuário;
-  - Criação e documentação de Design Systems escaláveis com tokens semânticos;
-  - Redesign moderno e refatoração visual de sites e plataformas legadas.
+Design de interfaces sofisticadas, prototipagem avançada de alta fidelidade e design systems com tokens semânticos voltados para alta conversão e usabilidade intuitiva.
 
 ### 3. Infraestrutura & Redes — Arquitetura e Logística de Redes Corporativas
-Planejamos, instalamos, auditamos e gerenciamos infraestruturas de conectividade corporativa com foco em alta disponibilidade, segurança perimetral de tráfego e logística ágil para reposição de ativos.
-- **Escopo Técnico:**
-  - Cabeamento estruturado (Cat6/Cat6A), certificação de pontos e fibra óptica;
-  - Configuração e gerenciamento de roteadores, switches L2/L3 e firewalls;
-  - Segmentação lógica de tráfego via VLANs (802.1Q), Spanning Tree (STP) e QoS;
-  - Redes corporativas sem fio de alta densidade (Wi-Fi 6);
-  - Modelagem e documentação viva de topologias no Cisco Packet Tracer (`.pkt`);
-  - Organização e saneamento de racks, patch panels e logística preventiva de peças sobressalentes;
-  - Sistemas de CFTV IP e videomonitoramento em redes isoladas.
+Planejamento, instalação e auditoria de cabeamento estruturado (Cat6/Cat6a e fibra óptica), segmentação por VLANs, roteamento dinâmico, firewalls e logística de peças.
 
-### 4. Marketing & Performance — SEO, Tráfego Pago e Posicionamento Digital
-Estratégias orientadas a dados para posicionar empresas no topo das buscas, atrair clientes qualificados e maximizar o retorno sobre investimento (ROI).
-- **Escopo Técnico:**
-  - Posicionamento orgânico (SEO técnico e on-page), estruturação de landing pages de alta conversão e funis de aquisição;
-  - Gestão estratégica de tráfego pago (Google Ads e Meta Ads);
-  - Análise de telemetria, métricas de conversão e relatórios de performance.
+### 4. Marketing & Performance Digital
+Estratégias de SEO técnico, Core Web Vitals, gestão de tráfego pago (Google Ads e Meta Ads) e arquitetura de atração para posicionar marcas com autoridade.
 
----
+## Contato & Atendimento
 
-## Metodologia de Trabalho (7 Etapas)
-
-1. **01. Diagnóstico & Auditoria:** Mapeamento rigoroso de infraestrutura e processos, análise de tráfego, identificação de gargalos e definição clara de escopo técnico.
-2. **02. Arquitetura & Estratégia:** Desenho da topologia de rede, especificação de switches/firewalls e modelagem da arquitetura de software e banco de dados.
-3. **03. Desenvolvimento & Engenharia:** Montagem de racks, conectorização, criação de sites, desenvolvimento de código sob medida e estruturação de APIs e bancos de dados escaláveis.
-4. **04. Design & Experiência:** Prototipagem interativa, aplicação de Design System, testes de usabilidade e construção de interfaces responsivas.
-5. **05. Homologação & Testes QA:** Simulação de estresse, validação de latência, auditoria de segurança perimetral/aplicacional e aprovação junto ao cliente.
-6. **06. Go-Live com Zero Downtime:** Transição suave e virada de chave planejada para não interromper a operação da empresa.
-7. **07. Sustentação & Suporte 24/7:** Monitoramento proativo contínuo, documentação entregue e resposta ágil com SLA corporativo.
-
----
-
-## Cases de Sucesso em Destaque (Portfólio)
-
-- **Ecossistema Digital, Criação de Portais Web & Software Sob Medida — SOBEI (`/projetos/sobei`):**
-  Desenvolvimento completo da arquitetura de software para a Sociedade Beneficente Equilíbrio de Interlagos (SOBEI), integrando 5 aplicações: API REST Centralizada em Java / Spring Boot + PostgreSQL (`api.sobei.org.br`), Portal Institucional em Next.js (`sobei.org.br`), Canal de Ética & Compliance aderente à LGPD (`denuncias.sobei.org.br`), Plataforma do Congresso SOBEI com credenciamento por QR Code (`congresso.sobei.org.br`), Backoffice Administrativo Unificado (`administracao.sobei.org.br`) e Design System autoral.
-- **Reestruturação Logística & Mapeamento de Redes — SOBEI (`/projetos/redes-sobei`):**
-  Auditoria física e lógica em mais de 13 unidades da SOBEI, eliminando loops de comutação, gargalos de banda e dependência tácita por meio de segmentação em 4 VLANs (802.1Q — Administrativo, CFTV, Pedagogia e Visitantes), reorganização de racks, logística de peças sobressalentes e documentação digital interativa completa no Cisco Packet Tracer (`.pkt`), reduzindo o MTTR em mais de 70%.
-
----
-
-## Estrutura de Páginas do Site
-
-- `/` — Página Inicial (Apresentação, Quem Somos, Nossos Serviços, Metodologia em 7 Etapas e Portfólio)
-- `/projetos/sobei` — Case de Sucesso: Criação de Site, Ecossistema Digital & Plataformas Web SOBEI
-- `/projetos/redes-sobei` — Case de Sucesso: Infraestrutura de TI, Logística & Mapeamento de Redes SOBEI
-- `/sitemap.xml` — Sitemap XML completo com imagens indexáveis
-- `/manifest.webmanifest` — Web App Manifest
-
----
-
-## Contato Oficial
-
-- **Empresa:** SuporteInTech (Suporte In Tech)
-- **Website Oficial:** https://suporteintech.com.br
-- **Telefone / WhatsApp Comercial:** +55 (11) 99252-7640 (`https://wa.me/5511992527640`)
-- **E-mail:** joserodriguesfrt@gmail.com
-- **Localização:** São Paulo, SP — Brasil (Atendimento em São Paulo e projetos de software/sites em todo o Brasil)
+- [Atendimento Comercial & Suporte via WhatsApp](https://wa.me/5511995964894): Canal direto com a liderança técnica para diagnósticos, propostas comerciais e orçamentos.
