@@ -9,10 +9,9 @@ import {
 } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { SplitText } from "gsap/SplitText";
 
 if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger, SplitText);
+  gsap.registerPlugin(ScrollTrigger);
 }
 
 const useIsomorphicLayoutEffect =
@@ -66,8 +65,6 @@ export type JourneyItem = {
   content: string;
   order?: number;
 };
-
-type SplitTextInstance = InstanceType<typeof SplitText>;
 
 export type TimelineProps = {
   title?: string;
@@ -185,6 +182,14 @@ export default function Timeline({
 
     if (!section || !slider) return;
 
+    // Tópicos fixos e visíveis: hastes, pontos e textos 100% renderizados sem animação de corte
+    allJourneyItems.forEach((item) => {
+      gsap.set(`.jl-${item.id}`, { scaleY: 1, clearProps: "transform" });
+      gsap.set(`.jd-${item.id}`, { scale: 1, clearProps: "transform" });
+      gsap.set(`.title-${item.id}`, { opacity: 1, clearProps: "transform,opacity" });
+      gsap.set(`.description-${item.id}`, { opacity: 1, clearProps: "transform,opacity" });
+    });
+
     const mm = gsap.matchMedia();
 
     // MOBILE (<= 600px): mantém o espaçamento e curso expandido necessários para o Item 07 ser navegável no mobile
@@ -214,6 +219,7 @@ export default function Timeline({
         { xPercent: slidePercent },
       );
 
+      // Somente a linha do meio se movimentando
       gsap.to(".journey-line", {
         width: lineWidth,
         ease: "none",
@@ -254,6 +260,7 @@ export default function Timeline({
         { xPercent: slidePercent },
       );
 
+      // Somente a linha do meio se movimentando
       gsap.to(".journey-line", {
         width: lineWidth,
         ease: "none",
@@ -269,145 +276,6 @@ export default function Timeline({
 
     return () => mm.revert();
   }, { scope: sectionRef });
-
-  useGSAP(() => {
-    const section = sectionRef.current;
-
-    if (!section) return;
-
-    const items = allJourneyItems;
-
-    items.forEach((item) => {
-      const isTop = topData.some((topItem) => topItem.id === item.id);
-      gsap.set(`.jl-${item.id}`, {
-        scaleY: 0,
-        transformOrigin: isTop ? "bottom bottom" : "top top",
-      });
-      gsap.set(`.jd-${item.id}`, { scale: 0 });
-      gsap.set(`.title-${item.id}`, { opacity: 1 });
-      gsap.set(`.description-${item.id}`, { opacity: 1 });
-    });
-
-    const titleSplits: Partial<Record<string, SplitTextInstance>> = {};
-    const descriptionSplits: Partial<Record<string, SplitTextInstance>> = {};
-
-    // Split only by lines (not chars/words) since only line masks are animated
-    items.forEach((item) => {
-      titleSplits[item.id] = new SplitText(`.title-${item.id}`, {
-        type: "lines",
-        mask: "lines",
-      });
-
-      descriptionSplits[item.id] = new SplitText(`.description-${item.id}`, {
-        type: "lines",
-        mask: "lines",
-      });
-    });
-
-    const createItemTimeline = (
-      item: JourneyItem,
-      startPos: number,
-      endPos: number,
-    ) => {
-      const lineSelector = `.jl-${item.id}`;
-      const dotSelector = `.jd-${item.id}`;
-      const titleLines = titleSplits[item.id]?.lines || [];
-      const descriptionLines = descriptionSplits[item.id]?.lines || [];
-
-      const isTop = topData.some((topItem) => topItem.id === item.id);
-
-      if (!isTop) {
-        gsap.set(lineSelector, { transformOrigin: "top top" });
-      }
-
-      const timeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: `${startPos}% 30%`,
-          end: `${endPos}% 50%`,
-          scrub: true,
-        },
-      });
-
-      timeline
-        .to(lineSelector, {
-          scaleY: 1,
-          duration: normalizedDuration * 0.4,
-        })
-        .to(
-          dotSelector,
-          {
-            scale: 1,
-            duration: normalizedDuration * 0.4,
-          },
-          "<",
-        )
-        .fromTo(
-          titleLines,
-          { y: 100 },
-          {
-            y: 0,
-            delay: -0.8 * normalizedDuration,
-            duration: normalizedDuration,
-            stagger: 0.02,
-            ease: "power2.out",
-          },
-        )
-        .fromTo(
-          descriptionLines,
-          { y: 100 },
-          {
-            y: 0,
-            duration: normalizedDuration,
-            stagger: 0.02,
-            ease: "power2.out",
-          },
-          "<",
-        );
-
-      return timeline;
-    };
-
-    const mm = gsap.matchMedia();
-
-    mm.add("(max-width: 600px)", () => {
-      const mobilePositions: ReadonlyArray<readonly [number, number]> = [
-        [2, 12],
-        [11, 20],
-        [20, 29],
-        [29, 38],
-        [38, 47],
-        [47, 56],
-        [56, 65],
-      ];
-      items.forEach((item, index) => {
-        const [startPos, endPos] = mobilePositions[index] || [index * 10, index * 10 + 20];
-        createItemTimeline(item, startPos, endPos);
-      });
-    });
-
-    mm.add("(min-width: 601px)", () => {
-      const desktopPositions: ReadonlyArray<readonly [number, number]> = [
-        [6, 26],
-        [16, 36],
-        [26, 46],
-        [35, 55],
-        [45, 65],
-        [55, 75],
-        [65, 85],
-      ];
-      items.forEach((item, index) => {
-        const [startPos, endPos] = desktopPositions[index] || [index * 10, index * 10 + 20];
-        createItemTimeline(item, startPos, endPos);
-      });
-    });
-
-    return () => {
-      mm.revert();
-      Object.values(titleSplits).forEach((split) => split?.revert?.());
-      Object.values(descriptionSplits).forEach((split) => split?.revert?.());
-    };
-  }, { dependencies: [normalizedDuration], scope: sectionRef });
 
   return (
     <section
