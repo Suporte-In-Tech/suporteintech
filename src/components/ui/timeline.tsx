@@ -189,11 +189,11 @@ export default function Timeline({
 
     // MOBILE (<= 600px): mantém o espaçamento e curso expandido necessários para o Item 07 ser navegável no mobile
     mm.add("(max-width: 600px)", () => {
-      const slidePercent = -76.8;
+      const slidePercent = -78.5;
       const lineWidth = "98%";
       const lineStart = "top 30%";
-      const slideEnd = "88% 50%";
-      const lineEnd = "86% 50%";
+      const slideEnd = "85% bottom";
+      const lineEnd = "82% bottom";
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -373,12 +373,12 @@ export default function Timeline({
     mm.add("(max-width: 600px)", () => {
       const mobilePositions: ReadonlyArray<readonly [number, number]> = [
         [2, 12],
-        [14, 24],
-        [26, 36],
-        [38, 48],
-        [51, 61],
-        [64, 74],
-        [77, 87],
+        [11, 20],
+        [20, 29],
+        [29, 38],
+        [38, 47],
+        [47, 56],
+        [56, 65],
       ];
       items.forEach((item, index) => {
         const [startPos, endPos] = mobilePositions[index] || [index * 10, index * 10 + 20];
@@ -413,13 +413,13 @@ export default function Timeline({
     <section
       ref={sectionRef}
       id="como-trabalhamos"
-      className="h-[240vh] sm:h-[260vh] w-full relative overflow-clip select-none"
+      className="h-[260vh] w-full relative overflow-clip select-none"
       style={sectionStyle}
     >
-      <div className="h-screen w-full sticky top-0 flex flex-col justify-center items-start overflow-hidden pt-20 pb-6 sm:pt-24 sm:pb-8">
+      <div className="h-screen w-full sticky top-0 flex flex-col justify-center items-start overflow-hidden pt-24 pb-8 sm:pt-24 sm:pb-8">
         <div
           ref={wholeSliderRef}
-          className="mr-[2vw] flex h-[30vw] max-h-[64vh] w-[165vw] items-center px-[5vw] max-[600px]:h-[62vh] max-[600px]:w-[430vw] max-[600px]:px-[7vw]"
+          className="mr-[2vw] flex h-[30vw] max-h-[64vh] w-[165vw] items-center px-[5vw] max-[600px]:h-[54vh] max-[600px]:w-[430vw] max-[600px]:px-[7vw]"
         >
           <div className="relative h-full w-full">
             {/* Linha Central Guia */}
@@ -440,7 +440,7 @@ export default function Timeline({
 
             {/* Metade Superior: Itens Ímpares (01, 03, 05, 07) */}
             <div className="flex h-1/2 w-full items-center justify-start">
-              <div className="w-full flex h-full gap-x-[15vw] max-[600px]:gap-x-[40vw] pl-[2vw] max-[600px]:pl-[5vw]">
+              <div className="w-full flex h-full gap-x-[15vw] max-[600px]:gap-x-[40vw] pl-[2vw] max-[600px]:pl-[14vw]">
                 {topData.map((item) => (
                   <div
                     key={`top-${item.id}`}
