@@ -27,24 +27,24 @@ export interface CardItem {
 const cards: CardItem[] = [
   {
     id: "1",
-    category: "INFRAESTRUTURA & REDES",
+    category: "CLOUD & ARQUITETURA EM NUVEM",
     title: (
       <>
-        Arquitetura e Logística
+        Estruturação de
         <br />
-        de Redes
+        Cloud Computing
       </>
     ),
-    description: "Estruturação de redes corporativas de alta disponibilidade, roteamento inteligente e logística de TI.",
-    explanation: "Planejamos, instalamos e gerenciamos sua infraestrutura de conectividade com foco em máxima estabilidade, segurança de tráfego e logística ágil para reposição de equipamentos.",
+    description: "Ambientes em nuvem escaláveis, migração para cloud, automação serverless e alta resiliência corporativa.",
+    explanation: "Arquitetura e provisionamento em nuvem (AWS, GCP, Cloudflare) com foco em alta disponibilidade, segurança e otimização contínua de custos (FinOps).",
     features: [
-      "Cabeamento estruturado & fibra óptica",
-      "Roteadores, switches e firewalls",
-      "Redes corporativas de alta densidade",
-      "Logística de peças e suporte contínuo",
+      "Arquitetura e migração para cloud",
+      "Infraestrutura como Código (IaC) e CI/CD",
+      "Bancos gerenciados e microsserviços",
+      "Otimização FinOps e alta resiliência",
     ],
-    src: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=75",
-    alt: "Infraestrutura de TI, Cabeamento Estruturado e Arquitetura de Redes Corporativas — Suporte In Tech",
+    src: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=75",
+    alt: "Serviços de Estruturação de Cloud, Arquitetura em Nuvem e Infraestrutura Escalável — Suporte In Tech",
   },
   {
     id: "2",
@@ -57,60 +57,62 @@ const cards: CardItem[] = [
       </>
     ),
     description: "Criação de sites profissionais, plataformas modernas, interfaces fluidas e sistemas sob medida para seu negócio.",
-    explanation: "Criação de sites institucionais, landing pages e desenvolvimento de software sob medida com tecnologia de ponta, velocidade extrema, código limpo e arquitetura escalável.",
+    explanation: "Criação de sites e software sob medida com tecnologias modernas, velocidade extrema, código limpo e arquitetura escalável.",
     features: [
-      "Criação de sites, portais web e landing pages",
-      "Desenvolvimento de software e sistemas sob medida",
+      "Sites corporativos, portais e landing pages",
+      "Sistemas web e plataformas sob medida",
       "Integrações de APIs REST e bancos de dados",
-      "Otimização de SEO técnico e alta performance",
+      "SEO técnico e alta performance",
     ],
     src: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=75",
     alt: "Criação de Sites Profissionais, Desenvolvimento de Software Sob Medida e Sistemas Web — Suporte In Tech",
   },
   {
     id: "3",
-    category: "UI/UX & PRODUTO",
+    category: "INTELIGÊNCIA ARTIFICIAL & MCP",
+    title: (
+      <>
+        Criação de MCPs &
+        <br />
+        Agentes de IA
+      </>
+    ),
+    description: "Desenvolvimento de servidores Model Context Protocol (MCP) e integrações para agentes autônomos de IA.",
+    explanation: "Servidores e ferramentas sob o padrão Model Context Protocol (MCP) para conectar LLMs e agentes de IA aos seus dados e sistemas internos.",
+    features: [
+      "Servidores MCP customizados",
+      "Conexão de LLMs a bancos e APIs internas",
+      "Ferramentas para agentes autônomos",
+      "Sandboxing e controle de permissões",
+    ],
+    src: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=75",
+    alt: "Criação de MCPs, Desenvolvimento de Servidores Model Context Protocol e Integrações de IA — Suporte In Tech",
+  },
+  {
+    id: "4",
+    category: "UI/UX & PRODUTO DIGITAL",
     title: (
       <>
         Design de Interfaces
-        <br />& Experiência
+        <br />
+        & Experiência
       </>
     ),
-    description: "Identidade visual sofisticada, prototipagem avançada e jornadas que convertem usuários.",
-    explanation: "Concepção visual de alto padrão aliada à usabilidade intuitiva. Desenhamos produtos que reforçam a autoridade da sua marca e encantam os usuários em cada interação.",
+    description: "Identidade visual sofisticada, prototipagem avançada e jornadas fluidas focadas em conversão.",
+    explanation: "Concepção de interfaces de alto padrão e usabilidade intuitiva para fortalecer a autoridade da sua marca e maximizar conversões.",
     features: [
       "Design de interfaces web e mobile (UI/UX)",
-      "Prototipagem interativa e fluxos de usuário",
-      "Design systems e diretrizes de marca",
-      "Redesign moderno de sites e plataformas legadas",
+      "Prototipagem interativa e fluxos de navegação",
+      "Design systems e diretrizes visuais escaláveis",
+      "Redesign de plataformas e produtos digitais",
     ],
     src: "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=800&q=75",
     alt: "Design de Interfaces UI/UX, Prototipagem e Design Systems — Suporte In Tech",
   },
-  {
-    id: "4",
-    category: "MARKETING & PERFORMANCE",
-    title: (
-      <>
-        Marketing Digital
-        <br />& Performance
-      </>
-    ),
-    description: "Estratégias orientadas a conversão, SEO, branding digital e presença com autoridade online.",
-    explanation: "Estratégias orientadas a dados para posicionar sua empresa no topo das buscas, atraindo clientes qualificados e maximizando o retorno sobre investimento.",
-    features: [
-      "Gestão de tráfego pago (Google Ads e Meta Ads)",
-      "Posicionamento orgânico (SEO) e conteúdo",
-      "Funis de atração e conversão de leads",
-      "Análise de métricas e relatórios de ROI",
-    ],
-    src: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=75",
-    alt: "Marketing Digital, SEO Técnico, Tráfego Pago e Gestão de Performance — Suporte In Tech",
-  },
 ];
 
 const arrowClass =
-  "shrink-0 grid place-items-center size-10 sm:size-12 lg:size-14 rounded-full border border-border bg-background/80 backdrop-blur-md text-foreground shadow-lg transition-all duration-300 hover:scale-110 hover:bg-foreground hover:text-background disabled:opacity-30 disabled:pointer-events-none cursor-pointer";
+  "shrink-0 grid place-items-center size-9 sm:size-12 lg:size-14 rounded-full border border-border bg-background/80 backdrop-blur-md text-foreground shadow-lg transition-all duration-300 hover:scale-110 hover:bg-foreground hover:text-background disabled:opacity-30 disabled:pointer-events-none cursor-pointer";
 
 export function AppleCardCarousel() {
   const [api, setApi] = React.useState<CarouselApi>();
@@ -192,24 +194,37 @@ export function AppleCardCarousel() {
           {/* Carousel ocupando toda a largura */}
           <Carousel
             setApi={setApi}
-            opts={{ align: "start", dragFree: true }}
+            opts={{
+              align: "start",
+              dragFree: false,
+              breakpoints: {
+                "(min-width: 640px)": {
+                  align: "start",
+                  containScroll: "trimSnaps",
+                  dragFree: true,
+                },
+              },
+            }}
             className="w-full"
           >
-            <CarouselContent className="-ml-6 px-6 sm:px-8 lg:px-12 py-4">
+            <CarouselContent className="ml-0 sm:-ml-6 px-0 sm:px-8 lg:px-12 py-4">
               {cards.map((card) => {
                 const isFlipped = !!flippedCards[card.id];
 
                 return (
-                  <CarouselItem key={card.id} className="pl-6 basis-auto">
+                  <CarouselItem
+                    key={card.id}
+                    className="basis-full sm:basis-auto flex justify-center sm:block pl-0 sm:pl-6"
+                  >
                     <div
                       onPointerDown={handlePointerDown}
                       onClick={(e) => handleCardClick(card.id, e)}
-                      className="group relative w-[280px] h-[460px] sm:w-[320px] sm:h-[500px] lg:w-[360px] lg:h-[540px] border border-border/60 overflow-hidden rounded-3xl cursor-pointer shadow-lg hover:shadow-2xl bg-neutral-950 select-none transition-all duration-300"
+                      className="group relative w-[280px] h-[480px] sm:w-[325px] sm:h-[510px] lg:w-[360px] lg:h-[540px] border border-border/60 overflow-hidden rounded-3xl cursor-pointer shadow-lg hover:shadow-2xl bg-neutral-950 select-none transition-all duration-300"
                     >
                       {/* FACE 1: FOTO E VISÃO PRINCIPAL */}
                       <div
                         className={cn(
-                          "absolute inset-0 flex flex-col justify-between p-6 sm:p-8 transition-all duration-500 ease-in-out",
+                          "absolute inset-0 flex flex-col justify-between p-5 sm:p-6 lg:p-7 transition-all duration-500 ease-in-out",
                           isFlipped
                             ? "opacity-0 scale-95 pointer-events-none -translate-y-3"
                             : "opacity-100 scale-100 pointer-events-auto translate-y-0"
@@ -229,8 +244,8 @@ export function AppleCardCarousel() {
                         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/25 pointer-events-none" />
 
                         {/* Título e Breve Descrição */}
-                        <div className="relative z-10 flex flex-col gap-2.5 sm:gap-3 text-white">
-                          <h3 className="text-2xl sm:text-3xl font-bold tracking-tight leading-tight drop-shadow-sm">
+                        <div className="relative z-10 flex flex-col gap-2 sm:gap-2.5 text-white">
+                          <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight leading-tight drop-shadow-sm">
                             {card.title}
                           </h3>
                           {card.description && (
@@ -248,7 +263,7 @@ export function AppleCardCarousel() {
                           <Button
                             size="icon"
                             type="button"
-                            className="h-11 w-11 rounded-full shadow-md bg-white hover:bg-neutral-100 cursor-pointer flex items-center justify-center transition-transform group-hover:scale-105"
+                            className="h-10 w-10 sm:h-11 sm:w-11 rounded-full shadow-md bg-white hover:bg-neutral-100 cursor-pointer flex items-center justify-center transition-transform group-hover:scale-105"
                             aria-label="Ver explicação do serviço"
                           >
                             <ArrowUpRight className="h-5 w-5 text-neutral-900 transition-transform duration-300 group-hover:rotate-45 will-change-transform" />
@@ -259,7 +274,7 @@ export function AppleCardCarousel() {
                       {/* FACE 2: EXPLICAÇÃO DETALHADA */}
                       <div
                         className={cn(
-                          "absolute inset-0 flex flex-col justify-between p-6 sm:p-8 bg-[#121212] text-white transition-all duration-500 ease-in-out border border-white/10 rounded-3xl",
+                          "absolute inset-0 flex flex-col justify-between p-5 sm:p-6 lg:p-7 bg-[#121212] text-white transition-all duration-500 ease-in-out border border-white/10 rounded-3xl",
                           isFlipped
                             ? "opacity-100 scale-100 pointer-events-auto translate-y-0"
                             : "opacity-0 scale-105 pointer-events-none translate-y-3"
@@ -269,28 +284,28 @@ export function AppleCardCarousel() {
                         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white/5 via-transparent to-transparent pointer-events-none" />
 
                         {/* Área Superior de Conteúdo */}
-                        <div className="relative z-10 flex flex-col gap-3.5 sm:gap-4">
+                        <div className="relative z-10 flex flex-col gap-2 sm:gap-2.5">
                           {/* Categoria / Tag Superior */}
-                          <span className="text-xs font-semibold uppercase tracking-wider text-neutral-400">
+                          <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-neutral-400">
                             {card.category}
                           </span>
 
                           {/* Título Principal */}
-                          <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight leading-snug">
+                          <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-white tracking-tight leading-snug">
                             {card.title}
                           </h3>
 
                           {/* Explicação breve do serviço */}
-                          <p className="text-sm sm:text-base text-neutral-300 leading-relaxed font-normal">
+                          <p className="text-xs sm:text-[13px] lg:text-sm text-neutral-300 leading-relaxed font-normal">
                             {card.explanation}
                           </p>
 
                           {/* Lista de Recursos / Escopo do Serviço */}
                           {card.features && card.features.length > 0 && (
-                            <ul className="flex flex-col gap-2 mt-2 pt-3 border-t border-white/10">
+                            <ul className="flex flex-col gap-1.5 sm:gap-2 mt-1 sm:mt-2 pt-2.5 sm:pt-3 border-t border-white/10">
                               {card.features.map((feature, idx) => (
-                                <li key={idx} className="flex items-center gap-2 text-xs sm:text-sm text-neutral-300">
-                                  <span className="size-1.5 rounded-full bg-white shrink-0 shadow-xs" />
+                                <li key={idx} className="flex items-start gap-2 text-[11px] sm:text-xs lg:text-sm text-neutral-300 leading-snug">
+                                  <span className="size-1.5 rounded-full bg-white shrink-0 mt-1 shadow-xs" />
                                   <span>{feature}</span>
                                 </li>
                               ))}
@@ -299,7 +314,7 @@ export function AppleCardCarousel() {
                         </div>
 
                         {/* Rodapé / Barra de Ação (Com "Voltar") */}
-                        <div className="relative z-10 flex items-center justify-start pt-4 border-t border-white/10 mt-auto">
+                        <div className="relative z-10 flex items-center justify-start pt-3 sm:pt-4 border-t border-white/10 mt-auto">
                           <button
                             type="button"
                             onClick={(e) => {
@@ -317,11 +332,7 @@ export function AppleCardCarousel() {
                   </CarouselItem>
                 );
               })}
-              {/* Espaçador final proporcional para igualar as margens esquerda e direita no fim do carrossel */}
-              <div
-                className="shrink-0 basis-6 sm:basis-8 lg:basis-12 pointer-events-none"
-                aria-hidden="true"
-              />
+
             </CarouselContent>
           </Carousel>
 

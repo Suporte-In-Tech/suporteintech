@@ -187,7 +187,7 @@ const Header = () => {
             <div className="flex w-full justify-between lg:w-auto">
               <Link
                 href="/"
-                aria-label="SuporteInTech Home"
+                aria-label="Suporte In Tech Home"
                 onClick={(e) => handleNavClick("/", e)}
                 className="relative flex items-center h-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-lg select-none"
               >
@@ -200,7 +200,7 @@ const Header = () => {
                   {/* Logo Completa - Dark Mode */}
                   <Image
                     src={logoCompletaDark}
-                    alt="SuporteInTech"
+                    alt="Suporte In Tech — Criação de Sites, Desenvolvimento de Software Sob Medida e Infraestrutura de TI"
                     priority
                     className={cn(
                       "absolute left-0 top-1/2 -translate-y-1/2 h-7 sm:h-8 w-auto max-w-none transition-all duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)] origin-left hidden dark:block",
@@ -212,7 +212,7 @@ const Header = () => {
                   {/* Logo Completa - Light Mode */}
                   <Image
                     src={logoCompletaLight}
-                    alt="SuporteInTech"
+                    alt="Suporte In Tech — Criação de Sites, Desenvolvimento de Software Sob Medida e Infraestrutura de TI"
                     className={cn(
                       "absolute left-0 top-1/2 -translate-y-1/2 h-7 sm:h-8 w-auto max-w-none transition-all duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)] origin-left dark:hidden",
                       isCollapsed
@@ -224,7 +224,7 @@ const Header = () => {
                   {/* Logo Simplificada - Dark Mode */}
                   <Image
                     src={logoSimplificadaDark}
-                    alt="SIT"
+                    alt="SIT — Suporte In Tech Logotipo Simplificado"
                     className={cn(
                       "absolute left-0 top-1/2 -translate-y-1/2 h-7 sm:h-8 w-auto max-w-none transition-all duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)] origin-left hidden dark:block",
                       isCollapsed
@@ -235,7 +235,7 @@ const Header = () => {
                   {/* Logo Simplificada - Light Mode */}
                   <Image
                     src={logoSimplificadaLight}
-                    alt="SIT"
+                    alt="SIT — Suporte In Tech Logotipo Simplificado"
                     className={cn(
                       "absolute left-0 top-1/2 -translate-y-1/2 h-7 sm:h-8 w-auto max-w-none transition-all duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)] origin-left dark:hidden",
                       isCollapsed
@@ -248,7 +248,7 @@ const Header = () => {
               <div className="flex gap-2">
                 <button
                   onClick={() => setMenuState(!menuState)}
-                  aria-label={menuState == true ? "Close Menu" : "Open Menu"}
+                  aria-label={menuState ? "Close Menu" : "Open Menu"}
                   className="relative z-20 pr-2 block cursor-pointer p-2 lg:hidden"
                 >
                   <Menu className={cn("size-5 duration-300 transition-all", menuState && "rotate-180 scale-0 opacity-0")} />
@@ -262,7 +262,7 @@ const Header = () => {
             </div>
 
             <div className={cn(
-              "border backdrop-blur-2xl lg:flex w-full flex-wrap items-center justify-end space-y-6 rounded-xl p-4 shadow-xl transition-all duration-300 md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-4 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none dark:shadow-none dark:lg:bg-transparent",
+              "border backdrop-blur-2xl lg:flex w-full flex-wrap items-center justify-end space-y-6 rounded-xl p-4 shadow-xl transition-all duration-300 md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-3 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none dark:shadow-none dark:lg:bg-transparent",
               menuState ? "block" : "hidden"
             )}>
               <div className="lg:hidden block p-2">
@@ -372,5 +372,4 @@ export function ModeToggle() {
 }
 
 export { Header };
-
 export default Header;

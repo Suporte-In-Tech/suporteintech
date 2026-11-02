@@ -51,7 +51,7 @@ export function HeroSection() {
             {/* Description */}
             <p className="text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed font-normal">
               A estabilidade que sua logística corporativa exige, a arquitetura
-              de rede que suporta a expansão, a experiência digital que encanta
+              de infraestrutura que suporta a expansão, a experiência digital que encanta
               seus usuários e a consultoria que guia cada linha de código. Da
               infraestrutura de TI à sua plataforma online — nós garantimos que
               nada pare.

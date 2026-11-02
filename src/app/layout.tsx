@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
+import { CookieBanner } from "@/components/ui/cookie-banner";
 import { RootJsonLd } from "@/components/seo/json-ld";
 import { SEO_KEYWORDS, SITE_CONFIG } from "@/lib/constants";
 import { Analytics } from "@vercel/analytics/next";
@@ -110,6 +111,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
+          <CookieBanner />
         </ThemeProvider>
         {process.env.VERCEL ? (
           <>

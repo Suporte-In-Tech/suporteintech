@@ -8,7 +8,8 @@ Allow: /llms.txt
 Allow: /sitemap.xml
 Allow: /manifest.webmanifest
 Allow: /projetos/sobei
-Allow: /projetos/redes-sobei
+Allow: /politica-de-privacidade
+Allow: /termos-de-uso
 Disallow: /api/
 
 # Permissões explícitas para Crawlers de Busca e Indexadores de IA (GEO / AEO)

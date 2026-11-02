@@ -132,8 +132,7 @@ export default async function Image() {
             }}
           >
             Criação de sites profissionais, desenvolvimento de software sob
-            medida, plataformas web de alta performance e infraestrutura de
-            redes corporativas.
+            medida, plataformas web de alta performance e infraestrutura corporativa em cloud.
           </div>
         </div>
 
@@ -151,14 +150,14 @@ export default async function Image() {
             fontWeight: 500,
           }}
         >
-          <div style={{ display: "flex", gap: "24px", alignItems: "center" }}>
-            <span>Criação de Sites & Portais</span>
+          <div style={{ display: "flex", gap: "20px", alignItems: "center" }}>
+            <span>Criação de Sites</span>
             <span style={{ color: "#52525B" }}>•</span>
             <span>Software Sob Medida</span>
             <span style={{ color: "#52525B" }}>•</span>
-            <span>UI/UX & Design System</span>
+            <span>Cloud & MCPs</span>
             <span style={{ color: "#52525B" }}>•</span>
-            <span>Redes & Infraestrutura de TI</span>
+            <span>Design UI/UX</span>
           </div>
           <div style={{ color: "#FAFAFA", fontWeight: 700 }}>
             (11) 99252-7640

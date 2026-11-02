@@ -381,7 +381,7 @@ export default function SobeiCasePage() {
                           <div className="relative w-full h-full flex items-center justify-center">
                             <Image
                               src={row.iconSrc}
-                              alt="Ícone Pequeno Oficial SOBEI"
+                              alt={`Símbolo oficial SOBEI — Variação cromática ${row.name}`}
                               width={70}
                               height={70}
                               className="object-contain max-h-10 sm:max-h-14 md:max-h-16 w-auto"
@@ -473,13 +473,6 @@ export default function SobeiCasePage() {
                   <span>Falar com Nossa Equipe</span>
                   <ArrowUpRight className="size-4" />
                 </a>
-
-                <Link
-                  href="/projetos/redes-sobei"
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-medium text-sm border border-border text-foreground hover:bg-muted transition-colors"
-                >
-                  <span>Ver Projeto de Redes</span>
-                </Link>
               </div>
             </div>
           </section>

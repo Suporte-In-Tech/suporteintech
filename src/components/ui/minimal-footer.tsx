@@ -39,13 +39,15 @@ export function MinimalFooter() {
 
   const company = [
     { title: "Sobre Nós", href: "/#sobre" },
-    { title: "Projeto Software SOBEI", href: "/projetos/sobei" },
-    { title: "Projeto Redes SOBEI", href: "/projetos/redes-sobei" },
+    { title: "Projeto SOBEI", href: "/projetos/sobei" },
+    { title: "Política de Privacidade", href: "/politica-de-privacidade" },
+    { title: "Termos de Uso", href: "/termos-de-uso" },
   ];
 
   const support = [
     { title: "Contato via WhatsApp", href: CONTACT_INFO.whatsappUrl, external: true },
     { title: "Solicitar Orçamento", href: CONTACT_INFO.whatsappUrl, external: true },
+    { title: "Instagram (@suporteintech)", href: CONTACT_INFO.instagramUrl, external: true },
   ];
 
   const navigation = [
@@ -55,8 +57,8 @@ export function MinimalFooter() {
   ];
 
   const socialLinks = [
+    { icon: <InstagramIcon className="size-4" />, link: CONTACT_INFO.instagramUrl, label: "Instagram (@suporteintech)" },
     { icon: <GithubIcon className="size-4" />, link: "#", label: "GitHub" },
-    { icon: <InstagramIcon className="size-4" />, link: "#", label: "Instagram" },
     { icon: <LinkedinIcon className="size-4" />, link: "#", label: "LinkedIn" },
   ];
 
@@ -82,12 +84,12 @@ export function MinimalFooter() {
             <Link href="/" aria-label="SuporteInTech Home" className="w-max opacity-90 hover:opacity-100 transition-opacity">
               <Image
                 src={logoSimplificadaDark}
-                alt="SuporteInTech — Criação de Sites, Desenvolvimento de Software e TI"
+                alt="Suporte In Tech — Criação de Sites, Desenvolvimento de Software Sob Medida e Infraestrutura de TI"
                 className="h-14 sm:h-16 md:h-20 w-auto object-contain"
               />
             </Link>
             <p className="text-neutral-300 font-mono text-sm text-balance leading-relaxed">
-              SuporteInTech — Criação de sites profissionais, desenvolvimento de software sob medida, infraestrutura de redes e suporte de TI corporativo.
+              SuporteInTech — Criação de sites profissionais, desenvolvimento de software sob medida, estruturação de infraestrutura e suporte de TI corporativo.
             </p>
             <div className="flex gap-2">
               {socialLinks.map((item, i) => (
@@ -95,9 +97,10 @@ export function MinimalFooter() {
                   key={i}
                   className="hover:bg-white/10 bg-white/5 border border-white/10 text-neutral-300 hover:text-white rounded-md p-1.5 transition-colors"
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   href={item.link}
                   aria-label={item.label}
+                  title={item.label}
                 >
                   {item.icon}
                 </a>
@@ -162,13 +165,22 @@ export function MinimalFooter() {
             </div>
           </div>
         </div>
-        {/* Barra inferior de copyright posicionada na base do footer */}
+        {/* Barra inferior de copyright posicionada na base do footer com links de privacidade e termos */}
         <div className="mt-auto w-full">
           <div className="bg-white/10 h-px w-full" />
-          <div className="flex max-w-5xl flex-col justify-between gap-2 px-6 md:px-10 pt-4 pb-8">
-            <p className="text-neutral-400 text-center font-light text-xs">
+          <div className="flex max-w-5xl flex-col sm:flex-row justify-between items-center gap-3 px-6 md:px-10 pt-4 pb-8">
+            <p className="text-neutral-400 text-center sm:text-left font-light text-xs">
               © {year} SuporteInTech. Todos os direitos reservados.
             </p>
+            <div className="flex items-center gap-4 text-xs text-neutral-400 font-light">
+              <Link href="/politica-de-privacidade" className="hover:text-white transition-colors duration-200">
+                Política de Privacidade
+              </Link>
+              <span className="text-neutral-600">•</span>
+              <Link href="/termos-de-uso" className="hover:text-white transition-colors duration-200">
+                Termos de Uso
+              </Link>
+            </div>
           </div>
         </div>
       </div>

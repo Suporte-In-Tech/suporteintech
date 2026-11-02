@@ -1,35 +1,36 @@
-# SuporteInTech — Criação de Sites, Desenvolvimento de Software Sob Medida & Infraestrutura de TI
+# SuporteInTech — Criação de Sites, Desenvolvimento de Software Sob Medida, Cloud & MCPs
 
-> Da infraestrutura à tela, nós construímos o futuro. A SuporteInTech (Suporte In Tech) é uma empresa especializada em criação de sites profissionais, desenvolvimento de software sob medida, sistemas web, UI/UX design, arquitetura de redes corporativas e infraestrutura de TI — responsável do cabo de rede à experiência final do usuário.
+> Da infraestrutura à tela, nós construímos o futuro. A SuporteInTech (Suporte In Tech) é uma empresa especializada em criação de sites profissionais, desenvolvimento de software sob medida, sistemas web, estruturação de cloud computing e criação de servidores Model Context Protocol (MCP) para agentes de IA.
 
 ## Seções & Navegação Principal
 
 - [Página Inicial](https://suporteintech.com.br/): Visão geral da empresa, proposta de valor e serviços oferecidos.
 - [Quem Somos & Filosofia](https://suporteintech.com.br/#sobre): Nossos princípios operacionais, metodologia integrada e compromissos corporativos com segurança da informação e LGPD.
-- [Nossos Serviços](https://suporteintech.com.br/#servicos): Detalhamento dos serviços de Engenharia de Software, Infraestrutura & Redes, UI/UX Design e Performance Digital.
+- [Nossos Serviços](https://suporteintech.com.br/#servicos): Detalhamento dos serviços de Engenharia de Software, Estruturação de Cloud e Criação de MCPs.
 - [Metodologia & Processos](https://suporteintech.com.br/#como-trabalhamos): Esteira técnica em 7 etapas, do diagnóstico inicial ao go-live com zero downtime e suporte contínuo 24/7.
 - [Portfólio de Projetos](https://suporteintech.com.br/#portfolio): Casos de sucesso e projetos em destaque desenvolvidos pela equipe técnica.
+- [Política de Privacidade](https://suporteintech.com.br/politica-de-privacidade): Termos e diretrizes de proteção de dados pessoais e privacidade em total conformidade com a LGPD (Lei nº 13.709/2018).
+- [Termos de Uso](https://suporteintech.com.br/termos-de-uso): Condições gerais de navegação, propriedade intelectual e contratação de serviços técnicos.
 
 ## Estudos de Caso & Projetos em Destaque
 
 - [Construção de Plataformas Web — SOBEI](https://suporteintech.com.br/projetos/sobei): Ecossistema completo composto por 4 portais em Next.js (Institucional, Canal de Ética LGPD, Congresso e Backoffice), API central em Java Spring Boot e Design System autoral.
-- [Reestruturação Logística de Redes — SOBEI](https://suporteintech.com.br/projetos/redes-sobei): Diagnóstico de conectividade, documentação de topologia física e lógica no Cisco Packet Tracer e reorganização de racks e switches para alta disponibilidade.
 
 ## Nossos Serviços Especializados
 
-### 1. Engenharia de Software — Criação de Sites Profissionais & Sistemas Sob Medida
+### 1. Estruturação de Cloud Computing — Arquitetura em Nuvem & Alta Resiliência
+Planejamento, provisionamento e governança de ambientes em nuvem com foco em escalabilidade, alta disponibilidade e redução de custos operacionais (FinOps).
+- **Tecnologias:** AWS, Google Cloud (GCP), Cloudflare, Vercel, Docker, Terraform (IaC), CI/CD pipelines e monitoramento contínuo.
+
+### 2. Engenharia de Software — Criação de Sites Profissionais & Sistemas Sob Medida
 Construção de sites institucionais rápidos, landing pages de alta conversão, portais web, APIs corporativas e sistemas escaláveis sob medida para empresas de todos os portes.
 - **Tecnologias:** Java, Spring Boot, Next.js, React, TypeScript, Tailwind CSS, PostgreSQL, Cloudflare R2 / AWS.
 
-### 2. UI/UX & Produto — Design de Interfaces & Experiência
-Design de interfaces sofisticadas, prototipagem avançada de alta fidelidade e design systems com tokens semânticos voltados para alta conversão e usabilidade intuitiva.
-
-### 3. Infraestrutura & Redes — Arquitetura e Logística de Redes Corporativas
-Planejamento, instalação e auditoria de cabeamento estruturado (Cat6/Cat6a e fibra óptica), segmentação por VLANs, roteamento dinâmico, firewalls e logística de peças.
-
-### 4. Marketing & Performance Digital
-Estratégias de SEO técnico, Core Web Vitals, gestão de tráfego pago (Google Ads e Meta Ads) e arquitetura de atração para posicionar marcas com autoridade.
+### 3. Inteligência Artificial & MCP — Criação de MCPs (Model Context Protocol)
+Criação e homologação de servidores MCP customizados e ferramentas especializadas para conectar LLMs e agentes de IA a bancos de dados legados, APIs proprietárias e sistemas internos.
+- **Padrões:** Model Context Protocol (Anthropic/Open standard), Tool Calling, Context Providers, Sandboxing e controle granular de permissões.
 
 ## Contato & Atendimento
 
-- [Atendimento Comercial & Suporte via WhatsApp](https://wa.me/5511995964894): Canal direto com a liderança técnica para diagnósticos, propostas comerciais e orçamentos.
+- [Atendimento Comercial & Suporte via WhatsApp](https://wa.me/5511992527640): Canal direto com a liderança técnica para diagnósticos, propostas comerciais e orçamentos.
+- [Instagram Oficial (@suporteintech)](https://www.instagram.com/suporteintech): Perfil oficial com atualizações contínuas de projetos, infraestrutura, engenharia de software e bastidores.

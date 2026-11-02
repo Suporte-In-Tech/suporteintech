@@ -24,6 +24,9 @@ export function RootJsonLd() {
         slogan: SITE_CONFIG.slogan,
         telephone: CONTACT_INFO.phoneInternational,
         email: CONTACT_INFO.email,
+        sameAs: [
+          CONTACT_INFO.instagramUrl,
+        ],
         priceRange: "$$",
         address: {
           "@type": "PostalAddress",
@@ -67,19 +70,22 @@ export function RootJsonLd() {
           "Criação de Sites Profissionais",
           "Desenvolvimento de Software Sob Medida",
           "Desenvolvimento de Sistemas Web",
+          "Serviços de Estruturação de Cloud",
+          "Arquitetura Cloud Computing (AWS, GCP, Cloudflare, Vercel)",
+          "Criação de MCPs (Model Context Protocol)",
+          "Integrações para Agentes de IA e LLMs",
+          "Design de Interfaces e Experiência do Usuário (UI/UX)",
+          "Design Systems e Prototipagem Interativa",
           "Criação de Landing Pages de Alta Conversão",
           "Portais Institucionais e Corporativos",
           "Arquitetura de Software e APIs REST",
           "Desenvolvimento Fullstack Next.js, React e Spring Boot",
-          "UI/UX Design e Design Systems",
-          "Infraestrutura de TI e Redes Corporativas",
-          "Cabeamento Estruturado e Segmentação VLAN",
           "Consultoria e Suporte Técnico de TI",
           "Segurança da Informação e Adequação à LGPD",
         ],
         hasOfferCatalog: {
           "@type": "OfferCatalog",
-          name: "Serviços de Engenharia de Software, Criação de Sites e Infraestrutura de TI",
+          name: "Serviços de Engenharia de Software, Criação de Sites, Estruturação de Cloud e Criação de MCPs",
           itemListElement: [
             {
               "@type": "Offer",
@@ -109,10 +115,22 @@ export function RootJsonLd() {
               "@type": "Offer",
               itemOffered: {
                 "@type": "Service",
-                name: "UI/UX Design, Prototipagem & Design Systems",
+                name: "Serviços de Estruturação de Cloud Computing & Arquitetura em Nuvem",
+                serviceType: "Estruturação de Cloud e Computação em Nuvem",
+                description:
+                  "Provisionamento, migração e gerenciamento de ambientes em nuvem (AWS, GCP, Cloudflare, Vercel), automação CI/CD, bancos de dados escaláveis, observabilidade 24/7 e otimização contínua de custos FinOps.",
+                provider: { "@id": `${baseUrl}/#organization` },
+                areaServed: "BR",
+              },
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Design de Interfaces & Experiência (UI/UX)",
                 serviceType: "Design de Interfaces e Experiência do Usuário",
                 description:
-                  "Design de interfaces web e mobile de alto padrão, prototipagem interativa, criação de Design Systems escaláveis e redesign moderno de plataformas legadas.",
+                  "Design de interfaces web e mobile de alto padrão, prototipagem interativa no Figma, criação de Design Systems escaláveis e redesign moderno de plataformas legadas.",
                 provider: { "@id": `${baseUrl}/#organization` },
                 areaServed: "BR",
               },
@@ -121,22 +139,10 @@ export function RootJsonLd() {
               "@type": "Offer",
               itemOffered: {
                 "@type": "Service",
-                name: "Infraestrutura de TI, Arquitetura e Logística de Redes",
-                serviceType: "Infraestrutura de Redes e Suporte de TI",
+                name: "Criação de MCPs (Model Context Protocol) & Agentes de IA",
+                serviceType: "Desenvolvimento de MCPs e Integrações de Inteligência Artificial",
                 description:
-                  "Cabeamento estruturado Cat6 e fibra óptica, configuração de roteadores, switches L2/L3 e firewalls, VLANs 802.1Q, Wi-Fi corporativo de alta densidade e mapeamento digital no Cisco Packet Tracer.",
-                provider: { "@id": `${baseUrl}/#organization` },
-                areaServed: "BR",
-              },
-            },
-            {
-              "@type": "Offer",
-              itemOffered: {
-                "@type": "Service",
-                name: "Marketing Digital, SEO Técnico & Performance",
-                serviceType: "Marketing Digital e Posicionamento Orgânico",
-                description:
-                  "Posicionamento orgânico no Google (SEO), gestão de tráfego pago (Google Ads e Meta Ads), funis de aquisição e análise de métricas de conversão e ROI.",
+                  "Desenvolvimento de servidores Model Context Protocol (MCP) e ferramentas customizadas para conectar inteligências artificiais e LLMs a bancos de dados, APIs proprietárias e sistemas corporativos com governança e segurança.",
                 provider: { "@id": `${baseUrl}/#organization` },
                 areaServed: "BR",
               },
@@ -192,18 +198,18 @@ export function RootJsonLd() {
           },
           {
             "@type": "Question",
-            name: "Quais serviços de infraestrutura de TI e redes corporativas vocês oferecem?",
+            name: "Quais serviços de estruturação de Cloud e criação de MCPs vocês oferecem?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Realizamos auditoria física e lógica de redes, cabeamento estruturado Cat6 e fibra óptica, configuração de switches gerenciáveis L2/L3, roteadores e firewalls, segmentação em VLANs (802.1Q), redes corporativas de alta densidade (Wi-Fi 6), CFTV IP e documentação completa de topologia no Cisco Packet Tracer.",
+              text: "Projetamos e estruturamos ambientes escaláveis em nuvem (AWS, GCP, Cloudflare e Vercel), realizamos migração para cloud, automação serverless e FinOps. Também desenvolvemos servidores sob o protocolo Model Context Protocol (MCP) para conectar LLMs e agentes autônomos de IA aos seus bancos de dados, APIs proprietárias e sistemas internos com governança e segurança.",
             },
           },
           {
             "@type": "Question",
-            name: "Como solicitar um orçamento para criação de site, software ou infraestrutura de TI?",
+            name: "Como solicitar um orçamento para criação de site, software, estruturação de cloud ou MCPs?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Você pode entrar em contato diretamente com nossa equipe técnica pelo WhatsApp comercial (11) 99252-7640 para agendar um diagnóstico técnico do seu projeto de site, sistema sob medida ou rede corporativa.",
+              text: "Você pode entrar em contato diretamente com nossa equipe técnica pelo WhatsApp comercial (11) 99252-7640 para agendar um diagnóstico técnico do seu projeto de software, criação de site, arquitetura de cloud ou integração de IA via MCP.",
             },
           },
         ],
