@@ -101,7 +101,7 @@ export const Card = ({ project, position, total, onDragNext, onDragPrev }: CardP
       >
         <Image
           src={project.link}
-          alt={project.title}
+          alt={`Capa e showcase do projeto ${project.title} — ${project.category} por Suporte In Tech`}
           fill
           loading="lazy"
           sizes="(max-width: 768px) 95vw, (max-width: 1200px) 85vw, 1152px"
@@ -161,16 +161,18 @@ const Component = React.forwardRef<HTMLDivElement, ComponentRootProps>(
         className={cn('w-full outline-none', className)}
       >
         <div className='flex items-center gap-2 sm:gap-4 lg:gap-6'>
-          <button
-            id='stacking-card-prev'
-            type='button'
-            onClick={prev}
-            disabled={!canPrev}
-            aria-label='Projeto anterior'
-            className={arrowClass}
-          >
-            <ArrowLeft className='size-4 sm:size-5' />
-          </button>
+          {total > 1 && (
+            <button
+              id='stacking-card-prev'
+              type='button'
+              onClick={prev}
+              disabled={!canPrev}
+              aria-label='Projeto anterior'
+              className={arrowClass}
+            >
+              <ArrowLeft className='size-4 sm:size-5' />
+            </button>
+          )}
 
           {/* Palco dos cards (espaço superior reservado para a pilha) */}
           <div className='relative flex-1 pt-8 sm:pt-10'>
@@ -188,54 +190,58 @@ const Component = React.forwardRef<HTMLDivElement, ComponentRootProps>(
             </div>
           </div>
 
-          <button
-            id='stacking-card-next'
-            type='button'
-            onClick={next}
-            disabled={!canNext}
-            aria-label='Próximo projeto'
-            className={arrowClass}
-          >
-            <ArrowRight className='size-4 sm:size-5' />
-          </button>
+          {total > 1 && (
+            <button
+              id='stacking-card-next'
+              type='button'
+              onClick={next}
+              disabled={!canNext}
+              aria-label='Próximo projeto'
+              className={arrowClass}
+            >
+              <ArrowRight className='size-4 sm:size-5' />
+            </button>
+          )}
         </div>
 
         {/* Indicadores */}
-        <div className='mt-6 sm:mt-8 flex items-center justify-center gap-4'>
-          <span className='font-mono text-xs tabular-nums text-muted-foreground'>
-            <AnimatePresence mode='popLayout' initial={false}>
-              <motion.span
-                key={index}
-                initial={{ y: 8, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: -8, opacity: 0 }}
-                className='inline-block text-foreground'
-              >
-                {String(index + 1).padStart(2, '0')}
-              </motion.span>
-            </AnimatePresence>{' '}
-            / {String(total).padStart(2, '0')}
-          </span>
-          <div className='flex items-center gap-1.5'>
-            {projects.map((p, i) => (
-              <button
-                key={`dot_${i}`}
-                type='button'
-                onClick={() => setIndex(i)}
-                aria-label={`Ir para ${p.title}`}
-                aria-current={i === index}
-                className="p-2 cursor-pointer flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-full"
-              >
-                <span
-                  className={cn(
-                    'h-1.5 rounded-full transition-all duration-500 block',
-                    i === index ? 'w-8 bg-foreground' : 'w-1.5 bg-foreground/25 hover:bg-foreground/50'
-                  )}
-                />
-              </button>
-            ))}
+        {total > 1 && (
+          <div className='mt-6 sm:mt-8 flex items-center justify-center gap-4'>
+            <span className='font-mono text-xs tabular-nums text-muted-foreground'>
+              <AnimatePresence mode='popLayout' initial={false}>
+                <motion.span
+                  key={index}
+                  initial={{ y: 8, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -8, opacity: 0 }}
+                  className='inline-block text-foreground'
+                >
+                  {String(index + 1).padStart(2, '0')}
+                </motion.span>
+              </AnimatePresence>{' '}
+              / {String(total).padStart(2, '0')}
+            </span>
+            <div className='flex items-center gap-1.5'>
+              {projects.map((p, i) => (
+                <button
+                  key={`dot_${i}`}
+                  type='button'
+                  onClick={() => setIndex(i)}
+                  aria-label={`Ir para ${p.title}`}
+                  aria-current={i === index}
+                  className="p-2 cursor-pointer flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-full"
+                >
+                  <span
+                    className={cn(
+                      'h-1.5 rounded-full transition-all duration-500 block',
+                      i === index ? 'w-8 bg-foreground' : 'w-1.5 bg-foreground/25 hover:bg-foreground/50'
+                    )}
+                  />
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     );
   }

@@ -12,15 +12,6 @@ const projects: ProjectData[] = [
     color: "#0A193F",
     href: "/projetos/sobei",
   },
-  {
-    category: "Infraestrutura & Redes • Projeto",
-    title: "Reestruturação Logística de Redes — SOBEI",
-    description:
-      "Projeto concebido para mapear e documentar a infraestrutura existente nas dependências da SOBEI, identificando gargalos e oportunidades de melhoria para facilitar manutenções futuras através de um mapa lógico e interativo da rede.",
-    link: "/projetos/sobei-redes-cover.webp",
-    color: "#364562",
-    href: "/projetos/redes-sobei",
-  },
 ];
 
 export function ProjectsSection() {
@@ -33,11 +24,11 @@ export function ProjectsSection() {
               Portfólio
             </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-foreground">
-              Projetos em Destaque
+              Projeto em Destaque
             </h2>
           </div>
           <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed max-w-md">
-            Alguns dos desafios que transformamos em resultados. Use as setas para navegar entre os projetos.
+            Um dos principais desafios técnicos que transformamos em resultados concretos para nossos clientes.
           </p>
         </div>
 
@@ -45,7 +36,7 @@ export function ProjectsSection() {
           <StackingCards projects={projects} className="mx-auto max-w-6xl" />
         </div>
 
-        {/* Sumário semântico SSR para garantir indexação completa de todos os projetos e links internos pelos crawlers */}
+        {/* Sumário semântico SSR para garantir indexação completa do projeto pelos crawlers */}
         <div className="sr-only">
           {projects.map((project) => (
             <article key={project.href}>

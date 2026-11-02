@@ -88,28 +88,28 @@ const defaultTopJourneyData: JourneyItem[] = [
     id: "etapa-1",
     year: "01",
     month: "Diagnóstico & Auditoria",
-    content: "Mapeamento rigoroso de infraestrutura, análise de tráfego, gargalos e definição clara de escopo técnico.",
+    content: "Mapeamento rigoroso de infraestrutura, análise de gargalos operacionais e definição clara de escopo técnico.",
     order: 1,
   },
   {
     id: "etapa-3",
     year: "03",
     month: "Desenvolvimento & Engenharia",
-    content: "Montagem de racks, conectorização, código sob medida e estruturação de bancos de dados escaláveis.",
+    content: "Provisionamento IaC em nuvem, desenvolvimento de software sob medida e servidores MCP para IA.",
     order: 3,
   },
   {
     id: "etapa-5",
     year: "05",
     month: "Homologação & Testes QA",
-    content: "Simulação de estresse, validação de latência, auditoria de segurança perimetral e aprovação pelo cliente.",
+    content: "Testes automatizados, simulação de carga, auditoria de segurança em cloud e validação da LGPD.",
     order: 5,
   },
   {
     id: "etapa-7",
     year: "07",
     month: "Sustentação & Suporte 24/7",
-    content: "Monitoramento proativo contínuo, telemetria em tempo real e resposta ágil com SLA corporativo garantido.",
+    content: "Observabilidade contínua, telemetria em tempo real, otimização FinOps e SLA corporativo garantido.",
     order: 7,
   },
 ];
@@ -119,21 +119,21 @@ const defaultBottomJourneyData: JourneyItem[] = [
     id: "etapa-2",
     year: "02",
     month: "Arquitetura & Estratégia",
-    content: "Desenho da topologia de rede, especificação de switches, firewalls e definição de arquitetura de software.",
+    content: "Arquitetura em nuvem (AWS/GCP), automação CI/CD, microsserviços e modelagem de software e APIs.",
     order: 2,
   },
   {
     id: "etapa-4",
     year: "04",
     month: "Design & Experiência",
-    content: "Prototipagem interativa, testes de usabilidade e criação de interfaces fluidas focadas em alta conversão.",
+    content: "Prototipagem no Figma, Design System escalável e jornadas fluidas focadas em máxima conversão.",
     order: 4,
   },
   {
     id: "etapa-6",
     year: "06",
     month: "Go-Live com Zero Downtime",
-    content: "Transição suave e virada de chave planejada para não interromper um único segundo da operação da sua empresa.",
+    content: "Deploy automatizado e virada de chave planejada sem interromper um único segundo da sua operação.",
     order: 6,
   },
 ];
@@ -235,7 +235,7 @@ export default function Timeline({
 
     // DESKTOP (> 600px): finaliza com o Item 07 perfeitamente visível à direita, eliminando o espaçamento vazio que não é necessário no desktop
     mm.add("(min-width: 601px)", () => {
-      const slidePercent = -41.5;
+      const slidePercent = -45.0;
       const lineWidth = "100%";
       const lineStart = "top 20%";
       const slideEnd = "90% bottom";
@@ -287,7 +287,7 @@ export default function Timeline({
       <div className="h-screen w-full sticky top-0 flex flex-col justify-center items-start overflow-hidden pt-24 pb-8 sm:pt-24 sm:pb-8">
         <div
           ref={wholeSliderRef}
-          className="mr-[2vw] flex h-[30vw] max-h-[64vh] w-[165vw] items-center px-[5vw] max-[600px]:h-[54vh] max-[600px]:w-[430vw] max-[600px]:px-[7vw]"
+          className="mr-[2vw] flex h-[30vw] max-h-[64vh] w-[180vw] items-center px-[5vw] max-[600px]:h-[54vh] max-[600px]:w-[430vw] max-[600px]:px-[7vw]"
         >
           <div className="relative h-full w-full">
             {/* Linha Central Guia */}

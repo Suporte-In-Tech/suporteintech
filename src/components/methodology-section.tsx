@@ -19,43 +19,43 @@ const methodologySeoSteps = [
     step: "01",
     title: "Diagnóstico & Auditoria",
     description:
-      "Mapeamento rigoroso de infraestrutura de TI, análise de tráfego, gargalos operacionais e definição clara de escopo técnico para criação de sites, sistemas web e redes.",
+      "Mapeamento de infraestrutura de TI, análise de gargalos operacionais e definição clara de requisitos para cloud, sistemas web, plataformas sob medida e inteligência artificial.",
   },
   {
     step: "02",
     title: "Arquitetura & Estratégia",
     description:
-      "Desenho da topologia de rede, especificação de switches e firewalls, e definição da arquitetura de software, APIs e banco de dados.",
+      "Desenho da arquitetura em nuvem escalável, esteiras de automação CI/CD, especificação de microsserviços, modelagem de banco de dados e APIs REST.",
   },
   {
     step: "03",
     title: "Desenvolvimento & Engenharia",
     description:
-      "Montagem de racks, conectorização, desenvolvimento de software sob medida, criação de sites rápidos e estruturação de bancos de dados escaláveis.",
+      "Provisionamento de infraestrutura como código (IaC), desenvolvimento de software sob medida, criação de sites performáticos e servidores MCP conectados a IA.",
   },
   {
     step: "04",
     title: "Design & Experiência (UI/UX)",
     description:
-      "Prototipagem interativa, aplicação de Design System, testes de usabilidade e criação de interfaces responsivas focadas em alta conversão.",
+      "Prototipagem interativa de alta fidelidade no Figma, aplicação de Design System consistente, testes de usabilidade e interfaces modernas focadas em alta conversão.",
   },
   {
     step: "05",
     title: "Homologação & Testes QA",
     description:
-      "Simulação de estresse, validação de latência, auditoria de segurança perimetral, adequação à LGPD e aprovação junto ao cliente.",
+      "Bateria de testes automatizados, simulação de estresse de carga, auditoria de segurança em nuvem, validação de latência e conformidade com a LGPD.",
   },
   {
     step: "06",
     title: "Go-Live com Zero Downtime",
     description:
-      "Transição suave e virada de chave planejada para colocar seu novo site, software ou rede em produção sem interromper a operação da empresa.",
+      "Transição planejada e deploy automatizado para colocar sua plataforma web, software sob medida ou infraestrutura em nuvem em produção sem interromper a operação da empresa.",
   },
   {
     step: "07",
     title: "Sustentação & Suporte 24/7",
     description:
-      "Monitoramento proativo contínuo, telemetria em tempo real, manutenção evolutiva e resposta ágil com SLA corporativo garantido.",
+      "Telemetria e observabilidade em tempo real, monitoramento proativo contínuo, otimização de custos FinOps e resposta ágil com SLA corporativo garantido.",
   },
 ];
 

@@ -58,11 +58,11 @@ const principles = [
   },
   {
     title: "Um único responsável técnico",
-    text: "Rede, servidores, software e presença digital costumam ficar espalhados entre vários fornecedores que não se falam. Centralizamos tudo em uma equipe só, com um ponto de contato que conhece o seu ambiente de ponta a ponta.",
+    text: "Infraestrutura, servidores, software e presença digital costumam ficar espalhados entre vários fornecedores que não se falam. Centralizamos tudo em uma equipe só, com um ponto de contato que conhece o seu ambiente de ponta a ponta.",
   },
   {
     title: "Documentação como entrega",
-    text: "Cada intervenção gera registro: topologia da rede, inventário de equipamentos, credenciais sob custódia, procedimentos e histórico de chamados. O conhecimento sobre a sua infraestrutura pertence à sua empresa — não a quem a instalou.",
+    text: "Cada intervenção gera registro: arquitetura de infraestrutura, inventário de ativos, credenciais sob custódia, procedimentos e histórico de chamados. O conhecimento sobre a sua infraestrutura pertence à sua empresa — não a quem a instalou.",
   },
   {
     title: "Continuidade acima de tudo",
@@ -74,7 +74,7 @@ const commitments = [
   {
     icon: ShieldCheck,
     title: "Segurança e LGPD",
-    text: "Boas práticas de proteção de dados aplicadas desde o projeto: controle de acesso, backups verificados e segmentação de rede.",
+    text: "Boas práticas de proteção de dados aplicadas desde o projeto: controle de acesso, backups verificados e proteção de infraestrutura.",
   },
   {
     icon: Handshake,
@@ -102,7 +102,7 @@ export function AboutSection() {
             <span className="text-yellow-500 dark:text-yellow-300">
               empresas que dependem de tecnologia, mas não têm com quem contar quando ela falha.
             </span>{" "}
-            Unimos infraestrutura, software e estratégia digital em uma só equipe — responsável do cabo de rede à
+            Unimos infraestrutura, software e estratégia digital em uma só equipe — responsável da infraestrutura à
             experiência do seu cliente.
           </p>
         </Reveal>
@@ -120,11 +120,11 @@ export function AboutSection() {
               <div className="mt-6 space-y-4 text-sm sm:text-base leading-relaxed text-muted-foreground">
                 <p>
                   Tecnologia deixou de ser um departamento de apoio: hoje ela é o que mantém vendas, atendimento e
-                  logística funcionando. Uma rede instável ou um sistema fora do ar não é um incômodo técnico — é
+                  logística funcionando. Uma infraestrutura instável ou um sistema fora do ar não é um incômodo técnico — é
                   faturamento perdido.
                 </p>
                 <p>
-                  Por isso trabalhamos com uma visão integrada. Quem projeta sua rede entende as aplicações que rodam
+                  Por isso trabalhamos com uma visão integrada. Quem projeta sua infraestrutura entende as aplicações que rodam
                   sobre ela; quem desenvolve seu sistema conhece a infraestrutura que o sustenta. O resultado são
                   decisões mais coerentes, menos falhas entre fornecedores e respostas mais rápidas quando algo
                   precisa de atenção.

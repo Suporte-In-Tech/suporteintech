@@ -14,7 +14,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       images: [
         `${baseUrl}/logo-completa-dark.png`,
         `${baseUrl}/projetos/sobei-cover.webp`,
-        `${baseUrl}/projetos/sobei-redes-cover.webp`,
       ],
     },
     {
@@ -28,11 +27,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       ],
     },
     {
-      url: `${baseUrl}/projetos/redes-sobei`,
+      url: `${baseUrl}/politica-de-privacidade`,
       lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.9,
-      images: [`${baseUrl}/projetos/sobei-redes-cover.webp`],
+      changeFrequency: "yearly",
+      priority: 0.4,
+    },
+    {
+      url: `${baseUrl}/termos-de-uso`,
+      lastModified: now,
+      changeFrequency: "yearly",
+      priority: 0.4,
     },
   ];
 }
