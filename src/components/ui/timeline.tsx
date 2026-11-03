@@ -1,393 +1,299 @@
-// Built using Hyperiux Vault: https://vault.hyperiux.com
 "use client";
 
-import {
-  type CSSProperties,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-} from "react";
+import * as React from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { motion, AnimatePresence } from "motion/react";
+import { ArrowRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const useIsomorphicLayoutEffect =
-  typeof window !== "undefined" ? useLayoutEffect : useEffect;
-
-/* Inline stand-in for @gsap/react's useGSAP. Mirrors its default
-   `revertOnUpdate: false`: one gsap.context lives for the component's
-   lifetime, the callback is re-added when dependencies change, and the
-   context is reverted only on unmount. A callback may return its own
-   cleanup, which runs before the next re-add and on unmount. */
-function useGSAP(
-  callback: () => void | (() => void),
-  options?: {
-    dependencies?: unknown[];
-    scope?: { current: Element | null } | Element | null;
-  }
-) {
-  const deps = options?.dependencies ?? [];
-  const scope = options?.scope;
-  const ctxRef = useRef<gsap.Context | null>(null);
-  const cleanupRef = useRef<(() => void) | undefined>(undefined);
-
-  useIsomorphicLayoutEffect(() => {
-    const el =
-      scope && typeof scope === "object" && "current" in scope
-        ? scope.current
-        : (scope as Element | null);
-    ctxRef.current = gsap.context(() => {}, el ?? undefined);
-    return () => {
-      cleanupRef.current?.();
-      cleanupRef.current = undefined;
-      ctxRef.current?.revert();
-      ctxRef.current = null;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useIsomorphicLayoutEffect(() => {
-    if (!ctxRef.current) return;
-    cleanupRef.current?.();
-    const ret = ctxRef.current.add(callback);
-    cleanupRef.current = typeof ret === "function" ? ret : undefined;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, deps);
-}
-
-export type JourneyItem = {
+export interface JourneyItem {
   id: string;
   year: string;
   month: string;
   content: string;
   order?: number;
-};
+}
 
-export type TimelineProps = {
-  title?: string;
-  periodLabel?: string;
-  textColor?: string;
-  mutedTextColor?: string;
-  activeColor?: string;
-  backgroundColor?: string;
-  imageUrl?: string;
-  imageAlt?: string;
-  /** Reveal animation duration, in seconds. */
-  duration?: number;
-  /** Fallback reveal duration when `duration` is omitted, in seconds. */
-  scrollDuration?: number;
-  topData?: JourneyItem[];
-  bottomData?: JourneyItem[];
-};
-
-const defaultTopJourneyData: JourneyItem[] = [
+export const defaultJourneySteps: JourneyItem[] = [
   {
-    id: "etapa-1",
+    id: "etapa-01",
     year: "01",
     month: "Diagnóstico & Auditoria",
-    content: "Mapeamento rigoroso de infraestrutura, análise de gargalos operacionais e definição clara de escopo técnico.",
+    content:
+      "Mapeamento de infraestrutura de TI, análise de gargalos operacionais e definição clara de requisitos para cloud, sistemas web, plataformas sob medida e inteligência artificial.",
     order: 1,
   },
   {
-    id: "etapa-3",
+    id: "etapa-02",
+    year: "02",
+    month: "Arquitetura & Estratégia",
+    content:
+      "Desenho da arquitetura em nuvem escalável, esteiras de automação CI/CD, especificação de microsserviços, modelagem de banco de dados e APIs REST.",
+    order: 2,
+  },
+  {
+    id: "etapa-03",
     year: "03",
     month: "Desenvolvimento & Engenharia",
-    content: "Provisionamento IaC em nuvem, desenvolvimento de software sob medida e servidores MCP para IA.",
+    content:
+      "Provisionamento de infraestrutura como código (IaC), desenvolvimento de software sob medida, criação de sites performáticos e servidores MCP conectados a IA.",
     order: 3,
   },
   {
-    id: "etapa-5",
+    id: "etapa-04",
+    year: "04",
+    month: "Design & Experiência (UI/UX)",
+    content:
+      "Prototipagem interativa de alta fidelidade no Figma, aplicação de Design System consistente, testes de usabilidade e interfaces modernas focadas em alta conversão.",
+    order: 4,
+  },
+  {
+    id: "etapa-05",
     year: "05",
     month: "Homologação & Testes QA",
-    content: "Testes automatizados, simulação de carga, auditoria de segurança em cloud e validação da LGPD.",
+    content:
+      "Testes automatizados, simulação de estresse de carga, auditoria de segurança em nuvem, validação de latência e conformidade com a LGPD.",
     order: 5,
   },
   {
-    id: "etapa-7",
+    id: "etapa-06",
+    year: "06",
+    month: "Go-Live com Zero Downtime",
+    content:
+      "Deploy automatizado e virada de chave planejada sem interromper um único segundo da sua operação.",
+    order: 6,
+  },
+  {
+    id: "etapa-07",
     year: "07",
     month: "Sustentação & Suporte 24/7",
-    content: "Observabilidade contínua, telemetria em tempo real, otimização FinOps e SLA corporativo garantido.",
+    content:
+      "Observabilidade contínua, telemetria em tempo real, otimização de custos FinOps e SLA corporativo garantido.",
     order: 7,
   },
 ];
 
-const defaultBottomJourneyData: JourneyItem[] = [
-  {
-    id: "etapa-2",
-    year: "02",
-    month: "Arquitetura & Estratégia",
-    content: "Arquitetura em nuvem (AWS/GCP), automação CI/CD, microsserviços e modelagem de software e APIs.",
-    order: 2,
-  },
-  {
-    id: "etapa-4",
-    year: "04",
-    month: "Design & Experiência",
-    content: "Prototipagem no Figma, Design System escalável e jornadas fluidas focadas em máxima conversão.",
-    order: 4,
-  },
-  {
-    id: "etapa-6",
-    year: "06",
-    month: "Go-Live com Zero Downtime",
-    content: "Deploy automatizado e virada de chave planejada sem interromper um único segundo da sua operação.",
-    order: 6,
-  },
-];
+export interface TimelineProps {
+  title?: string;
+  periodLabel?: string;
+  items?: JourneyItem[];
+}
 
 export default function Timeline({
-  textColor = "var(--color-foreground, currentColor)",
-  mutedTextColor = "var(--color-muted-foreground, #71717a)",
-  activeColor = "var(--color-primary, currentColor)",
-  backgroundColor = "var(--color-background, transparent)",
-  duration,
-  scrollDuration = 1.2,
-  topData = defaultTopJourneyData,
-  bottomData = defaultBottomJourneyData,
+  items = defaultJourneySteps,
 }: TimelineProps) {
-  const sectionRef = useRef<HTMLElement>(null);
-  const wholeSliderRef = useRef<HTMLDivElement>(null);
-  const animationDuration = duration ?? scrollDuration;
-  const normalizedDuration = Math.max(0.2, animationDuration);
+  const [activeIndex, setActiveIndex] = React.useState(0);
+  const [direction, setDirection] = React.useState<1 | -1>(1);
 
-  const allJourneyItems: JourneyItem[] = [
-    ...topData,
-    ...bottomData,
-  ].sort((a, b) => {
-    if (a.order !== undefined && b.order !== undefined) {
-      return a.order - b.order;
-    }
-    const yearDiff = Number(a.year) - Number(b.year);
-    if (!isNaN(yearDiff) && yearDiff !== 0) return yearDiff;
-    return a.id.localeCompare(b.id);
-  });
+  const containerRef = React.useRef<HTMLElement>(null);
+  const triggerRef = React.useRef<ScrollTrigger | null>(null);
+  const prevIndexRef = React.useRef(0);
 
-  const sectionStyle: CSSProperties = {
-    color: textColor,
-    backgroundColor,
-  };
-  const activeStyle: CSSProperties = {
-    backgroundColor: activeColor,
-  };
-  const mutedTextStyle: CSSProperties = {
-    color: mutedTextColor,
-  };
+  const totalSteps = items.length;
+  const currentStep = items[activeIndex] ?? items[0];
 
-  useGSAP(() => {
-    const section = sectionRef.current;
-    const slider = wholeSliderRef.current;
+  // Sincronização estritamente vertical com o scroll da página via ScrollTrigger
+  React.useEffect(() => {
+    const el = containerRef.current;
+    if (!el || typeof window === "undefined") return;
 
-    if (!section || !slider) return;
+    const ctx = gsap.context(() => {
+      const trigger = ScrollTrigger.create({
+        trigger: el,
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 0.2,
+        onUpdate: (self) => {
+          const p = Math.max(0, Math.min(0.9999, self.progress));
+          const nextIndex = Math.min(totalSteps - 1, Math.floor(p * totalSteps));
 
-    // Tópicos fixos e visíveis: hastes, pontos e textos 100% renderizados sem animação de corte
-    allJourneyItems.forEach((item) => {
-      gsap.set(`.jl-${item.id}`, { scaleY: 1, clearProps: "transform" });
-      gsap.set(`.jd-${item.id}`, { scale: 1, clearProps: "transform" });
-      gsap.set(`.title-${item.id}`, { opacity: 1, clearProps: "transform,opacity" });
-      gsap.set(`.description-${item.id}`, { opacity: 1, clearProps: "transform,opacity" });
-    });
-
-    const mm = gsap.matchMedia();
-
-    // MOBILE (<= 600px): mantém o espaçamento e curso expandido necessários para o Item 07 ser navegável no mobile
-    mm.add("(max-width: 600px)", () => {
-      const slidePercent = -78.5;
-      const lineWidth = "98%";
-      const lineStart = "top 30%";
-      const slideEnd = "85% bottom";
-      const lineEnd = "82% bottom";
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: "top top",
-          end: slideEnd,
-          scrub: true,
-          invalidateOnRefresh: true,
-        },
-        defaults: {
-          ease: "none",
+          if (nextIndex !== prevIndexRef.current) {
+            setDirection(nextIndex > prevIndexRef.current ? 1 : -1);
+            prevIndexRef.current = nextIndex;
+            setActiveIndex(nextIndex);
+          }
         },
       });
 
-      tl.fromTo(
-        slider,
-        { xPercent: 0 },
-        { xPercent: slidePercent },
-      );
+      triggerRef.current = trigger;
+    }, el);
 
-      // Somente a linha do meio se movimentando
-      gsap.to(".journey-line", {
-        width: lineWidth,
-        ease: "none",
-        scrollTrigger: {
-          trigger: section,
-          start: lineStart,
-          end: lineEnd,
-          scrub: true,
-          invalidateOnRefresh: true,
-        },
-      });
-    });
+    return () => {
+      ctx.revert();
+      triggerRef.current = null;
+    };
+  }, [totalSteps]);
 
-    // DESKTOP (> 600px): finaliza com o Item 07 perfeitamente visível à direita, eliminando o espaçamento vazio que não é necessário no desktop
-    mm.add("(min-width: 601px)", () => {
-      const slidePercent = -45.0;
-      const lineWidth = "100%";
-      const lineStart = "top 20%";
-      const slideEnd = "90% bottom";
-      const lineEnd = "88% bottom";
+  // Navegação direta por clique com scroll suave
+  const goToStep = React.useCallback(
+    (index: number) => {
+      const clampedIndex = Math.max(0, Math.min(totalSteps - 1, index));
+      setDirection(clampedIndex >= activeIndex ? 1 : -1);
+      prevIndexRef.current = clampedIndex;
+      setActiveIndex(clampedIndex);
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: "top top",
-          end: slideEnd,
-          scrub: true,
-          invalidateOnRefresh: true,
-        },
-        defaults: {
-          ease: "none",
-        },
-      });
-
-      tl.fromTo(
-        slider,
-        { xPercent: 0 },
-        { xPercent: slidePercent },
-      );
-
-      // Somente a linha do meio se movimentando
-      gsap.to(".journey-line", {
-        width: lineWidth,
-        ease: "none",
-        scrollTrigger: {
-          trigger: section,
-          start: lineStart,
-          end: lineEnd,
-          scrub: true,
-          invalidateOnRefresh: true,
-        },
-      });
-    });
-
-    return () => mm.revert();
-  }, { scope: sectionRef });
+      const trigger = triggerRef.current;
+      if (trigger && typeof window !== "undefined") {
+        const stepProgress = (clampedIndex + 0.5) / totalSteps;
+        const targetScroll =
+          trigger.start + stepProgress * (trigger.end - trigger.start);
+        window.scrollTo({
+          top: targetScroll,
+          behavior: "smooth",
+        });
+      }
+    },
+    [activeIndex, totalSteps]
+  );
 
   return (
     <section
-      ref={sectionRef}
+      ref={containerRef}
       id="como-trabalhamos"
-      className="h-[260vh] w-full relative overflow-clip select-none"
-      style={sectionStyle}
+      className="relative w-full bg-background select-none h-[300vh]"
     >
-      <div className="h-screen w-full sticky top-0 flex flex-col justify-center items-start overflow-hidden pt-24 pb-8 sm:pt-24 sm:pb-8">
-        <div
-          ref={wholeSliderRef}
-          className="mr-[2vw] flex h-[30vw] max-h-[64vh] w-[180vw] items-center px-[5vw] max-[600px]:h-[54vh] max-[600px]:w-[430vw] max-[600px]:px-[7vw]"
-        >
-          <div className="relative h-full w-full">
-            {/* Linha Central Guia */}
-            <div className="w-full absolute left-0 top-1/2 -translate-y-1/2 flex items-center h-fit pointer-events-none z-0">
-              <div
-                className="h-[.8vw] max-[600px]:h-[2vw] max-[600px]:w-[2vw] w-[.8vw] rounded-full shrink-0 shadow-sm"
-                style={activeStyle}
-              ></div>
-              <div
-                className="h-0.5 w-[0%] rounded-full journey-line opacity-80"
-                style={activeStyle}
-              ></div>
-              <div
-                className="h-[.8vw] max-[600px]:h-[2vw] max-[600px]:w-[2vw] w-[.8vw] rounded-full shrink-0 shadow-sm"
-                style={activeStyle}
-              ></div>
-            </div>
+      {/* Container Sticky que fixa a tela durante o scroll vertical */}
+      <div className="sticky top-0 h-screen w-full flex flex-col justify-center px-6 sm:px-8 lg:px-12 py-8 overflow-hidden">
+        <div className="max-w-7xl mx-auto w-full flex flex-col h-full max-h-[85vh] justify-center">
+          {/* Grid Principal: Trilha Vertical Minimalista à Esquerda + Foco no Tópico à Direita */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center flex-1 py-8 overflow-hidden">
+            
+            {/* COLUNA ESQUERDA: Tópicos Tipográficos Limpos */}
+            <div className="hidden lg:flex lg:col-span-5 flex-col justify-center py-6">
+              {/* Lista dos 7 Tópicos com tipografia pura, sem linhas laterais */}
+              <nav aria-label="Passos da Metodologia" className="space-y-6">
+                {items.map((item, idx) => {
+                  const isActive = idx === activeIndex;
+                  const isPast = idx < activeIndex;
 
-            {/* Metade Superior: Itens Ímpares (01, 03, 05, 07) */}
-            <div className="flex h-1/2 w-full items-center justify-start">
-              <div className="w-full flex h-full gap-x-[15vw] max-[600px]:gap-x-[40vw] pl-[2vw] max-[600px]:pl-[14vw]">
-                {topData.map((item) => (
-                  <div
-                    key={`top-${item.id}`}
-                    className="relative h-full w-[30vw] pl-[2.5vw] pr-[1vw] max-[600px]:w-[70vw] max-[600px]:pl-[5vw] flex flex-col justify-start shrink-0"
-                  >
-                    {/* Haste Vertical e Ponto Superior conectados à linha base */}
-                    <div className="absolute left-0 top-[1.8vw] max-[600px]:top-[2vw] bottom-0 w-8 -translate-x-1/2 flex flex-col items-center pointer-events-none">
-                      <div
-                        className={`size-[0.85vw] max-[600px]:size-[3.5vw] rounded-full shrink-0 jd-${item.id} shadow-sm z-10`}
-                        style={activeStyle}
-                      />
-                      <div
-                        className={`w-0.5 flex-1 origin-bottom jl-${item.id} opacity-85`}
-                        style={activeStyle}
-                      />
-                    </div>
+                  return (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={() => goToStep(idx)}
+                      className="group flex items-center gap-4 text-left transition-colors cursor-pointer outline-none w-full"
+                    >
+                      {/* Ponto indicador sutil */}
+                      <div className="flex items-center justify-center shrink-0 w-3">
+                        <div
+                          className={cn(
+                            "rounded-full transition-all duration-300",
+                            isActive
+                              ? "size-2.5 bg-foreground ring-4 ring-foreground/15 shadow-sm"
+                              : isPast
+                              ? "size-1.5 bg-foreground/60"
+                              : "size-1.5 bg-muted-foreground/30 group-hover:bg-muted-foreground/60"
+                          )}
+                        />
+                      </div>
 
-                    <div className="pt-[1vw] max-[600px]:pt-2 space-y-[0.8vw] max-[600px]:space-y-1.5">
-                      <h4
-                        className={`title-${item.id} text-[2.2vw] font-semibold tracking-tight leading-tight max-[600px]:text-[5.5vw]`}
-                      >
-                        <span className="opacity-60 font-mono text-[1.8vw] max-[600px]:text-[4.5vw] mr-2">
+                      {/* Rótulo da Etapa */}
+                      <div className="flex items-baseline gap-2.5 min-w-0">
+                        <span
+                          className={cn(
+                            "font-mono text-xs transition-colors",
+                            isActive
+                              ? "text-foreground font-semibold"
+                              : "text-muted-foreground/50 group-hover:text-muted-foreground"
+                          )}
+                        >
                           {item.year}.
                         </span>
-                        {item.month}
-                      </h4>
-                      <p
-                        className={`description-${item.id} w-[90%] text-[1.3vw] leading-[1.3] font-normal max-[600px]:w-[95%] max-[600px]:text-[3.8vw]`}
-                        style={mutedTextStyle}
-                      >
-                        {item.content}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+                        <span
+                          className={cn(
+                            "text-sm tracking-tight truncate transition-colors",
+                            isActive
+                              ? "text-foreground font-semibold"
+                              : isPast
+                              ? "text-muted-foreground/80 group-hover:text-foreground"
+                              : "text-muted-foreground/50 group-hover:text-muted-foreground"
+                          )}
+                        >
+                          {item.month}
+                        </span>
+                      </div>
+                    </button>
+                  );
+                })}
+              </nav>
             </div>
 
-            {/* Metade Inferior: Itens Pares (02, 04, 06) */}
-            <div className="h-1/2 flex items-center justify-start w-full">
-              <div className="w-full flex h-full gap-x-[15vw] max-[600px]:gap-x-[40vw] pl-[18vw] max-[600px]:pl-[60vw]">
-                {bottomData.map((item) => (
-                  <div
-                    key={`bottom-${item.id}`}
-                    className="relative h-full w-[25vw] pl-[2.5vw] pr-[1vw] max-[600px]:w-[70vw] max-[600px]:pl-[5vw] flex flex-col justify-end shrink-0"
-                  >
-                    {/* Haste Vertical e Ponto Inferior conectados à linha base */}
-                    <div className="absolute left-0 top-0 bottom-[1.8vw] max-[600px]:bottom-[2vw] w-8 -translate-x-1/2 flex flex-col items-center pointer-events-none">
-                      <div
-                        className={`w-0.5 flex-1 origin-top jl-${item.id} opacity-85`}
-                        style={activeStyle}
-                      />
-                      <div
-                        className={`size-[0.85vw] max-[600px]:size-[3.5vw] rounded-full shrink-0 jd-${item.id} shadow-sm z-10`}
-                        style={activeStyle}
-                      />
-                    </div>
+            {/* COLUNA DIREITA: Destaque do Tópico Ativo com Identidade Visual Limpa e Original */}
+            <div className="col-span-1 lg:col-span-7 flex flex-col justify-center h-full">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentStep.id}
+                  initial={{ opacity: 0, y: direction === 1 ? 16 : -16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: direction === 1 ? -16 : 16 }}
+                  transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                  className="relative flex flex-col justify-between max-w-2xl py-4"
+                >
+                  <div className="space-y-6">
+                    {/* Título Principal com Tipografia Editorial Idêntica à Original */}
+                    <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-foreground leading-[1.15]">
+                      <span className="font-mono font-normal opacity-50 mr-3 text-2xl sm:text-3xl lg:text-4xl">
+                        {currentStep.year}.
+                      </span>
+                      {currentStep.month}
+                    </h3>
 
-                    <div className="pb-[1vw] max-[600px]:pb-2 space-y-[0.8vw] max-[600px]:space-y-1.5">
-                      <h4
-                        className={`title-${item.id} text-[2.2vw] font-semibold tracking-tight leading-tight max-[600px]:text-[5.5vw]`}
-                      >
-                        <span className="opacity-60 font-mono text-[1.8vw] max-[600px]:text-[4.5vw] mr-2">
-                          {item.year}.
-                        </span>
-                        {item.month}
-                      </h4>
-                      <p
-                        className={`description-${item.id} w-[90%] text-[1.3vw] leading-[1.3] font-normal max-[600px]:w-[95%] max-[600px]:text-[3.8vw]`}
-                        style={mutedTextStyle}
-                      >
-                        {item.content}
-                      </p>
-                    </div>
+                    {/* Descrição Limpa e Direta */}
+                    <p className="text-base sm:text-lg lg:text-xl text-muted-foreground font-normal leading-relaxed">
+                      {currentStep.content}
+                    </p>
                   </div>
-                ))}
-              </div>
+
+                  {/* Rodapé Sutil com Ação Discreta */}
+                  <div className="mt-12 pt-6 border-t border-border/40 flex items-center justify-end">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (activeIndex < totalSteps - 1) {
+                          goToStep(activeIndex + 1);
+                        } else {
+                          const nextSection = document.getElementById("projetos");
+                          if (nextSection) {
+                            nextSection.scrollIntoView({ behavior: "smooth" });
+                          }
+                        }
+                      }}
+                      className="inline-flex items-center gap-2 text-xs sm:text-sm font-medium text-foreground hover:opacity-70 transition-opacity cursor-pointer"
+                    >
+                      Próxima etapa
+                      <ArrowRight className="size-3.5" />
+                    </button>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
             </div>
           </div>
+
+          {/* Mini-seletor no Mobile (abaixo de 1024px) */}
+          <div className="flex lg:hidden items-center justify-center gap-2 pt-2">
+            {items.map((_, idx) => (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => goToStep(idx)}
+                aria-label={`Ir para etapa ${idx + 1}`}
+                className={cn(
+                  "h-1 rounded-full transition-all duration-300 cursor-pointer",
+                  idx === activeIndex
+                    ? "w-6 bg-foreground"
+                    : idx < activeIndex
+                    ? "w-2 bg-foreground/40"
+                    : "w-2 bg-muted-foreground/30"
+                )}
+              />
+            ))}
+          </div>
+
         </div>
       </div>
     </section>
