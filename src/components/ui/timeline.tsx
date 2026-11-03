@@ -93,11 +93,58 @@ export default function Timeline({
   const containerRef = React.useRef<HTMLElement>(null);
   const triggerRef = React.useRef<ScrollTrigger | null>(null);
   const prevIndexRef = React.useRef(0);
+  const activeIndexRef = React.useRef(0);
+
+  // Controle de trava contra avanço múltiplo acidental (inércia de trackpads / scrolls rápidos)
+  const isTransitioningRef = React.useRef(false);
+  const lockTimerRef = React.useRef<NodeJS.Timeout | null>(null);
+  const minLockUntilRef = React.useRef(0);
 
   const totalSteps = items.length;
   const currentStep = items[activeIndex] ?? items[0];
 
-  // Sincronização estritamente vertical com o scroll da página via ScrollTrigger
+  // Mantém a ref sincronizada com o estado
+  React.useEffect(() => {
+    activeIndexRef.current = activeIndex;
+  }, [activeIndex]);
+
+  // Transição estrita de exatamente 1 etapa com sincronização suave do scroll
+  const goToStep = React.useCallback(
+    (index: number) => {
+      const clampedIndex = Math.max(0, Math.min(totalSteps - 1, index));
+      if (clampedIndex === activeIndexRef.current) return;
+
+      const newDirection = clampedIndex > activeIndexRef.current ? 1 : -1;
+      setDirection(newDirection);
+      prevIndexRef.current = clampedIndex;
+      activeIndexRef.current = clampedIndex;
+      setActiveIndex(clampedIndex);
+
+      // Trava de segurança para que uma única rolagem nunca passe mais de 1 etapa
+      isTransitioningRef.current = true;
+      minLockUntilRef.current = Date.now() + 500;
+
+      if (lockTimerRef.current) clearTimeout(lockTimerRef.current);
+      lockTimerRef.current = setTimeout(() => {
+        isTransitioningRef.current = false;
+      }, 500);
+
+      const trigger = triggerRef.current;
+      if (trigger && typeof window !== "undefined") {
+        const totalDistance = trigger.end - trigger.start;
+        const stepRatio = totalSteps > 1 ? clampedIndex / (totalSteps - 1) : 0;
+        const targetScroll = trigger.start + stepRatio * totalDistance;
+
+        window.scrollTo({
+          top: targetScroll,
+          behavior: "smooth",
+        });
+      }
+    },
+    [totalSteps]
+  );
+
+  // Sincronização com o scroll da página via ScrollTrigger
   React.useEffect(() => {
     const el = containerRef.current;
     if (!el || typeof window === "undefined") return;
@@ -109,12 +156,19 @@ export default function Timeline({
         end: "bottom bottom",
         scrub: 0.2,
         onUpdate: (self) => {
+          // Ignora updates automáticos intermediários enquanto a etapa está sendo animada via rolagem controlada
+          if (isTransitioningRef.current) return;
+
           const p = Math.max(0, Math.min(0.9999, self.progress));
-          const nextIndex = Math.min(totalSteps - 1, Math.floor(p * totalSteps));
+          const nextIndex = Math.min(
+            totalSteps - 1,
+            Math.max(0, Math.round(p * (totalSteps - 1)))
+          );
 
           if (nextIndex !== prevIndexRef.current) {
             setDirection(nextIndex > prevIndexRef.current ? 1 : -1);
             prevIndexRef.current = nextIndex;
+            activeIndexRef.current = nextIndex;
             setActiveIndex(nextIndex);
           }
         },
@@ -129,27 +183,149 @@ export default function Timeline({
     };
   }, [totalSteps]);
 
-  // Navegação direta por clique com scroll suave
-  const goToStep = React.useCallback(
-    (index: number) => {
-      const clampedIndex = Math.max(0, Math.min(totalSteps - 1, index));
-      setDirection(clampedIndex >= activeIndex ? 1 : -1);
-      prevIndexRef.current = clampedIndex;
-      setActiveIndex(clampedIndex);
+  // Interceptação de eventos wheel para assegurar exatamente 1 etapa por rolagem
+  React.useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      const el = containerRef.current;
+      if (!el) return;
 
-      const trigger = triggerRef.current;
-      if (trigger && typeof window !== "undefined") {
-        const stepProgress = (clampedIndex + 0.5) / totalSteps;
-        const targetScroll =
-          trigger.start + stepProgress * (trigger.end - trigger.start);
-        window.scrollTo({
-          top: targetScroll,
-          behavior: "smooth",
-        });
+      const rect = el.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+
+      // Seção está fixada na tela (sticky ativa ocupando a viewport)
+      const isStickyActive = rect.top <= 5 && rect.bottom >= viewportHeight - 5;
+      if (!isStickyActive) return;
+
+      // Ignora micro-movimentos acidentais
+      if (Math.abs(e.deltaY) < 15) return;
+
+      const currentIndex = activeIndexRef.current;
+
+      // Se ainda estiver no período de transição/amortecimento da rolagem anterior
+      if (isTransitioningRef.current) {
+        // Absorve a inércia do mesmo gesto se ainda houver etapas antes dos limites
+        if (
+          (e.deltaY > 0 && currentIndex < totalSteps - 1) ||
+          (e.deltaY < 0 && currentIndex > 0)
+        ) {
+          e.preventDefault();
+        }
+
+        // Renova o tempo de amortecimento para que o mesmo swipe contínuo não passe 2 etapas
+        if (lockTimerRef.current) clearTimeout(lockTimerRef.current);
+        const remainingMin = Math.max(0, minLockUntilRef.current - Date.now());
+        const waitTime = Math.max(remainingMin, 180);
+
+        lockTimerRef.current = setTimeout(() => {
+          isTransitioningRef.current = false;
+        }, waitTime);
+
+        return;
       }
-    },
-    [activeIndex, totalSteps]
-  );
+
+      // 1 Rolagem para baixo: passa rigorosamente 1 etapa
+      if (e.deltaY > 0) {
+        if (currentIndex < totalSteps - 1) {
+          e.preventDefault();
+          goToStep(currentIndex + 1);
+        }
+        // Se já estiver na última etapa (07), deixa o scroll nativo seguir para a seção seguinte
+      } else if (e.deltaY < 0) {
+        // 1 Rolagem para cima: volta rigorosamente 1 etapa
+        if (currentIndex > 0) {
+          e.preventDefault();
+          goToStep(currentIndex - 1);
+        }
+        // Se já estiver na primeira etapa (01), deixa o scroll nativo seguir para cima
+      }
+    };
+
+    window.addEventListener("wheel", handleWheel, { passive: false });
+
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+      if (lockTimerRef.current) clearTimeout(lockTimerRef.current);
+    };
+  }, [totalSteps, goToStep]);
+
+  // Navegação acessível via teclado quando a trilha estiver ativa
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const el = containerRef.current;
+      if (!el) return;
+
+      const rect = el.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const isStickyActive = rect.top <= 5 && rect.bottom >= viewportHeight - 5;
+      if (!isStickyActive) return;
+
+      const currentIndex = activeIndexRef.current;
+
+      if (e.key === "ArrowDown" || e.key === "PageDown") {
+        if (currentIndex < totalSteps - 1) {
+          e.preventDefault();
+          if (!isTransitioningRef.current) {
+            goToStep(currentIndex + 1);
+          }
+        }
+      } else if (e.key === "ArrowUp" || e.key === "PageUp") {
+        if (currentIndex > 0) {
+          e.preventDefault();
+          if (!isTransitioningRef.current) {
+            goToStep(currentIndex - 1);
+          }
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [totalSteps, goToStep]);
+
+  // Suporte a swipe por toque em dispositivos móveis
+  React.useEffect(() => {
+    let touchStartY = 0;
+
+    const handleTouchStart = (e: TouchEvent) => {
+      if (e.touches.length === 1) {
+        touchStartY = e.touches[0].clientY;
+      }
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      const el = containerRef.current;
+      if (!el || e.changedTouches.length === 0) return;
+
+      const rect = el.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const isStickyActive = rect.top <= 5 && rect.bottom >= viewportHeight - 5;
+      if (!isStickyActive) return;
+
+      const deltaY = touchStartY - e.changedTouches[0].clientY;
+      if (Math.abs(deltaY) < 45) return;
+
+      const currentIndex = activeIndexRef.current;
+      if (deltaY > 0) {
+        if (currentIndex < totalSteps - 1) {
+          goToStep(currentIndex + 1);
+        }
+      } else {
+        if (currentIndex > 0) {
+          goToStep(currentIndex - 1);
+        }
+      }
+    };
+
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchend", handleTouchEnd, { passive: true });
+
+    return () => {
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchend", handleTouchEnd);
+    };
+  }, [totalSteps, goToStep]);
 
   return (
     <section
