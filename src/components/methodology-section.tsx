@@ -8,7 +8,7 @@ const Timeline = dynamic(() => import("@/components/ui/timeline"), {
   loading: () => (
     <div
       id="como-trabalhamos"
-      className="h-[240vh] sm:h-[260vh] w-full bg-background"
+      className="h-[300vh] w-full bg-background"
       aria-hidden="true"
     />
   ),
@@ -93,7 +93,7 @@ export function MethodologySection() {
         </ol>
       </section>
 
-      {/* Linha do Tempo Horizontal Interativa com Scroll Pinned */}
+      {/* Trilha Técnica Vertical Interativa com Scroll Pinned */}
       <Timeline
         title="Metodologia & Processos"
         periodLabel="Metodologia & Processo — SuporteInTech"
